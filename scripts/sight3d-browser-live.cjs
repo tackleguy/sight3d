@@ -1,4 +1,4 @@
-// Optional integration check: downloads/caches the real browser model (about 300 MB).
+// Optional integration check: downloads/caches the real browser model (about 1 GB).
 const { chromium } = require('@playwright/test');
 const assert = require('node:assert/strict');
 let context;

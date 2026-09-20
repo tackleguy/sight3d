@@ -1,3 +1,4 @@
+import { createObject, paintObject, surfaceOptions, OBJECT_TYPES } from './objects';
 import { createBuilding, createCity, detailBuilding } from './architecture';
 import { buildSkyscraper } from './skyscraper';
 // @archigraph ai.chat
@@ -32,6 +33,8 @@ export interface ChatMessage {
 
 export function getToolDefinitions() {
   return [
+    { name:'create_object', description:'Create a 3D model: sphere, cylinder, cone, torus, tubular arc, glass_of_water (hollow glass with water inside), table, chair, or water volume. Dimensions in meters, Y up. Radius controls curved shapes; height controls cylinders, cones, furniture and glass; width/depth control furniture and water. Arc angle is degrees, thickness is tube radius. Optional material and color apply to the model. One undo step.', input_schema:{type:'object' as const,properties:{type:{type:'string',enum:[...OBJECT_TYPES]},radius:{type:'number',minimum:.001,maximum:1000},height:{type:'number',minimum:.001,maximum:2000},width:{type:'number',minimum:.001,maximum:2000},depth:{type:'number',minimum:.001,maximum:2000},angle:{type:'number',minimum:1,maximum:360},thickness:{type:'number'},segments:{type:'integer',minimum:8,maximum:128},fill:{type:'number',minimum:.01,maximum:.95},material:{type:'string',enum:['solid','glass','water','metal','wood']},color:{type:'string',description:'Basic color name or #RRGGBB.'},x:{type:'number'},y:{type:'number'},z:{type:'number'}},required:['type']} },
+    { name:'apply_surface',description:'Apply glass, water, solid color, metal or wood to existing faces. Omit faceIds to paint selected faces. Read state first if you need IDs. One undo step.',input_schema:{type:'object' as const,properties:{faceIds:{type:'array',items:{type:'string'}},material:{type:'string',enum:['solid','glass','water','metal','wood']},color:{type:'string',description:'Basic color name or #RRGGBB.'}}}},
     {name:'create_building',description:'Design any supported building type and shape, including houses, apartments, offices, skyscrapers, warehouses, pavilions and civic buildings. Supports city-inspired architecture, custom polygon footprints and loft profiles. Explicit user dimensions and shapes take priority. Height includes the roof. Use this instead of the legacy fixed skyscraper tool.',input_schema:{type:'object' as const,properties:{
       type:{type:'string',enum:['house','apartment','office','skyscraper','warehouse','pavilion','civic']},
       shape:{type:'string',enum:['rectangle','circle','ellipse','triangle','hexagon','l_shape','u_shape','custom']},
@@ -61,6 +64,8 @@ export function getToolDefinitions() {
       input_schema: {
         type: 'object' as const,
         properties: {
+          material: { type: 'string', enum: ['solid', 'glass', 'water', 'metal', 'wood'] },
+          color: { type: 'string', description: 'Basic color name or #RRGGBB.' },
           width: { type: 'number', description: 'Width along X in meters, positive.' },
           depth: { type: 'number', description: 'Depth along Z in meters, positive.' },
           height: { type: 'number', description: 'Height along Y in meters, positive.' },
@@ -254,7 +259,7 @@ export function contextToMessage(ctx: SelectionContext): string {
 export function buildLocalSystemPrompt(): string {
   return `You are Sight3D's local 3D modeling assistant. Use tools to change the model; text alone cannot create geometry.
 For architecture use create_building: choose building type, footprint shape, roof, height, twist, taper and city inspiration from the user's request. Never turn every building into the same skyscraper. Houses can have gabled roofs; pavilions can be domed; towers can be round, elliptical, twisted or tapered; custom polygon footprints and loft sections are supported. For neighborhoods, skylines, city blocks or multiple city-inspired buildings use create_city. These are fictional city-inspired designs, not actual map data. For more detail on your latest building use detail_building. The legacy create_skyscraper tool is only for explicitly requested tiered Art Deco towers.
-For a box or cube, ALWAYS call create_box with numeric width, depth and height in meters. Default origin is 0,0,0. Do not use execute_script for boxes.
+For objects, curved shapes, furniture and a glass of water use create_object. Use apply_surface for colors, glass and water on selected or specified faces. For a box or cube, ALWAYS call create_box with numeric width, depth and height in meters. Default origin is 0,0,0. Do not use execute_script for boxes.
 Use read_state or inspect to understand existing or selected geometry. Never guess entity IDs. Ask a short question when the requested change is ambiguous. Preserve unrelated geometry.
 For complex geometry, call read_api_reference before execute_script. That tool runs JavaScript with m=model=DraftDown.activeModel, Geom and UI already available. Use m.api_ helpers. Coordinates are meters; Y is up. Do not redeclare m/model or wrap scripts in a function. Use operationName to label edits.
 After a successful tool result, briefly describe what actually changed and STOP. Do not repeat successful edits. If a result failed or created no geometry, do not claim success. Explain the problem or retry once with corrected inputs. Each modeling operation can be undone; a script may create several undo steps.`;
@@ -575,6 +580,8 @@ export async function executeTool(api: IModelAPI, name: string, input: Record<st
   let ok = true;
   try {
     switch (name) {
+      case 'create_object': resultStr = JSON.stringify(createObject(api,input)); break;
+      case 'apply_surface': resultStr = JSON.stringify(paintObject(api,input)); break;
       case 'create_building': resultStr = JSON.stringify(createBuilding(api,input)); break;
       case 'create_city': resultStr = JSON.stringify(createCity(api,input)); break;
       case 'detail_building': resultStr = JSON.stringify(detailBuilding(api)); break;
@@ -587,7 +594,13 @@ export async function executeTool(api: IModelAPI, name: string, input: Record<st
             ![x, y, z].every(v => typeof v === 'number' && Number.isFinite(v))) {
           throw new Error('Box dimensions must be positive finite numbers in meters; origin coordinates must be finite numbers.');
         }
-        const shape = api.createBox({ x: x as number, y: y as number, z: z as number }, width as number, depth as number, height as number);
+        const surface = input.material !== undefined || input.color !== undefined ? surfaceOptions(input) : null;
+        let shape!: ReturnType<IModelAPI['createBox']>;
+        const build = () => {
+          shape = api.createBox({ x: x as number, y: y as number, z: z as number }, width as number, depth as number, height as number);
+          if (surface) api.setFaceMaterial(shape.faceIds, api.createMaterial(surface.name, surface.color, surface));
+        };
+        if (surface) api.batch('Create colored box', build); else build();
         resultStr = JSON.stringify({ ok: true, operationName: 'Create Box', created: { faces: shape.faceIds, edges: shape.edgeIds, vertices: shape.vertexIds } });
         break;
       }

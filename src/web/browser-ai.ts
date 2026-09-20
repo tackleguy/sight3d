@@ -4,7 +4,7 @@ import type { AIResponse } from '../../implementations/ai.chat/chat-runner';
 import { createAIWorker } from './browser-ai-worker-factory';
 import { completedBrowserOperations, generateBrowserResponse } from './browser-ai-protocol';
 
-export const BROWSER_MODEL = 'Qwen2.5-0.5B-Instruct-q4f32_1-MLC';
+export const BROWSER_MODEL = 'Qwen2.5-1.5B-Instruct-q4f32_1-MLC';
 type State = { phase:'idle'|'loading'|'ready'|'error'; progress:number; message:string };
 let state: State = { phase:'idle', progress:0, message:'Download the model once, then chat on this device.' };
 const listeners = new Set<() => void>();

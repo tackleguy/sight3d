@@ -7,6 +7,9 @@ import { BrowserAISetup } from './BrowserAISetup';
 import { stopBrowserAI } from '../../src/web/browser-ai';
 
 const STARTERS = [
+  ['A glass of water', 'Create a glass of water, radius 0.04m, height 0.12m.'],
+  ['A colored arc', 'Create a blue arc with radius 2m and angle 180 degrees.'],
+  ['A 3D chair', 'Create a wood chair, 0.5m wide, 0.5m deep and 0.9m tall.'],
   ['A house', 'Create a two-floor house, 12m wide, 9m deep and 7m tall, with a gable roof.'],
   ['A tower', 'Create a circular glass tower, 180m tall, 30m wide and 30m deep, twisted by 60 degrees, with a flat roof.'],
   ['A neighborhood', 'Design a Paris-inspired neighborhood with 6 buildings at detail level 2.'],

@@ -284,12 +284,15 @@ export interface BuiltinMaterial {
   opacity: number;
   roughness: number;
   metalness: number;
-  albedoMap: string;
+  albedoMap?: string;
 }
 
 export function generateBuiltinMaterials(): BuiltinMaterial[] {
   const size = 64;
   return [
+    { name:'Clear glass', color:{r:.77,g:.91,b:.96}, opacity:.24, roughness:.04, metalness:0 },
+    { name:'Water', color:{r:.15,g:.56,b:.75}, opacity:.55, roughness:.08, metalness:0 },
+    ...Object.entries({Red:[.89,.29,.28],Orange:[.93,.58,.23],Yellow:[.93,.8,.29],Green:[.28,.62,.4],Blue:[.22,.48,.8],Purple:[.56,.38,.72],Pink:[.89,.51,.68],White:[.95,.95,.95],Black:[.1,.12,.15]}).map(([name,c])=>({name,color:{r:c[0],g:c[1],b:c[2]},opacity:1,roughness:.55,metalness:0})),
     {
       name: 'Brick',
       color: { r: 0.7, g: 0.35, b: 0.15 },

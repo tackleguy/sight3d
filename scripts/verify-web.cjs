@@ -60,7 +60,28 @@ let browser, server;
   assert.equal(await page.evaluate(() => window.modelAPI.getAllFaces().length), 0);
   await page.getByRole('button', { name: 'Redo', exact: true }).click();
   assert.equal(await page.evaluate(() => window.modelAPI.getAllFaces().length), 6);
-  console.log('Production modeling and undo/redo passed; checking refresh.');
+  await page.getByRole('button', { name: 'Undo', exact: true }).click();
+  // Exercise new direct tools through the real production assistant and renderer.
+  for (const input of [{type:'glass_of_water',radius:1,height:3}, {type:'arc',radius:2,angle:120,color:'blue',x:4}, {type:'chair',width:2,depth:2,height:3,x:-4,material:'wood'}]) {
+    const before=await page.evaluate(()=>window.modelAPI.getAllFaces().length);
+    await page.evaluate(input=>{
+      const invoke=window.api.invoke.bind(window.api);let calls=0;
+      window.api.invoke=async(channel,args)=>channel!=='ai:chat'?invoke(channel,args):++calls===1
+        ? {content:[{type:'tool_use',id:'object',name:'create_object',input}],stop_reason:'tool_use'}
+        : {content:[{type:'text',text:`Verified ${input.type}`}],stop_reason:'end_turn'};
+    },input);
+    await page.locator('#ai-prompt-input').fill(`Create ${input.type}`);
+    await page.getByRole('button',{name:'Send',exact:true}).click();
+    await page.getByText(`Verified ${input.type}`,{exact:true}).waitFor();
+    assert.ok(await page.evaluate(()=>window.modelAPI.getAllFaces().length)>before);
+  }
+  await page.evaluate(()=>{window.modelAPI.setView('iso');window.modelAPI.zoomExtents();});
+  await page.setViewportSize({width:1440,height:1000});
+  await page.screenshot({path:'/tmp/sight3d-objects-desktop.png'});
+  await page.setViewportSize({width:390,height:844});
+  await page.screenshot({path:'/tmp/sight3d-objects-mobile.png'});
+  assert.deepEqual(await page.locator('.ai-chat-error').allTextContents(),[]);
+  console.log('Production modeling, objects and undo/redo passed; checking refresh.');
   await page.reload();
   await page.getByText('Start modeling', { exact: true }).waitFor();
   assert.deepEqual(errors, [], 'Production site must not emit browser or HTTP errors');

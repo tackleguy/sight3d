@@ -117,3 +117,11 @@ test('architecture grammar reserves output for a single plan rather than long ex
  expect(schema.properties.calls.minItems).toBe(1);
  expect(request.max_tokens).toBe(2048);
 });
+
+
+test('object prompts use direct tools and receipts prevent duplicate objects',()=>{
+ const tools=[{name:'create_object'},{name:'create_building'},{name:'execute_script'}];
+ expect(browserTools({system:'',tools,messages:[{role:'user',content:'Create a glass of water'}]}).map(t=>t.name)).toEqual(['create_object']);
+ const messages=[{role:'assistant',content:[{type:'tool_use',id:'glass',name:'create_object',input:{type:'glass_of_water'}}]}, {role:'user',content:[{type:'tool_result',tool_use_id:'glass',content:JSON.stringify({ok:true,created:{faces:['a']},summary:'Created glass of water.'})}]}];
+ expect(completedBrowserOperations({system:'',tools,messages})?.content?.[0].text).toBe('Created glass of water.');
+});

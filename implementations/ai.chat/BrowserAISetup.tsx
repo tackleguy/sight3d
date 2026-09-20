@@ -15,11 +15,11 @@ export function BrowserAISetup({ busy = false, force = false }: { busy?: boolean
   const ready = state.phase === 'ready';
   return <div className="browser-ai-setup">
     <p role="status">{ready ? 'Ready · Runs privately on this device' : state.phase === 'loading' ? `Getting AI ready… ${Math.round(state.progress * 100)}%` : state.phase === 'error' ? state.message : 'Free AI · Runs on your device'}</p>
-    {!ready && state.phase !== 'loading' && <p className="ai-download-note">Download about 300 MB once to get started. No account needed.</p>}
+    {!ready && state.phase !== 'loading' && <p className="ai-download-note">Download about 1 GB once to get started. 1.5B model. No account needed.</p>}
     {state.phase === 'loading' && <progress aria-label="AI model download" value={state.progress} max={1} />}
     {state.phase === 'loading' ? <button onClick={releaseBrowserAI}>Cancel download</button> : !ready ? <button className="ai-chat-send" onClick={() => void enableBrowserAI()}>{state.phase === 'error' ? 'Retry loading AI' : 'Enable browser AI'}</button> : null}
     <details className="ai-device-details"><summary>{ready ? 'Device options' : 'Download details'}</summary>
-      <p>Prompts stay on this device. Model files download from Hugging Face and MLC and are cached when storage allows. AI needs a compatible browser and roughly 1–2 GB of graphics memory.</p>
+      <p>Prompts stay on this device. Model files download from Hugging Face and MLC and are cached when storage allows. AI needs a compatible browser and roughly 2–3 GB of graphics memory.</p>
       {state.phase === 'loading' && <p>{state.message}</p>}
       {ready && <button disabled={busy} onClick={releaseBrowserAI}>Turn off AI</button>}
     </details>

@@ -9,13 +9,14 @@ export function browserTools(args: ChatArgs) {
   const previousReply = typeof assistant?.content === 'string' ? assistant.content : '';
   const request = prompt.split('\n\n').pop()!.trim();
   const tower = /\b(skyscraper|skysraper|high[- ]?rise|tower|building|house|home|cottage|villa|apartment|office|warehouse|pavilion|museum|library|school|civic)\b/i;
-  // A tiny model reliably fills parameters when it isn't distracted by a general
+  // A browser model reliably fills parameters when it isn't distracted by a general
   // JavaScript tool. Learn mode still has no tools, and other edits keep theirs.
   const detail = (tower.test(prompt) || (/^(?:please )?add (?:more |extra )?detail[.!]?$/i.test(request) && tower.test(previousReply))) && /\b(add|more|increase|extra|next)\b[^.!?]*\bdetail\b/i.test(prompt);
   const create = tower.test(prompt) && /\b(create|build|make|design|generate)\b/i.test(prompt);
   const city = (/\b(neighborhood|neighbourhood|skyline|city block|district)\b/i.test(request) || /\bbuildings\b/i.test(request) || (/\bcity\b/i.test(request) && !tower.test(request))) && /\b(create|build|make|design|generate)\b/i.test(request);
   const available = (preferred:string, fallback:string) => tools.some(tool=>tool.name===preferred)?preferred:fallback;
-  const name = detail ? available('detail_building','detail_skyscraper') : city ? 'create_city' : create ? available('create_building','create_skyscraper') : null;
+  const object = /\b(sphere|ball|cylinder|cone|torus|donut|arc|table|chair|glass of water|water volume)\b/i.test(request) && /\b(create|build|make|draw|add|generate)\b/i.test(request);
+  const name = object ? 'create_object' : detail ? available('detail_building','detail_skyscraper') : city ? 'create_city' : create ? available('create_building','create_skyscraper') : null;
   return name && tools.some(tool => tool.name === name) ? tools.filter(tool => tool.name === name) : tools;
 }
 export function browserRequest(args: ChatArgs, retry = false) {
@@ -43,7 +44,7 @@ export function browserRequest(args: ChatArgs, retry = false) {
     calls: { type: 'array', minItems: architecture ? 1 : 0, maxItems: architecture ? 1 : 6, items: { anyOf: tools.map(tool => ({ type: 'object', properties: { name: { const: tool.name }, arguments: inputSchema(tool) }, required: ['name', 'arguments'], additionalProperties: false })) } },
   }, required: ['reply', 'calls'], additionalProperties: false };
   return {
-    messages: [{ role: 'system' as const, content: base + '\nReturn concise JSON with reply and calls. Omit optional arguments unless needed by the request. Do not write an explanation before a tool call; successful tools provide the final confirmation. Each call has name and arguments (a JSON object matching the tool schema). For architecture use create_building with varied shapes, types, dimensions and roofs. For city-inspired blocks use create_city. For more detail use detail_building. Only simple boxes use create_box. After success, return a brief reply and calls:[]; never repeat a completed action.  Available tools:\n' + JSON.stringify(tools) }, ...messages],
+    messages: [{ role: 'system' as const, content: base + '\nReturn concise JSON with reply and calls. Omit optional arguments unless needed by the request. Do not write an explanation before a tool call; successful tools provide the final confirmation. Each call has name and arguments (a JSON object matching the tool schema). For objects and arcs use create_object, and for painting existing faces use apply_surface. For architecture use create_building with varied shapes, types, dimensions and roofs. For city-inspired blocks use create_city. For more detail use detail_building. Only simple boxes use create_box. After success, return a brief reply and calls:[]; never repeat a completed action.  Available tools:\n' + JSON.stringify(tools) }, ...messages],
     temperature: 0, max_tokens: retry ? 3072 : 2048, stream: false as const,
     response_format: { type: 'json_object' as const, schema: JSON.stringify(schema) },
   };
@@ -72,7 +73,7 @@ export function completedBrowserOperations(args: ChatArgs): AIResponse | null {
   const previous = args.messages[args.messages.length - 2], last = args.messages[args.messages.length - 1];
   if (previous?.role !== 'assistant' || last?.role !== 'user' || !Array.isArray(previous.content) || !Array.isArray(last.content)) return null;
   const calls = previous.content.filter((block: any) => block.type === 'tool_use');
-  if (!calls.length || calls.some((call: any) => !['create_box','create_skyscraper','detail_skyscraper','create_building','create_city','detail_building'].includes(call.name))) return null;
+  if (!calls.length || calls.some((call: any) => !['create_object','create_box','create_skyscraper','detail_skyscraper','create_building','create_city','detail_building'].includes(call.name))) return null;
   const receipts = last.content;
   const descriptions: string[] = [];
   for (const call of calls) {

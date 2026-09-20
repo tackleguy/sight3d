@@ -357,6 +357,7 @@ export class SceneBridge {
     }
     mat.opacity = matDef.opacity ?? 1;
     mat.transparent = mat.opacity < 1;
+    mat.depthWrite = !mat.transparent;
     mat.roughness = matDef.roughness ?? 0.7;
     mat.metalness = matDef.metalness ?? 0;
     if (matDef.albedoMap) {
