@@ -2,9 +2,9 @@ import type { WebWorkerMLCEngine } from '@mlc-ai/web-llm';
 import type { ChatArgs } from '../core/local-ai';
 import type { AIResponse } from '../../implementations/ai.chat/chat-runner';
 import { createAIWorker } from './browser-ai-worker-factory';
-import { browserRequest, parseBrowserReply } from './browser-ai-protocol';
+import { browserRequest, parseBrowserReply, completedBrowserBoxes } from './browser-ai-protocol';
 
-export const BROWSER_MODEL = 'Qwen2.5-1.5B-Instruct-q4f32_1-MLC';
+export const BROWSER_MODEL = 'Qwen2.5-0.5B-Instruct-q4f32_1-MLC';
 type State = { phase:'idle'|'loading'|'ready'|'error'; progress:number; message:string };
 let state: State = { phase:'idle', progress:0, message:'Download the model once, then chat on this device.' };
 const listeners = new Set<() => void>();
@@ -67,6 +67,8 @@ export async function enableBrowserAI(): Promise<void> {
 export function stopBrowserAI() { engine?.interruptGenerate(); }
 export async function chatBrowser(args: ChatArgs): Promise<AIResponse> {
   if (!engine || state.phase !== 'ready') return { error:'Enable browser AI above the conversation first. No app installation or API key is needed.' };
+  const completed = completedBrowserBoxes(args);
+  if (completed) return completed;
   if (busy) return { error:'Browser AI is still finishing a request. Wait a moment and retry.' };
   busy = true;
   let timer: ReturnType<typeof setTimeout> | undefined;

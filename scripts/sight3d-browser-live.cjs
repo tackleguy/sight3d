@@ -1,4 +1,4 @@
-// Optional integration check: downloads/caches the real browser model (about 1 GB).
+// Optional integration check: downloads/caches the real browser model (about 300 MB).
 const { chromium } = require('@playwright/test');
 const assert = require('node:assert/strict');
 let context;
@@ -25,6 +25,7 @@ let context;
  const thinking=setInterval(async()=>{try{console.log('INFERENCE:',await page.locator('.ai-progress').textContent(), 'faces:', await page.evaluate(()=>window.modelAPI.getAllFaces().length));}catch{}},15000);
  try { await page.waitForFunction(()=>!document.querySelector('.ai-progress'),{},{timeout:400000}); } finally { clearInterval(thinking); }
  console.log('ANSWER:',await page.locator('.ai-chat-msg-assistant').allTextContents());console.log('ERRORS:',await page.locator('.ai-chat-error').allTextContents());
+ assert.deepEqual(await page.locator('.ai-chat-error').allTextContents(), [], 'AI turn should finish without errors');
  const faces=await page.evaluate(()=>window.modelAPI.getAllFaces().length);console.log('FACES:',faces);assert.equal(faces,6);
  assert.deepEqual(posts,[],'Inference must not make HTTP POST requests');
  await page.getByRole('button',{name:'Extents',exact:true}).click();

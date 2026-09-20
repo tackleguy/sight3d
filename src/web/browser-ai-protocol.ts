@@ -34,3 +34,26 @@ export function parseBrowserReply(text: string, tools: unknown[], finishReason: 
   if (!content.length) throw new Error('The browser model returned no answer. Please try again.');
   return { content, stop_reason:result.calls.length ? 'tool_use' : 'end_turn' };
 }
+
+/** Finish direct box plans from actual tool receipts, without another generation. */
+export function completedBrowserBoxes(args: ChatArgs): AIResponse | null {
+  const previous = args.messages[args.messages.length - 2], last = args.messages[args.messages.length - 1];
+  if (previous?.role !== 'assistant' || last?.role !== 'user' || !Array.isArray(previous.content) || !Array.isArray(last.content)) return null;
+  const calls = previous.content.filter((block: any) => block.type === 'tool_use');
+  if (!calls.length || calls.some((call: any) => call.name !== 'create_box')) return null;
+  const receipts = last.content;
+  const descriptions: string[] = [];
+  for (const call of calls) {
+    const receipt = receipts.find((block: any) => block.type === 'tool_result' && block.tool_use_id === call.id);
+    if (!receipt) return null;
+    let result;
+    try { result = JSON.parse(receipt.content); } catch { return null; }
+    if (!result || typeof result !== 'object') return null;
+    if (result.ok !== true || !Array.isArray(result.created?.faces) || result.created.faces.length !== 6) {
+      return { error: `The box plan did not finish successfully. ${result.error || 'No complete box was reported.'} Review any completed operations before retrying.` };
+    }
+    const input = call.input;
+    descriptions.push(`${input.width} × ${input.depth} × ${input.height} m box at (${input.x ?? 0}, ${input.y ?? 0}, ${input.z ?? 0})`);
+  }
+  return { content: [{ type: 'text', text: `Created ${descriptions.join('; ')}. You can undo each box.` }], stop_reason: 'end_turn' };
+}
