@@ -5,7 +5,8 @@
 
 set -euo pipefail
 
-BUCKET="draftdown-web-prod"
+: "${SIGHT3D_S3_BUCKET:?Set SIGHT3D_S3_BUCKET to your own AWS bucket. For Vercel use the repository integration and vercel.json.}"
+BUCKET="$SIGHT3D_S3_BUCKET"
 REGION="us-east-1"
 PROJECT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 DIST_DIR="$PROJECT_DIR/dist/web"
@@ -127,7 +128,7 @@ CF_DOMAIN=$(aws cloudfront get-distribution \
 
 echo ""
 echo "==> Deploy complete!"
-echo "    https://draftdownapp.com"
+echo "    Sight3D website"
 echo ""
 echo "    CloudFront: https://${CF_DOMAIN}"
 echo "    S3:         s3://${BUCKET}"

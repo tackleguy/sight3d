@@ -28,4 +28,13 @@ jobs:
         run: npx tsc --noEmit
 
       - name: Tests (jest)
-        run: npx jest --ci
+        run: npx jest --ci --runInBand
+
+      - name: Build production website
+        run: npm run build:web
+
+      - name: Install browser for production smoke test
+        run: npx playwright install chromium
+
+      - name: Verify production website
+        run: npm run test:web

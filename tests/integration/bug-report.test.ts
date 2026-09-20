@@ -5,6 +5,11 @@
   __PLATFORM__: 'web',
 };
 
+Object.defineProperty(globalThis, 'navigator', {
+  configurable: true,
+  value: { userAgent: 'Sight3D test browser', platform: 'test' },
+});
+
 import { installConsoleBuffer, getConsoleEntries } from '../../src/core/console-buffer';
 import { collectBugReport } from '../../src/core/bug-report';
 
@@ -63,6 +68,7 @@ describe('collectBugReport', () => {
     expect(payload.description).toBe('it broke');
     expect(payload.reporterEmail).toBe('a@b.c');
     expect(payload.appVersion).toBe('9.9.9');
+    expect(payload.userAgent).toBe('Sight3D test browser');
     expect(payload.screenshot).toBe('data:image/jpeg;base64,QUJD');
     expect(payload.model).toBe(btoa(String.fromCharCode(...new Uint8Array(100))));
     expect(payload.modelSkipped).toBeUndefined();

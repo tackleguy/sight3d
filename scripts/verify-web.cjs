@@ -1,0 +1,71 @@
+// Run after build:web. Exercises the actual static output, including subdirectory hosting.
+const { chromium } = require('@playwright/test');
+const assert = require('node:assert/strict');
+const http = require('node:http');
+const fs = require('node:fs');
+const path = require('node:path');
+const root = path.resolve(__dirname, '../dist/web');
+let browser, server;
+(async () => {
+  let url = process.env.SIGHT3D_URL;
+  if (!url) {
+    assert.ok(fs.existsSync(path.join(root, 'index.html')), 'Run npm run build:web first');
+    server = http.createServer((req, res) => {
+      const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
+      const relative = pathname.startsWith('/sight3d/') ? pathname.slice('/sight3d/'.length) : pathname.slice(1);
+      const file = path.resolve(root, relative || 'index.html');
+      if (!file.startsWith(root + path.sep) || !fs.existsSync(file) || !fs.statSync(file).isFile()) {
+        res.writeHead(404); res.end(); return;
+      }
+      res.setHeader('Content-Type', file.endsWith('.html') ? 'text/html' : file.endsWith('.js') ? 'application/javascript' : 'application/octet-stream');
+      fs.createReadStream(file).pipe(res);
+    });
+    await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+    url = `http://127.0.0.1:${server.address().port}/sight3d/`;
+  }
+  browser = await chromium.launch({ headless: true, args: ['--enable-unsafe-swiftshader'] });
+  const page = await browser.newPage();
+  page.setDefaultTimeout(20000);
+  page.on('dialog', dialog => dialog.accept());
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
+  page.on('response', response => { if (response.status() >= 400) errors.push(`${response.status()} ${response.url()}`); });
+  page.on('requestfailed', request => errors.push(`${request.failure()?.errorText} ${request.url()}`));
+  // Unsupported hardware must remain usable without downloading an AI model.
+  await page.addInitScript(() => Object.defineProperty(navigator, 'gpu', { value: { requestAdapter: async () => null }, configurable: true }));
+  const response = await page.goto(url);
+  assert.equal(response.status(), 200);
+  await page.getByText('Start modeling', { exact: true }).click();
+  await page.waitForFunction(() => !!window.modelAPI);
+  await page.getByRole('button', { name: 'Close quick start', exact: true }).click();
+  await page.getByRole('button', { name: 'Enable browser AI', exact: true }).click();
+  await page.getByText(/No compatible GPU is available/).waitFor();
+  // Stub inference only; the production UI executes the real modeling operation.
+  await page.evaluate(() => {
+    const invoke = window.api.invoke.bind(window.api);
+    let calls = 0;
+    window.api.invoke = async (channel, args) => {
+      if (channel !== 'ai:chat') return invoke(channel, args);
+      return ++calls === 1
+        ? { content: [{ type: 'tool_use', id: 'production-box', name: 'create_box', input: { width: 2, depth: 3, height: 4 } }], stop_reason: 'tool_use' }
+        : { content: [{ type: 'text', text: 'Production test box created.' }], stop_reason: 'end_turn' };
+    };
+  });
+  await page.locator('#ai-prompt-input').fill('Create a 2 by 3 by 4 meter box');
+  await page.getByRole('button', { name: 'Send', exact: true }).click();
+  await page.getByText('Production test box created.', { exact: true }).waitFor();
+  assert.equal(await page.evaluate(() => window.modelAPI.getAllFaces().length), 6);
+  await page.getByRole('button', { name: 'Undo', exact: true }).click();
+  assert.equal(await page.evaluate(() => window.modelAPI.getAllFaces().length), 0);
+  await page.getByRole('button', { name: 'Redo', exact: true }).click();
+  assert.equal(await page.evaluate(() => window.modelAPI.getAllFaces().length), 6);
+  console.log('Production modeling and undo/redo passed; checking refresh.');
+  await page.reload();
+  await page.getByText('Start modeling', { exact: true }).waitFor();
+  assert.deepEqual(errors, [], 'Production site must not emit browser or HTTP errors');
+  console.log(`PASS: ${url} loads, models, undo/redo, refresh and unsupported-GPU recovery without browser errors.`);
+})().catch(error => { console.error(error); process.exitCode = 1; }).finally(async () => {
+  await browser?.close();
+  if (server) await new Promise(resolve => server.close(resolve));
+});

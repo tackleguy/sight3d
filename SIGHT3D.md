@@ -37,3 +37,5 @@ Protocol references: [LM Studio tool calling](https://lmstudio.ai/docs/developer
 ## Static website hosting
 
 Run `npm run build:web` and serve **dist/web** over HTTPS on a static host. No inference backend or secret environment variables are required. Worker and model-library chunks resolve relative to the site, including a hosted subdirectory. The host must allow worker scripts, WebAssembly compilation, and connections to Hugging Face and MLC model assets if it supplies a restrictive Content Security Policy. Model downloads are made directly by each visitor’s browser.
+
+Vercel uses the committed `vercel.json`: install with `npm ci`, build with `npm run build:web`, and publish `dist/web` using the Other framework preset. The default `npm run build` is for Electron and must not be used as the website build. GitHub CI builds and smoke-tests the static website on each push. Locally, run `npm run build:web && npm run test:web`; set `SIGHT3D_URL` to test a deployed URL instead. The legacy AWS script requires an explicit `SIGHT3D_S3_BUCKET` and is not used by Vercel.

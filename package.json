@@ -17,7 +17,8 @@
     "build:web": "webpack --config webpack.web.config.js --mode production",
     "dev:web": "webpack serve --config webpack.web.config.js --mode development",
     "test": "jest",
-    "test:e2e": "jest --config jest.e2e.config.js"
+    "test:e2e": "jest --config jest.e2e.config.js",
+    "test:web": "node scripts/verify-web.cjs"
   },
   "build": {
     "appId": "com.cachefactory.draftdown",
