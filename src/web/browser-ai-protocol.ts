@@ -18,11 +18,18 @@ export function browserTools(args: ChatArgs) {
   const name = detail ? available('detail_building','detail_skyscraper') : city ? 'create_city' : create ? available('create_building','create_skyscraper') : null;
   return name && tools.some(tool => tool.name === name) ? tools.filter(tool => tool.name === name) : tools;
 }
-export function browserRequest(args: ChatArgs) {
+export function browserRequest(args: ChatArgs, retry = false) {
   const tools = browserTools(args);
-  const base = args.system + '\nYou run inside the visitor’s browser. Keep answers short. Only tools can edit geometry. Never claim a change without a successful tool result.';
-  const messages = args.messages.slice(-4).map(m => ({ role: m.role as 'user' | 'assistant', content: (typeof m.content === 'string' ? m.content : JSON.stringify(m.content)).slice(-5000) }));
-  if (!tools.length) return { messages: [{ role: 'system' as const, content: base }, ...messages], temperature: 0.2, max_tokens: 512, stream: false as const };
+  const base = args.system + (retry ? '\nYour previous response was cut short and was NOT executed. Produce a shorter complete answer or plan. Use concise arguments; do not repeat explanations.' : '') + '\nYou run inside the visitor’s browser. Keep answers short. Only tools can edit geometry. Never claim a change without a successful tool result.';
+  // Reserve context space for the output rather than sending four full scene dumps.
+  let remaining = 6000;
+  const messages = args.messages.slice(-4).reverse().map(m => {
+    const text = typeof m.content === 'string' ? m.content : JSON.stringify(m.content);
+    const content = remaining > 0 ? text.slice(-Math.min(remaining, 4000)) : '';
+    remaining -= content.length;
+    return { role: m.role as 'user' | 'assistant', content };
+  }).filter(m => m.content).reverse();
+  if (!tools.length) return { messages: [{ role: 'system' as const, content: base }, ...messages], temperature: 0.2, max_tokens: retry ? 2048 : 1024, stream: false as const };
   // An explicit UI/prompt detail level is a constraint, not a model suggestion.
   const lastUser = [...args.messages].reverse().find(m => m.role === 'user' && typeof m.content === 'string');
   const detail = typeof lastUser?.content === 'string' ? lastUser.content.match(/\bdetail(?:\s+level)?\s*[:=]?\s*([123])\b/i)?.[1] : undefined;
@@ -30,13 +37,14 @@ export function browserRequest(args: ChatArgs) {
     const schema = tool.input_schema as { properties?: Record<string,unknown>; required?: string[] };
     return ['create_skyscraper','create_building','create_city'].includes(tool.name) && detail ? { ...schema, properties: { ...schema.properties, detail: { const: Number(detail) } }, required: [...new Set([...(schema.required || []), 'detail'])] } : schema;
   };
+  const architecture = tools.length === 1 && ['create_building','create_city','detail_building'].includes(tools[0].name);
   const schema = { type: 'object', properties: {
-    reply: { type: 'string' },
-    calls: { type: 'array', maxItems: tools.length===1 && ['create_building','create_city','detail_building'].includes(tools[0].name) ? 1 : 6, items: { anyOf: tools.map(tool => ({ type: 'object', properties: { name: { const: tool.name }, arguments: inputSchema(tool) }, required: ['name', 'arguments'], additionalProperties: false })) } },
+    reply: architecture ? { const: '' } : { type: 'string' },
+    calls: { type: 'array', minItems: architecture ? 1 : 0, maxItems: architecture ? 1 : 6, items: { anyOf: tools.map(tool => ({ type: 'object', properties: { name: { const: tool.name }, arguments: inputSchema(tool) }, required: ['name', 'arguments'], additionalProperties: false })) } },
   }, required: ['reply', 'calls'], additionalProperties: false };
   return {
-    messages: [{ role: 'system' as const, content: base + '\nReturn JSON with reply and calls. Each call has name and arguments (a JSON object matching the tool schema). For architecture use create_building with varied shapes, types, dimensions and roofs. For city-inspired blocks use create_city. For more detail use detail_building. Only simple boxes use create_box. After success, return a brief reply and calls:[]; never repeat a completed action.  Available tools:\n' + JSON.stringify(tools) }, ...messages],
-    temperature: 0, max_tokens: 1024, stream: false as const,
+    messages: [{ role: 'system' as const, content: base + '\nReturn concise JSON with reply and calls. Omit optional arguments unless needed by the request. Do not write an explanation before a tool call; successful tools provide the final confirmation. Each call has name and arguments (a JSON object matching the tool schema). For architecture use create_building with varied shapes, types, dimensions and roofs. For city-inspired blocks use create_city. For more detail use detail_building. Only simple boxes use create_box. After success, return a brief reply and calls:[]; never repeat a completed action.  Available tools:\n' + JSON.stringify(tools) }, ...messages],
+    temperature: 0, max_tokens: retry ? 3072 : 2048, stream: false as const,
     response_format: { type: 'json_object' as const, schema: JSON.stringify(schema) },
   };
 }
@@ -81,4 +89,21 @@ export function completedBrowserOperations(args: ChatArgs): AIResponse | null {
     descriptions.push(`${input.width} × ${input.depth} × ${input.height} m box at (${input.x ?? 0}, ${input.y ?? 0}, ${input.z ?? 0})`);
   }
   return { content: [{ type: 'text', text: calls.every((call: any) => call.name === 'create_box') ? `Created ${descriptions.join('; ')}. You can undo each box.` : descriptions.join('\n') }], stop_reason: 'end_turn' };
+}
+
+/** Retry an unfinished plan before exposing any executable tool calls. */
+export async function generateBrowserResponse(
+  args: ChatArgs,
+  generate: (request: ReturnType<typeof browserRequest>) => Promise<{choices: Array<{message:{content?:string|null};finish_reason?:string|null}>}>,
+  stopped: () => boolean = () => false,
+): Promise<AIResponse> {
+  for(let attempt=0;attempt<2;attempt++) {
+    if(stopped())throw new Error('Generation stopped.');
+    const reply=await generate(browserRequest(args,attempt===1));
+    if(stopped())throw new Error('Generation stopped.');
+    const choice=reply.choices[0];
+    if(choice?.finish_reason==='length' && attempt===0)continue;
+    return parseBrowserReply(choice?.message.content||'',browserTools(args),choice?.finish_reason??null);
+  }
+  throw new Error('No complete response was generated.');
 }

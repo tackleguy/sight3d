@@ -2,7 +2,7 @@ import type { WebWorkerMLCEngine } from '@mlc-ai/web-llm';
 import type { ChatArgs } from '../core/local-ai';
 import type { AIResponse } from '../../implementations/ai.chat/chat-runner';
 import { createAIWorker } from './browser-ai-worker-factory';
-import { browserRequest, parseBrowserReply, completedBrowserOperations, browserTools } from './browser-ai-protocol';
+import { completedBrowserOperations, generateBrowserResponse } from './browser-ai-protocol';
 
 export const BROWSER_MODEL = 'Qwen2.5-0.5B-Instruct-q4f32_1-MLC';
 type State = { phase:'idle'|'loading'|'ready'|'error'; progress:number; message:string };
@@ -17,6 +17,7 @@ let loading: Promise<void> | null = null;
 let cancelLoad: (() => void) | null = null;
 let generation = 0;
 let busy = false;
+let chatStopped = false;
 let cancelChat: (() => void) | null = null;
 
 export function releaseBrowserAI() {
@@ -64,22 +65,22 @@ export async function enableBrowserAI(): Promise<void> {
   })();
   return loading;
 }
-export function stopBrowserAI() { engine?.interruptGenerate(); }
+export function stopBrowserAI() { chatStopped = true; engine?.interruptGenerate(); }
 export async function chatBrowser(args: ChatArgs): Promise<AIResponse> {
   if (!engine || state.phase !== 'ready') return { error:'Enable browser AI above the conversation first. No app installation or API key is needed.' };
   const completed = completedBrowserOperations(args);
   if (completed) return completed;
   if (busy) return { error:'Browser AI is still finishing a request. Wait a moment and retry.' };
-  busy = true;
+  busy = true; chatStopped = false;
   let timer: ReturnType<typeof setTimeout> | undefined;
   try {
     const active = engine;
-    const reply = await Promise.race([
-      active.chat.completions.create(browserRequest(args)),
+    const run = generation;
+    return await Promise.race([
+      generateBrowserResponse(args, request => active.chat.completions.create(request), () => chatStopped || generation !== run),
       new Promise<never>((_, reject) => { cancelChat = () => reject(new Error('Browser AI was unloaded. Enable it again to continue.')); }),
-      new Promise<never>((_, reject) => { timer = setTimeout(() => { active.interruptGenerate(); reject(new Error('Browser AI timed out. Try a shorter request.')); }, 180000); }),
+      new Promise<never>((_, reject) => { timer = setTimeout(() => { chatStopped = true; active.interruptGenerate(); reject(new Error('Browser AI timed out. Try a shorter request.')); }, 300000); }),
     ]);
-    return parseBrowserReply(reply.choices[0]?.message.content || '', browserTools(args), reply.choices[0]?.finish_reason ?? null);
   } catch (e) { return { error:e instanceof Error ? e.message : 'Browser AI failed. Reload the model or try a smaller request.' }; }
   finally { if (timer) clearTimeout(timer); cancelChat = null; busy = false; }
 }

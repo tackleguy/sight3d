@@ -1,4 +1,4 @@
-import { browserRequest, parseBrowserReply, completedBrowserOperations, browserTools } from '../../../src/web/browser-ai-protocol';
+import { browserRequest, parseBrowserReply, completedBrowserOperations, browserTools, generateBrowserResponse } from '../../../src/web/browser-ai-protocol';
 const tools=[{name:'create_box',description:'Create a box',input_schema:{type:'object'}}];
 test('browser Build plans adapt to the existing tool loop',()=>{
  const result=parseBrowserReply(JSON.stringify({reply:'',calls:[{name:'create_box',arguments:JSON.stringify({width:1,depth:2,height:3})}]}),tools,'stop');
@@ -79,4 +79,41 @@ test('architecture routing distinguishes individual buildings, blocks and detail
   expect(schema.properties.calls.items.anyOf[0].properties.name.const).toBe(name);
  }
  expect(browserTools({system:'',tools,messages:[{role:'assistant',content:'Created a house.'},{role:'user',content:'Add more detail.'}]}).map(t=>t.name)).toEqual(['detail_building']);
+});
+
+test('truncated plans retry before any executable calls are returned',async()=>{
+ const generate=jest.fn().mockResolvedValueOnce({choices:[{message:{content:'{"reply":"","calls":['},finish_reason:'length'}]})
+  .mockResolvedValueOnce({choices:[{message:{content:JSON.stringify({reply:'',calls:[{name:'create_box',arguments:{width:2,depth:3,height:4}}]})},finish_reason:'stop'}]});
+ const result=await generateBrowserResponse({system:'',tools,messages:[]},generate);
+ expect(generate).toHaveBeenCalledTimes(2);
+ expect(generate.mock.calls[1][0].max_tokens).toBeGreaterThan(generate.mock.calls[0][0].max_tokens);
+ expect(result.content).toHaveLength(1);
+ expect(result.content?.[0]).toMatchObject({name:'create_box',input:{width:2,depth:3,height:4}});
+});
+test('recovery is bounded and cancellation never starts another generation',async()=>{
+ const args={system:'',tools,messages:[]};
+ const generate=jest.fn().mockResolvedValue({choices:[{message:{content:'{'},finish_reason:'length'}]});
+ await expect(generateBrowserResponse(args,generate)).rejects.toThrow('response limit');
+ expect(generate).toHaveBeenCalledTimes(2);
+ generate.mockClear();
+ await expect(generateBrowserResponse(args,generate,()=>true)).rejects.toThrow('stopped');
+ expect(generate).not.toHaveBeenCalled();
+ let stopped=false;
+ const cancelled=jest.fn(async()=>{stopped=true;return {choices:[{message:{content:'{'},finish_reason:'length'}]};});
+ await expect(generateBrowserResponse(args,cancelled,()=>stopped)).rejects.toThrow('stopped');
+ expect(cancelled).toHaveBeenCalledTimes(1);
+});
+test('long chat history is bounded while preserving the latest request',()=>{
+ const messages=Array.from({length:10},(_,i)=>({role:i%2?'assistant':'user',content:'x'.repeat(8000)}));
+ messages.push({role:'user',content:'Create a round office 100m tall'});
+ const request=browserRequest({system:'',tools,messages});
+ expect(request.messages.slice(1).reduce((n,m)=>n+m.content.length,0)).toBeLessThanOrEqual(6000);
+ expect(request.messages[request.messages.length-1]?.content).toBe('Create a round office 100m tall');
+});
+test('architecture grammar reserves output for a single plan rather than long explanations',()=>{
+ const request=browserRequest({system:'',messages:[{role:'user',content:'Create a house'}],tools:[{name:'create_building',input_schema:{type:'object'}}]});
+ const schema=JSON.parse(request.response_format!.schema);
+ expect(schema.properties.reply).toEqual({const:''});
+ expect(schema.properties.calls.minItems).toBe(1);
+ expect(request.max_tokens).toBe(2048);
 });
