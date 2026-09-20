@@ -40,3 +40,21 @@
 .ai-chat-send { background:var(--accent); color:white; padding:7px 16px; }
 .ai-chat-send:hover { background:var(--accent-hover); }
 .ai-chat-input-area small { color:var(--text-secondary); font-size:10px; }
+
+.browser-ai-setup { padding:12px 16px; border-bottom:1px solid var(--border-color); line-height:1.5; }
+.browser-ai-setup > p { margin:0 0 8px; }
+.browser-ai-setup progress { width:100%; accent-color:var(--accent); }
+.ai-download-note, .ai-device-details, .ai-options { color:var(--text-secondary); font-size:11px; }
+.ai-device-details { margin-top:8px; }
+.ai-device-details summary, .ai-options summary { cursor:pointer; padding:5px 0; }
+.ai-device-details p, .ai-options p { margin:8px 0; overflow-wrap:anywhere; }
+.ai-options { margin-top:8px; }
+.ai-options button, .ai-device-details button { padding:6px 0; text-decoration:underline; text-underline-offset:3px; }
+.ai-followup { padding:8px 12px; border:1px solid var(--border-color); margin-bottom:16px; }
+.ai-chat-window button:focus-visible, .ai-chat-window summary:focus-visible, .ai-chat-window textarea:focus-visible { outline:2px solid var(--accent-hover); outline-offset:2px; }
+.ai-chat-window button:disabled { opacity:.5; cursor:not-allowed; }
+.ai-starters { margin:16px 0; }
+.ai-starters button { min-height:40px; }
+.ai-mode-help { padding:8px 16px; }
+
+.ai-chat-messages > .browser-ai-setup { padding:0 0 12px; margin-bottom:20px; }

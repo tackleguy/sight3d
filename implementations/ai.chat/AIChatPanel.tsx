@@ -7,13 +7,9 @@ import { BrowserAISetup } from './BrowserAISetup';
 import { stopBrowserAI } from '../../src/web/browser-ai';
 
 const STARTERS = [
-  ['Twisted tower', 'Create a circular glass tower, 180m tall and 30m wide, twisted by 60 degrees, with a flat roof.'],
-  ['City-inspired block', 'Design a Paris-inspired neighborhood with 6 buildings at detail level 2.'],
-  ['A different shape', 'Create an L-shaped apartment building, 24m wide, 18m deep and 20m tall, with a flat roof.'],
-  ['Add more detail', 'Add more detail.'],
-  ['Create a room', 'Create an open-top room 5m wide, 4m deep and 2.8m tall with 15cm thick walls.'],
-  ['Build a table', 'Create a simple table 1.5m wide, 0.8m deep and 0.75m tall with four legs.'],
-  ['Edit my selection', 'Help me change the selected geometry. Ask what I want to change before editing.'],
+  ['A house', 'Create a two-floor house, 12m wide, 9m deep and 7m tall, with a gable roof.'],
+  ['A tower', 'Create a circular glass tower, 180m tall, 30m wide and 30m deep, twisted by 60 degrees, with a flat roof.'],
+  ['A neighborhood', 'Design a Paris-inspired neighborhood with 6 buildings at detail level 2.'],
 ];
 
 export function AIChatPanel({ visible = true }: { visible?: boolean }) {
@@ -86,34 +82,36 @@ export function AIChatPanel({ visible = true }: { visible?: boolean }) {
     <section className="ai-chat-window" aria-label="AI modeling assistant" hidden={!visible}>
       <div className="ai-chat-header"><strong>Model with AI</strong><button disabled={loading || !messages.length} onClick={() => { setMessages([]); setError(null); }} title="Start a new conversation">New chat</button></div>
       <div className="ai-mode-switch" role="group" aria-label="Assistant mode">
-        <button aria-pressed={mode === 'build'} disabled={loading} onClick={() => setMode('build')}>Build</button>
-        <button aria-pressed={mode === 'learn'} disabled={loading} onClick={() => setMode('learn')}>Learn</button>
+        <button aria-pressed={mode === 'build'} disabled={loading} onClick={() => setMode('build')}>Create</button>
+        <button aria-pressed={mode === 'learn'} disabled={loading} onClick={() => setMode('learn')}>Ask for help</button>
       </div>
-      <p className="ai-mode-help">{mode === 'build' ? 'Describe it. The assistant can create and edit your model.' : 'Step-by-step help. Your model stays unchanged.'}</p>
-      <div className="ai-context"><span>{selectedCount ? `${selectedCount} selected` : 'Whole model'}</span><span>Units: {units}</span></div>
-      <BrowserAISetup busy={loading} />
+      <p className="ai-mode-help">{mode === 'build' ? 'Describe what you want to make or change.' : 'Get instructions without changing your model.'}</p>
+      <div className="ai-context"><span>{selectedCount ? `${selectedCount} selected` : 'Nothing selected'}</span><span>Units: {units}</span></div>
       <div className="ai-chat-messages" role="log" aria-label="Conversation" aria-live="polite">
+        <BrowserAISetup busy={loading} />
         {messages.length === 0 && <div className="ai-chat-empty">
           <h2>{mode === 'build' ? 'What would you like to make?' : 'Learn by making.'}</h2>
-          <p>{mode === 'build' ? 'Start with a shape, a room, or a piece of furniture. Include dimensions for a more useful result.' : 'Ask about a tool or follow a small project, one step at a time.'}</p>
-          <div className="ai-starters">{(mode === 'build' ? STARTERS : [['Make my first model', 'Walk me through drawing a rectangle and turning it into a box with Push/Pull. Give me one step at a time.'], ['Explain this tool', `How do I use ${activeTool?.name || 'Select'}? Explain the clicks and keyboard shortcuts.`]]).map(([label, prompt]) => <button key={label} onClick={() => { setInput(prompt); inputRef.current?.focus(); }}>{label}<span aria-hidden="true">→</span></button>)}</div>
-          <div className="ai-setup"><strong>AI settings</strong><p>Use browser AI on the website, or optionally connect your own local server.</p><button onClick={() => window.dispatchEvent(new Event('show-ai-settings'))}>AI settings</button></div>
+          <p>{mode === 'build' ? 'Use your own words, or choose an example to edit. Sizes are optional.' : 'Ask about a tool or follow a small project, one step at a time.'}</p>
+          <div className="ai-starters">{(mode === 'build' ? STARTERS : [['Make my first model', 'Walk me through drawing a rectangle and turning it into a box with Push/Pull. Give me one step at a time.'], ['Explain this tool', `How do I use ${activeTool?.name || 'Select'}? Explain the clicks and keyboard shortcuts.`]]).map(([label, prompt]) => <button key={label} onClick={() => { setInput(prompt); inputRef.current?.focus(); }}>{label}</button>)}</div>
+
         </div>}
         {messages.map((msg, i) => <div key={i} className={`ai-chat-msg ai-chat-msg-${msg.role}`}>
           <div className="ai-chat-msg-role">{msg.role === 'user' ? 'You' : 'Sight3D'}</div>
           <div className="ai-chat-msg-content">{msg.content}</div>
           {!!msg.toolCalls?.length && <details className="ai-chat-tool-calls"><summary>{msg.toolCalls.length} operation{msg.toolCalls.length === 1 ? '' : 's'} · view details</summary>{msg.toolCalls.map((tc, j) => <ToolCallRow key={j} tc={tc} />)}</details>}
         </div>)}
-        {loading && <div className="ai-progress" role="status">{progress}<small>{liveTools.length} operations completed</small></div>}
-        {error && <div className="ai-chat-error" role="alert"><strong>Couldn’t finish this request</strong><p>{error}</p><button onClick={() => { setInput(lastPrompt); inputRef.current?.focus(); }}>Edit and retry</button><button onClick={() => window.dispatchEvent(new Event('show-ai-settings'))}>AI settings</button></div>}
+        {!loading && mode === 'build' && messages.some(m => m.toolCalls?.some(t => t.name === 'create_building')) && <button className="ai-followup" onClick={() => { setInput('Add more detail.'); inputRef.current?.focus(); }}>Add more detail</button>}
+        {loading && <div className="ai-progress" role="status">{progress}<small>{liveTools.length > 0 ? `${liveTools.length} changes completed` : 'You can stop at any time.'}</small></div>}
+        {error && <div className="ai-chat-error" role="alert"><strong>Couldn’t finish this request</strong><p>{error}</p><button onClick={() => { setInput(lastPrompt); inputRef.current?.focus(); }}>Edit and retry</button><details><summary>Connection settings</summary><button onClick={() => window.dispatchEvent(new Event('show-ai-settings'))}>Open AI settings</button></details></div>}
         <div ref={endRef} />
       </div>
       <div className="ai-chat-input-area">
         <label htmlFor="ai-prompt-input">{mode === 'build' ? 'Describe your model or change' : 'Ask a modeling question'}</label>
-        <textarea id="ai-prompt-input" ref={inputRef} value={input} onChange={e => setInput(e.target.value)} placeholder={mode === 'build' ? 'A bookshelf, 1m wide and 2m tall…' : 'How do I turn a flat shape into 3D?'} rows={3} disabled={loading}
+        <textarea id="ai-prompt-input" ref={inputRef} value={input} onChange={e => setInput(e.target.value)} placeholder={mode === 'build' ? 'A small house with a gable roof…' : 'How do I turn a flat shape into 3D?'} rows={3} disabled={loading}
           onKeyDown={e => { e.stopPropagation(); if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) { e.preventDefault(); void sendMessage(); } }} />
-        <div className="ai-compose-actions"><button disabled={!canUndo || loading} onClick={undo}>Undo last operation</button>{loading ? <button className="ai-chat-send" onClick={() => { stopRef.current = true; stopBrowserAI(); setProgress('Stopping after the current request or operation…'); }}>Stop</button> : <button className="ai-chat-send" onClick={() => void sendMessage()} disabled={!input.trim() || !app}>Send</button>}</div>
-        <small>Enter to send · Edits may create several undo steps</small>
+        <div className="ai-compose-actions"><button disabled={!canUndo || loading} onClick={undo}>Undo change</button>{loading ? <button className="ai-chat-send" onClick={() => { stopRef.current = true; stopBrowserAI(); setProgress('Stopping after the current request or operation…'); }}>Stop</button> : <button className="ai-chat-send" onClick={() => void sendMessage()} disabled={!input.trim() || !app}>Send</button>}</div>
+        <small>Enter to send · Shift + Enter for a new line</small>
+        <details className="ai-options"><summary>More options</summary><p>Undo reverses one change at a time.</p><button onClick={() => window.dispatchEvent(new Event('show-ai-settings'))}>AI settings</button></details>
       </div>
     </section>
   );
