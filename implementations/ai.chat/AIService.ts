@@ -3,7 +3,7 @@
 //
 // Design notes
 // ────────────
-//  • Four tools: `execute_script`, `inspect`, `read_state`, `read_api_reference`.
+//  • Direct create_box plus execute_script, inspect, read_state and read_api_reference.
 //  • `execute_script` auto-wraps in startOperation/commitOperation, captures console.log,
 //    diffs the entity set before/after to return concrete `created` / `removed` IDs so
 //    Claude can chain operations without hunting for handles.
@@ -30,6 +30,22 @@ export interface ChatMessage {
 
 export function getToolDefinitions() {
   return [
+    {
+      name: 'create_box',
+      description: 'Create a solid box or cube with exact dimensions in meters. Use this instead of a script for boxes. Origin is the bottom-front-left corner; Y is up.',
+      input_schema: {
+        type: 'object' as const,
+        properties: {
+          width: { type: 'number', description: 'Width along X in meters, positive.' },
+          depth: { type: 'number', description: 'Depth along Z in meters, positive.' },
+          height: { type: 'number', description: 'Height along Y in meters, positive.' },
+          x: { type: 'number', description: 'Origin X in meters, default 0.' },
+          y: { type: 'number', description: 'Origin Y in meters, default 0.' },
+          z: { type: 'number', description: 'Origin Z in meters, default 0.' },
+        },
+        required: ['width', 'depth', 'height'],
+      },
+    },
     {
       name: 'execute_script',
       description:
@@ -209,6 +225,14 @@ export function contextToMessage(ctx: SelectionContext): string {
 }
 
 // ─── System Prompt ───────────────────────────────────────────────
+
+export function buildLocalSystemPrompt(): string {
+  return `You are Sight3D's local 3D modeling assistant. Use tools to change the model; text alone cannot create geometry.
+For a box or cube, ALWAYS call create_box with numeric width, depth and height in meters. Default origin is 0,0,0. Do not use execute_script for boxes.
+Use read_state or inspect to understand existing or selected geometry. Never guess entity IDs. Ask a short question when the requested change is ambiguous. Preserve unrelated geometry.
+For complex geometry, call read_api_reference before execute_script. That tool runs JavaScript with m=model=DraftDown.activeModel, Geom and UI already available. Use m.api_ helpers. Coordinates are meters; Y is up. Do not redeclare m/model or wrap scripts in a function. Use operationName to label edits.
+After a successful tool result, briefly describe what actually changed and STOP. Do not repeat successful edits. If a result failed or created no geometry, do not claim success. Explain the problem or retry once with corrected inputs. Each modeling operation can be undone; a script may create several undo steps.`;
+}
 
 export function buildSystemPrompt(): string {
   return `You are an expert 3D architect inside DraftDown. You drive the model by calling
@@ -525,6 +549,17 @@ export async function executeTool(api: IModelAPI, name: string, input: Record<st
   let ok = true;
   try {
     switch (name) {
+      case 'create_box': {
+        const { width, depth, height } = input;
+        const x = input.x ?? 0, y = input.y ?? 0, z = input.z ?? 0;
+        if (![width, depth, height].every(v => typeof v === 'number' && Number.isFinite(v) && v > 0) ||
+            ![x, y, z].every(v => typeof v === 'number' && Number.isFinite(v))) {
+          throw new Error('Box dimensions must be positive finite numbers in meters; origin coordinates must be finite numbers.');
+        }
+        const shape = api.createBox({ x: x as number, y: y as number, z: z as number }, width as number, depth as number, height as number);
+        resultStr = JSON.stringify({ ok: true, operationName: 'Create Box', created: { faces: shape.faceIds, edges: shape.edgeIds, vertices: shape.vertexIds } });
+        break;
+      }
       case 'execute_script':       resultStr = await runScript(input.script as string, (input.operationName as string) ?? 'AI Script', callId); break;
       case 'inspect':              resultStr = JSON.stringify(inspect(api, (input.ids as string[]) ?? [])); break;
       case 'read_state':           resultStr = JSON.stringify(buildStateSnapshot(api)); break;

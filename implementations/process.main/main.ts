@@ -12,7 +12,7 @@ import {
 import * as path from 'path';
 import * as fs from 'fs';
 import * as os from 'os';
-import * as https from 'https';
+import { chatLocal, listLocalModels } from '../../src/core/local-ai';
 import * as zlib from 'zlib';
 import {
   UserPreferences,
@@ -546,61 +546,8 @@ function registerIpcHandlers(): void {
   // -- AI Chat ---------------------------------------------------------------
 
   // @archigraph ai.chat
-  ipcMain.handle('ai:chat', async (_event, args: {
-    messages: Array<{ role: string; content: unknown }>;
-    tools: unknown[];
-    system: string;
-  }) => {
-    const apiKey = preferences.anthropicApiKey || process.env.ANTHROPIC_API_KEY;
-    if (!apiKey) {
-      return { error: 'Anthropic API key not set. Go to Preferences > AI to enter your key.' };
-    }
-
-    const body = JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 4096,
-      system: args.system,
-      messages: args.messages,
-      tools: args.tools,
-    });
-
-    return new Promise((resolve) => {
-      const req = https.request({
-        hostname: 'api.anthropic.com',
-        path: '/v1/messages',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': apiKey,
-          'anthropic-version': '2023-06-01',
-        },
-      }, (res) => {
-        let data = '';
-        res.on('data', (chunk: string) => { data += chunk; });
-        res.on('end', () => {
-          try {
-            const parsed = JSON.parse(data);
-            if (parsed.error) {
-              resolve({ error: parsed.error.message || JSON.stringify(parsed.error) });
-            } else {
-              resolve(parsed);
-            }
-          } catch (e) {
-            console.error('[main.ai:chat] failed to parse Anthropic API response:', e, 'raw:', data.slice(0, 200));
-            resolve({ error: `Failed to parse API response: ${data.slice(0, 200)}` });
-          }
-        });
-      });
-
-      req.on('error', (err) => {
-        resolve({ error: `API request failed: ${err.message}` });
-      });
-
-      req.setTimeout(90000, () => req.destroy(new Error('AI request timed out. Please retry.')));
-      req.write(body);
-      req.end();
-    });
-  });
+  ipcMain.handle('ai:models', (_event, args: { baseUrl: string }) => listLocalModels(args.baseUrl));
+  ipcMain.handle('ai:chat', (_event, args) => chatLocal(args, preferences));
 }
 
 // ---------------------------------------------------------------------------

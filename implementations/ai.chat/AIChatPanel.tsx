@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useApp } from '../window.main/AppContext';
-import { ChatMessage, buildSystemPrompt, buildSelectionContext, contextToMessage, getToolDefinitions, executeTool } from './AIService';
+import { ChatMessage, buildLocalSystemPrompt, buildSelectionContext, contextToMessage, getToolDefinitions, executeTool } from './AIService';
 import { runChatTurn, ToolResult } from './chat-runner';
 import './assistant.css';
 
@@ -52,7 +52,7 @@ export function AIChatPanel({ visible = true }: { visible?: boolean }) {
       history[history.length - 1].content = `${contextToMessage(buildSelectionContext(api))}\nDisplay units: ${units}. Active tool: ${activeTool?.name || 'Select'}.\n\n${text}`;
       const system = mode === 'learn'
         ? 'You are Sight3D’s friendly modeling instructor. Explain SketchUp-style modeling in short, concrete steps using the active tool and selection context. You cannot edit geometry in Learn mode. Never claim to have made changes. Teach Rectangle (R), Push/Pull (P), Orbit (O), Move (M), and typed dimensions. Ask one focused question when the request is ambiguous.'
-        : buildSystemPrompt() + '\nYou are the Sight3D modeling assistant. Use plain language, state assumptions about dimensions, and ask one focused question when intent is ambiguous. Preserve unrelated geometry. After editing, briefly explain what changed and that each modeling operation can be undone. Never claim an operation succeeded if its result failed.';
+        : buildLocalSystemPrompt() + '\nYou are the Sight3D modeling assistant. Use plain language, state assumptions about dimensions, and ask one focused question when intent is ambiguous. Preserve unrelated geometry. After editing, briefly explain what changed and that each modeling operation can be undone. Never claim an operation succeeded if its result failed.';
       const result = await runChatTurn({
         messages: history,
         request: async messages => window.api.invoke('ai:chat', { system, messages, tools: mode === 'build' ? getToolDefinitions() : [] }) as any,
@@ -88,7 +88,7 @@ export function AIChatPanel({ visible = true }: { visible?: boolean }) {
           <h2>{mode === 'build' ? 'What would you like to make?' : 'Learn by making.'}</h2>
           <p>{mode === 'build' ? 'Start with a shape, a room, or a piece of furniture. Include dimensions for a more useful result.' : 'Ask about a tool or follow a small project, one step at a time.'}</p>
           <div className="ai-starters">{(mode === 'build' ? STARTERS : [['Make my first model', 'Walk me through drawing a rectangle and turning it into a box with Push/Pull. Give me one step at a time.'], ['Explain this tool', `How do I use ${activeTool?.name || 'Select'}? Explain the clicks and keyboard shortcuts.`]]).map(([label, prompt]) => <button key={label} onClick={() => { setInput(prompt); inputRef.current?.focus(); }}>{label}<span aria-hidden="true">→</span></button>)}</div>
-          <div className="ai-setup"><strong>Connect your AI</strong><p>Uses your Anthropic API key. Prompts and model context are sent to Anthropic.</p><button onClick={() => window.dispatchEvent(new Event('show-ai-settings'))}>AI settings</button></div>
+          <div className="ai-setup"><strong>Local AI</strong><p>Runs through LM Studio or Ollama on this computer. No cloud API key required.</p><button onClick={() => window.dispatchEvent(new Event('show-ai-settings'))}>AI settings</button></div>
         </div>}
         {messages.map((msg, i) => <div key={i} className={`ai-chat-msg ai-chat-msg-${msg.role}`}>
           <div className="ai-chat-msg-role">{msg.role === 'user' ? 'You' : 'Sight3D'}</div>

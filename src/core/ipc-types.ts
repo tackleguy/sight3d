@@ -14,7 +14,8 @@ export interface UserPreferences {
   recentFiles: string[];
   defaultTemplate: string;
   renderQuality: 'low' | 'medium' | 'high';
-  anthropicApiKey: string;
+  localAIUrl: string;
+  localAIModel: string;
 }
 
 export const DEFAULT_PREFERENCES: UserPreferences = {
@@ -60,7 +61,8 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   recentFiles: [],
   defaultTemplate: 'default',
   renderQuality: 'high',
-  anthropicApiKey: '',
+  localAIUrl: 'http://127.0.0.1:1234/v1',
+  localAIModel: '',
 };
 
 export type MenuAction =
@@ -95,6 +97,7 @@ export interface MainProcessAPI {
   'app:get-version': () => Promise<string>;
   'app:get-user-data-path': () => Promise<string>;
   'app:quit': () => Promise<void>;
+  'ai:models': (args: { baseUrl: string }) => Promise<{ models: string[]; error?: string }>;
   'ai:chat': (args: { messages: Array<{ role: string; content: unknown }>; tools: unknown[]; system: string }) => Promise<unknown>;
 }
 

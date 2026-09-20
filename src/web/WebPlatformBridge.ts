@@ -3,6 +3,7 @@
 // Replaces Electron IPC with Web APIs (File API, localStorage, fetch).
 
 import type { WindowAPI, MainProcessAPI, RendererEvents, UserPreferences } from '../core/ipc-types';
+import { chatLocal, listLocalModels } from '../core/local-ai';
 import { DEFAULT_PREFERENCES } from '../core/ipc-types';
 import { bytesToBase64, convertSkpViaService } from '../core/skp-convert-client';
 
@@ -233,43 +234,11 @@ export class WebPlatformBridge implements WindowAPI {
     'app:get-user-data-path': async () => '/web',
     'app:quit': async () => {},
 
+    'ai:models': async (args: { baseUrl: string }) => listLocalModels(args.baseUrl),
     'ai:chat': async (args: { messages: Array<{ role: string; content: unknown }>; tools: unknown[]; system: string }) => {
-      let prefs: UserPreferences;
-      try {
-        prefs = JSON.parse(localStorage.getItem(PREFS_KEY) || '{}');
-      } catch { prefs = {} as any; }
-
-      if (!prefs.anthropicApiKey) {
-        return {
-          error: 'Connect your Anthropic API key in AI settings, then retry your request.',
-        };
-      }
-
-      // User-configured browser access; never embed a shared API key in the bundle.
-      try {
-        const resp = await fetch('https://api.anthropic.com/v1/messages', {
-          method: 'POST',
-          signal: AbortSignal.timeout(90000),
-          headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': prefs.anthropicApiKey,
-            'anthropic-version': '2023-06-01',
-            'anthropic-dangerous-direct-browser-access': 'true',
-          },
-          body: JSON.stringify({
-            model: 'claude-sonnet-4-20250514',
-            max_tokens: 4096,
-            system: args.system,
-            messages: args.messages,
-            tools: args.tools?.length ? args.tools : undefined,
-          }),
-        });
-        const data = await resp.json();
-        if (!resp.ok || data.error) return { error: data.error?.message || `AI request failed (${resp.status}). Try again or check AI settings.` };
-        return data;
-      } catch (err: any) {
-        return { error: `AI connection failed: ${err.message}. Check your connection and retry.` };
-      }
+      let prefs: UserPreferences = DEFAULT_PREFERENCES;
+      try { prefs = { ...prefs, ...JSON.parse(localStorage.getItem(PREFS_KEY) || '{}') }; } catch { /* use local defaults */ }
+      return chatLocal(args, prefs);
     },
   };
 

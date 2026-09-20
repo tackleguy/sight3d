@@ -60,7 +60,7 @@ export function WelcomeModal({ visible, onNewProject, onOpenFile, onLoadExample 
             </div>
           </button>
           <button className="welcome-option" onClick={() => { onNewProject(); window.dispatchEvent(new CustomEvent('ai-prompt', { detail: { mode: 'build', prompt: 'Help me plan my first 3D model. Ask me what I want to make.' } })); }}>
-            <div className="welcome-option-text"><div className="welcome-option-title">Start with AI</div><div className="welcome-option-desc">Describe an idea · requires an Anthropic API key</div></div>
+            <div className="welcome-option-text"><div className="welcome-option-title">Start with AI</div><div className="welcome-option-desc">Describe an idea · powered by your local model</div></div>
           </button>
           <button className="welcome-option" onClick={() => setShowTemplates(true)}><div className="welcome-option-text"><div className="welcome-option-title">Choose units &amp; template</div><div className="welcome-option-desc">Architecture, woodworking, or product design</div></div></button>
           <button className="welcome-option" onClick={onOpenFile}>

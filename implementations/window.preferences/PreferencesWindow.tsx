@@ -1,5 +1,6 @@
 // @archigraph window.preferences
 import React, { useState, useEffect, useCallback } from 'react';
+import { localBaseURL } from '../../src/core/local-ai';
 import { UserPreferences, DEFAULT_PREFERENCES } from '../../src/core/ipc-types';
 import { parseDistanceExpr, toDisplay, unitLabel, getCurrentUnit } from '../../src/core/units';
 
@@ -56,6 +57,9 @@ function LengthInput({ valueMeters, onValid }: { valueMeters: number; onValid: (
 export function PreferencesWindow({ visible, onClose, onSaved, initialTab = 'units' }: PreferencesWindowProps) {
   const [prefs, setPrefs] = useState<UserPreferences>(DEFAULT_PREFERENCES);
   const [activeTab, setActiveTab] = useState<TabId>('units');
+  const [localModels, setLocalModels] = useState<string[]>([]);
+  const [checkingAI, setCheckingAI] = useState(false);
+  const [aiStatus, setAIStatus] = useState('');
   const [modified, setModified] = useState(false);
   useEffect(() => { if (visible) setActiveTab(initialTab); }, [visible, initialTab]);
 
@@ -70,7 +74,19 @@ export function PreferencesWindow({ visible, onClose, onSaved, initialTab = 'uni
     setModified(true);
   }, []);
 
+  const checkLocalAI = async () => {
+    setCheckingAI(true); setAIStatus('Checking local server…'); setLocalModels([]);
+    try {
+      const result = await window.api.invoke('ai:models', { baseUrl: prefs.localAIUrl });
+      setLocalModels(result.models);
+      setAIStatus(result.error || (result.models.length ? `Connected · ${result.models.length} local model(s) available. Save to use your selection.` : 'Connected, but no chat models are available. Load a model in your local server.'));
+      if (!result.error && result.models.length && !result.models.includes(prefs.localAIModel)) updatePref('localAIModel', result.models[0]);
+    } catch { setAIStatus('Could not connect. Start your local AI server and try again.'); }
+    finally { setCheckingAI(false); }
+  };
+
   const handleSave = useCallback(async () => {
+    try { localBaseURL(prefs.localAIUrl); } catch (e) { setActiveTab('ai'); setAIStatus((e as Error).message); return; }
     if (typeof window.api !== 'undefined') {
       await window.api.invoke('prefs:set', prefs);
     }
@@ -209,19 +225,27 @@ export function PreferencesWindow({ visible, onClose, onSaved, initialTab = 'uni
             {activeTab === 'ai' && (
               <div className="prefs-section">
                 <label className="pref-row" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: 6 }}>
-                  <span>Anthropic API Key</span>
-                  <input
-                    type="password"
-                    value={prefs.anthropicApiKey}
-                    onChange={e => updatePref('anthropicApiKey', e.target.value)}
-                    placeholder="sk-ant-..."
-                    style={{ width: '100%', height: 28, fontFamily: 'monospace', fontSize: 12 }}
-                  />
+                  <span>Local server URL</span>
+                  <input type="url" value={prefs.localAIUrl} disabled={checkingAI}
+                    onChange={e => { updatePref('localAIUrl', e.target.value); setLocalModels([]); setAIStatus(''); }}
+                    placeholder="http://127.0.0.1:1234/v1" style={{ width: '100%' }} />
                 </label>
-                <p style={{ color: 'var(--text-muted)', fontSize: 11, lineHeight: 1.5, margin: 0 }}>
-                  Required for the AI chat assistant. Get your key from{' '}
-                  <span style={{ color: 'var(--accent)' }}>console.anthropic.com</span>.
-                  The key is stored locally in your preferences file and never sent anywhere except the Anthropic API.
+                <div style={{ display: 'flex', gap: 8 }}>
+                  <button disabled={checkingAI} onClick={() => { updatePref('localAIUrl', 'http://127.0.0.1:1234/v1'); updatePref('localAIModel', ''); setLocalModels([]); setAIStatus(''); }}>LM Studio</button>
+                  <button disabled={checkingAI} onClick={() => { updatePref('localAIUrl', 'http://127.0.0.1:11434/v1'); updatePref('localAIModel', ''); setLocalModels([]); setAIStatus(''); }}>Ollama</button>
+                </div>
+                <label className="pref-row" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: 6 }}>
+                  <span>Local model</span>
+                  <input list="local-ai-models" value={prefs.localAIModel} disabled={checkingAI} onChange={e => updatePref('localAIModel', e.target.value)} placeholder="Automatic (first available chat model)" style={{ width: '100%' }} />
+                  <datalist id="local-ai-models">{localModels.map(model => <option key={model} value={model} />)}</datalist>
+                </label>
+                <button onClick={checkLocalAI} disabled={checkingAI}>{checkingAI ? 'Connecting…' : 'Find local models'}</button>
+                <p role="status" style={{ lineHeight: 1.5, overflowWrap: 'anywhere' }}>{aiStatus}</p>
+                <p style={{ color: 'var(--text-secondary)', fontSize: 12, lineHeight: 1.6 }}>
+                  Start LM Studio’s local server and load a chat model, or run Ollama. Build mode needs a model that supports tools. Only loopback servers are allowed; Sight3D has no cloud AI fallback.
+                </p>
+                <p style={{ color: 'var(--text-secondary)', fontSize: 12, lineHeight: 1.6 }}>
+                  Browser connection blocked? Enable CORS in LM Studio’s server settings. For Ollama, allow this app’s origin with OLLAMA_ORIGINS. Use OLLAMA_NO_CLOUD=1 to disable Ollama cloud models.
                 </p>
               </div>
             )}

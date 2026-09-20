@@ -12,12 +12,20 @@ Choose **Start modeling** for a blank model in meters. Quick start explains Rect
 
 ## Model with AI
 
-Open **AI settings** inside the assistant and add your Anthropic API key. Requests send your prompt and model context to Anthropic and use your provider account. Keys are stored in the existing local preference store (browser localStorage in the web build); use the desktop build on shared machines. No shared key is shipped.
+Open **AI settings** inside the assistant. Start LM Studio’s local server with a downloaded chat model, then choose **LM Studio → Find local models → Save**. The default endpoint is `http://127.0.0.1:1234/v1`; leaving Model blank uses the first available chat model.
 
-**Build** can inspect, create and modify geometry using the existing modeling API. Starter prompts fill the composer for you to review and send. Include dimensions and select geometry when you want to edit it. **Learn** answers modeling questions without executing model tools. The tool guide’s **Explain with AI** supplies the current tool as context.
+For Ollama, start it with `OLLAMA_NO_CLOUD=1 ollama serve`, install a tool-capable model, then choose **Ollama → Find local models → Save** (endpoint `http://127.0.0.1:11434/v1`). Sight3D does not download models automatically. Build mode requires tool calling; model quality and hardware determine performance.
+
+AI requests go only to a loopback server on this computer. There is no Anthropic transport, API key, or cloud fallback. Redirects and remote server URLs are rejected; cloud-tagged and embedding models are excluded. Keep the configured local server itself in local-only mode; Sight3D cannot control any custom server’s internal routing.
+
+The development browser server proxies the standard LM Studio/Ollama ports locally, so no CORS changes are needed for `npm run dev:web`. Production browser builds connect directly: enable CORS in LM Studio or allow the app’s origin with Ollama’s `OLLAMA_ORIGINS`. Desktop builds connect directly without browser CORS restrictions. No inference request is routed through an external proxy.
+
+Protocol references: [LM Studio tool calling](https://lmstudio.ai/docs/developer/openai-compat/tools), [Ollama compatibility](https://docs.ollama.com/api/openai-compatibility), [Ollama local-only configuration](https://docs.ollama.com/faq).
+
+**Build** can inspect, create and modify geometry using the existing modeling API. Boxes and cubes use a validated direct shape tool, so local models do not need to write JavaScript for them. Advanced tasks still depend on the chosen model’s coding and tool-calling ability. Starter prompts fill the composer for you to review and send. Include dimensions and select geometry when you want to edit it. **Learn** answers modeling questions without executing model tools. The tool guide’s **Explain with AI** supplies the current tool as context.
 
 **Stop** prevents subsequent actions after the current provider request or modeling operation finishes; it cannot interrupt an executing script or roll back completed work. **Undo last operation** reverses one recorded modeling operation. A request, including a single AI script, may produce several undo steps (for example, drawing a face and then extruding it). Inspect the operation details and model after partial failures before retrying. AI-generated scripts retain the original application’s execution capabilities; Build mode is not an isolated script sandbox.
 
 ## Validation
 
-`npx tsc --noEmit`, `npm test -- --runInBand`, and production builds. The AI turn-loop tests cover tool result chaining, provider errors, read-only Learn mode, stop boundaries, truncated responses and action limits. UI smoke tests use mocked provider responses; a real provider response requires the user's key.
+`npx tsc --noEmit`, `npm test -- --runInBand`, and production builds. The AI turn-loop tests cover tool result chaining, provider errors, read-only Learn mode, stop boundaries, truncated responses and action limits. UI smoke tests use mocked provider responses; live inference requires a running local server and downloaded model.

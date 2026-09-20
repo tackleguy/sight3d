@@ -60,6 +60,10 @@ module.exports = {
   devServer: {
     port: 3001,
     hot: true,
+    proxy: [
+      { context: ['/__local_ai/lm'], target: 'http://127.0.0.1:1234', pathRewrite: { '^/__local_ai/lm': '' } },
+      { context: ['/__local_ai/ollama'], target: 'http://127.0.0.1:11434', pathRewrite: { '^/__local_ai/ollama': '' } },
+    ],
     historyApiFallback: true,
   },
   performance: {
