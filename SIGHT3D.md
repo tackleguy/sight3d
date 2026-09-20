@@ -65,3 +65,22 @@ The assistant now has direct `create_object` and `apply_surface` tools. Ask for 
 Try the new starter prompts, or ask “Create a purple sphere with radius 2m”, “Create a blue arc with radius 2m and angle 120 degrees”, or select faces and ask “Make the selected faces glass”. Basic color names and #RRGGBB colors are supported. The Materials palette includes clear glass, water and nine color swatches for manual painting. Glass and water use transparency and roughness; they are visual materials, not fluid simulation or physically refractive glass.
 
 Browser inference has no paid API quota, but GPU memory, context, generation and geometry safeguards still apply. The model upgrade requires a new download; old cached assets are not reused as the larger model.
+
+## Building catalog: 10,000 configurable recipes
+
+The local catalog contains **100 named building subtypes in 20 categories × 10 design styles × 10 massing forms = 10,000 addressable exterior concept recipes**. It adds retrieval and procedural geometry to the existing AI; it does not retrain the model or claim 10,000 independent architectural classes. Recipes are generated on demand, so the full catalog is never stuffed into the model context.
+
+Categories cover homes, multi-family housing, hospitality, offices, retail, food, education, healthcare, culture, performance, civic administration, emergency services, worship, sport, passenger transport, industry, agriculture and utilities. Examples include cottages, banks, castles, research laboratories, clinics, museums, railway stations, hangars, greenhouses and lighthouses. The catalog search tool returns categories, subtype IDs, typical concept dimensions and modeled features; it supports up to 20 results per page. These dimensions are design defaults, not architectural standards.
+
+Use the **Building catalog** starter, or ask:
+- “Show me types of buildings in the catalog.”
+- “Create a terraced brutalist art museum, 48m wide and 20m tall.”
+- “Create a traditional railway station, 70m wide.”
+- “Build a minimalist dental clinic, 12m tall.”
+- “Create a neighborhood of cottages.”
+
+Style treatments: contemporary, minimalist, industrial, traditional, Mediterranean-inspired, Nordic-inspired, Art Deco-inspired, Brutalist-inspired, futuristic and vernacular-inspired. They affect facade material, roof defaults, window spacing and window/floor-band proportions. Massing forms: compact, elongated, slender, L-wing, open courtyard, circular, oval, hexagonal, tapered and terraced. Subtype features include porches, balconies, canopies, colonnades, loading bays, chimneys, spires, domes, skylights, platforms, hangar doors and shopfronts.
+
+A recipe ID such as `art_museum/brutalist/terraced` can be passed to `create_building` as `catalogId`. A subtype ID alone uses contemporary/compact defaults; `designStyle` and `massing` override those defaults. Explicit prompt dimensions, shapes and roof requests take priority over recipe defaults. Width/depth describe the main mass; projecting facade features can extend beyond it. City blocks can use the same subtype. Creation and each detail pass remain undoable.
+
+These are simplified editable exteriors. Subtype names and stylistic treatments do not imply authentic historic reconstruction, designed interiors, structural engineering, fluid simulation, or building-code compliance. Generic buildings, custom footprints, loft profiles and scripted geometry remain available outside the catalog.

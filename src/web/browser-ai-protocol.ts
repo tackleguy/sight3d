@@ -1,3 +1,4 @@
+import { findBuildingArchetype, buildingCatalogContext } from '../../implementations/ai.chat/building-catalog';
 import type { AIResponse, AIBlock } from '../../implementations/ai.chat/chat-runner';
 import type { ChatArgs } from '../core/local-ai';
 
@@ -12,16 +13,20 @@ export function browserTools(args: ChatArgs) {
   // A browser model reliably fills parameters when it isn't distracted by a general
   // JavaScript tool. Learn mode still has no tools, and other edits keep theirs.
   const detail = (tower.test(prompt) || (/^(?:please )?add (?:more |extra )?detail[.!]?$/i.test(request) && tower.test(previousReply))) && /\b(add|more|increase|extra|next)\b[^.!?]*\bdetail\b/i.test(prompt);
-  const create = tower.test(prompt) && /\b(create|build|make|design|generate)\b/i.test(prompt);
+  const create = (tower.test(request) || !!findBuildingArchetype(request)) && /\b(create|build|make|design|generate)\b/i.test(prompt);
   const city = (/\b(neighborhood|neighbourhood|skyline|city block|district)\b/i.test(request) || /\bbuildings\b/i.test(request) || (/\bcity\b/i.test(request) && !tower.test(request))) && /\b(create|build|make|design|generate)\b/i.test(request);
   const available = (preferred:string, fallback:string) => tools.some(tool=>tool.name===preferred)?preferred:fallback;
   const object = /\b(sphere|ball|cylinder|cone|torus|donut|arc|table|chair|glass of water|water volume)\b/i.test(request) && /\b(create|build|make|draw|add|generate)\b/i.test(request);
-  const name = object ? 'create_object' : detail ? available('detail_building','detail_skyscraper') : city ? 'create_city' : create ? available('create_building','create_skyscraper') : null;
+  const browse = /\b(list|browse|search|find|show|what)\b/i.test(request) && /\b(types|subtypes|catalog|kinds|recipes)\b/i.test(request);
+  const name = browse ? 'search_building_catalog' : object && !create ? 'create_object' : detail ? available('detail_building','detail_skyscraper') : city ? 'create_city' : create ? available('create_building','create_skyscraper') : null;
   return name && tools.some(tool => tool.name === name) ? tools.filter(tool => tool.name === name) : tools;
 }
 export function browserRequest(args: ChatArgs, retry = false) {
   const tools = browserTools(args);
-  const base = args.system + (retry ? '\nYour previous response was cut short and was NOT executed. Produce a shorter complete answer or plan. Use concise arguments; do not repeat explanations.' : '') + '\nYou run inside the visitor’s browser. Keep answers short. Only tools can edit geometry. Never claim a change without a successful tool result.';
+  const latestText=[...args.messages].reverse().find(m=>m.role==='user'&&typeof m.content==='string')?.content;
+  const retrieved=typeof latestText==='string'?buildingCatalogContext(latestText.split('\n\n').pop()!):'';
+  const catalog=args.system.includes(retrieved)?'':retrieved;
+  const base = args.system + catalog + (retry ? '\nYour previous response was cut short and was NOT executed. Produce a shorter complete answer or plan. Use concise arguments; do not repeat explanations.' : '') + '\nYou run inside the visitor’s browser. Keep answers short. Only tools can edit geometry. Never claim a change without a successful tool result.';
   // Reserve context space for the output rather than sending four full scene dumps.
   let remaining = 6000;
   const messages = args.messages.slice(-4).reverse().map(m => {
@@ -38,7 +43,7 @@ export function browserRequest(args: ChatArgs, retry = false) {
     const schema = tool.input_schema as { properties?: Record<string,unknown>; required?: string[] };
     return ['create_skyscraper','create_building','create_city'].includes(tool.name) && detail ? { ...schema, properties: { ...schema.properties, detail: { const: Number(detail) } }, required: [...new Set([...(schema.required || []), 'detail'])] } : schema;
   };
-  const architecture = tools.length === 1 && ['create_building','create_city','detail_building'].includes(tools[0].name);
+  const architecture = tools.length === 1 && ['create_building','create_city','detail_building','search_building_catalog'].includes(tools[0].name);
   const schema = { type: 'object', properties: {
     reply: architecture ? { const: '' } : { type: 'string' },
     calls: { type: 'array', minItems: architecture ? 1 : 0, maxItems: architecture ? 1 : 6, items: { anyOf: tools.map(tool => ({ type: 'object', properties: { name: { const: tool.name }, arguments: inputSchema(tool) }, required: ['name', 'arguments'], additionalProperties: false })) } },
@@ -73,6 +78,17 @@ export function completedBrowserOperations(args: ChatArgs): AIResponse | null {
   const previous = args.messages[args.messages.length - 2], last = args.messages[args.messages.length - 1];
   if (previous?.role !== 'assistant' || last?.role !== 'user' || !Array.isArray(previous.content) || !Array.isArray(last.content)) return null;
   const calls = previous.content.filter((block: any) => block.type === 'tool_use');
+  if(calls.length && calls.every((call:any)=>call.name==='search_building_catalog')) {
+    const descriptions:string[]=[];
+    for(const call of calls){
+      const receipt=last.content.find((block:any)=>block.type==='tool_result'&&block.tool_use_id===call.id);
+      if(!receipt)return null;
+      let result;try{result=JSON.parse(receipt.content);}catch{return null;}
+      if(!Array.isArray(result.results))return {error:result.error||'The catalog search did not finish.'};
+      descriptions.push(`${result.recipeCount.toLocaleString()} configurable building recipes: ${result.subtypeCount} subtypes × 10 styles × 10 forms.\n${result.results.map((item:any)=>`• ${item.name} (${item.category}) — ${item.dimensions.width} × ${item.dimensions.depth} m, ${item.dimensions.height} m tall; ${item.feature.replace(/_/g,' ')}. ID: ${item.id}`).join('\n')}\n${result.results.length?'Ask to create one of these, with any dimensions you want.':'No matching subtypes. Try a broader category such as housing, education or transport.'}${result.nextOffset!==null?` More results: search with offset ${result.nextOffset}.`:''}`);
+    }
+    return {content:[{type:'text',text:descriptions.join('\n\n')}],stop_reason:'end_turn'};
+  }
   if (!calls.length || calls.some((call: any) => !['create_object','create_box','create_skyscraper','detail_skyscraper','create_building','create_city','detail_building'].includes(call.name))) return null;
   const receipts = last.content;
   const descriptions: string[] = [];

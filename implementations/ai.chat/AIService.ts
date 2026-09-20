@@ -1,3 +1,4 @@
+import { searchBuildingCatalog } from './building-catalog';
 import { createObject, paintObject, surfaceOptions, OBJECT_TYPES } from './objects';
 import { createBuilding, createCity, detailBuilding } from './architecture';
 import { buildSkyscraper } from './skyscraper';
@@ -33,10 +34,12 @@ export interface ChatMessage {
 
 export function getToolDefinitions() {
   return [
+    {name:'search_building_catalog',description:'Search 100 building subtypes in 20 categories, with 10 design styles and 10 massing forms (10,000 configurable exterior recipes). Use for subtype discovery or to browse types. Returns catalog IDs, dimensions and features. Search with an empty query and offset to page through all subtypes. Does not edit geometry.',input_schema:{type:'object' as const,properties:{query:{type:'string'},offset:{type:'integer',minimum:0},limit:{type:'integer',minimum:1,maximum:20}}}},
     { name:'create_object', description:'Create a 3D model: sphere, cylinder, cone, torus, tubular arc, glass_of_water (hollow glass with water inside), table, chair, or water volume. Dimensions in meters, Y up. Radius controls curved shapes; height controls cylinders, cones, furniture and glass; width/depth control furniture and water. Arc angle is degrees, thickness is tube radius. Optional material and color apply to the model. One undo step.', input_schema:{type:'object' as const,properties:{type:{type:'string',enum:[...OBJECT_TYPES]},radius:{type:'number',minimum:.001,maximum:1000},height:{type:'number',minimum:.001,maximum:2000},width:{type:'number',minimum:.001,maximum:2000},depth:{type:'number',minimum:.001,maximum:2000},angle:{type:'number',minimum:1,maximum:360},thickness:{type:'number'},segments:{type:'integer',minimum:8,maximum:128},fill:{type:'number',minimum:.01,maximum:.95},material:{type:'string',enum:['solid','glass','water','metal','wood']},color:{type:'string',description:'Basic color name or #RRGGBB.'},x:{type:'number'},y:{type:'number'},z:{type:'number'}},required:['type']} },
     { name:'apply_surface',description:'Apply glass, water, solid color, metal or wood to existing faces. Omit faceIds to paint selected faces. Read state first if you need IDs. One undo step.',input_schema:{type:'object' as const,properties:{faceIds:{type:'array',items:{type:'string'}},material:{type:'string',enum:['solid','glass','water','metal','wood']},color:{type:'string',description:'Basic color name or #RRGGBB.'}}}},
     {name:'create_building',description:'Design any supported building type and shape, including houses, apartments, offices, skyscrapers, warehouses, pavilions and civic buildings. Supports city-inspired architecture, custom polygon footprints and loft profiles. Explicit user dimensions and shapes take priority. Height includes the roof. Use this instead of the legacy fixed skyscraper tool.',input_schema:{type:'object' as const,properties:{
-      type:{type:'string',enum:['house','apartment','office','skyscraper','warehouse','pavilion','civic']},
+      catalogId:{type:'string',description:'Subtype ID from search_building_catalog or retrieved context; optionally subtype/designStyle/massing.'},designStyle:{type:'string',enum:['contemporary','minimalist','industrial','traditional','mediterranean','nordic','art_deco','brutalist','futuristic','vernacular']},massing:{type:'string',enum:['compact','elongated','slender','l_wing','courtyard','circular','oval','hexagonal','tapered','terraced']},
+      type:{type:'string',description:'Base type (house, apartment, office, skyscraper, warehouse, pavilion, civic) or a catalog subtype name.'},
       shape:{type:'string',enum:['rectangle','circle','ellipse','triangle','hexagon','l_shape','u_shape','custom']},
       roof:{type:'string',enum:['flat','gable','hip','dome','pyramid','spire']},style:{type:'string',enum:['glass','brick','stone','concrete','terracotta','white']},
       city:{type:'string',description:'City inspiration: new_york, chicago, paris, tokyo, dubai, singapore, london, barcelona, hong_kong, san_francisco, venice, sydney.'},
@@ -45,7 +48,7 @@ export function getToolDefinitions() {
       footprint:{type:'array',description:'Custom outline in meters; use shape=custom.',minItems:3,maxItems:32,items:{type:'object',properties:{x:{type:'number'},z:{type:'number'}},required:['x','z']}},
       sections:{type:'array',description:'Optional custom loft profiles ordered from at=0 to at=1; control taper, lean and twist.',minItems:2,maxItems:12,items:{type:'object',properties:{at:{type:'number'},scale:{type:'number'},rotation:{type:'number'},offsetX:{type:'number'},offsetZ:{type:'number'}},required:['at']}}
     }}},
-    {name:'create_city',description:'Create a varied fictional city-inspired block with buildings, streets and sidewalks. This is not an actual map reconstruction. Use for a city, skyline, neighborhood or city block. Supported inspirations: New York, Chicago, Paris, Tokyo, Dubai, Singapore, London, Barcelona, Hong Kong, San Francisco, Venice, Sydney.',input_schema:{type:'object' as const,properties:{city:{type:'string'},count:{type:'integer',minimum:1,maximum:25},spacing:{type:'number',minimum:8,maximum:100},seed:{type:'integer',minimum:0},detail:{type:'integer',minimum:1,maximum:3},x:{type:'number'},z:{type:'number'}}}},
+    {name:'create_city',description:'Create a varied fictional city-inspired block with buildings, streets and sidewalks. This is not an actual map reconstruction. Use for a city, skyline, neighborhood or city block. Supported inspirations: New York, Chicago, Paris, Tokyo, Dubai, Singapore, London, Barcelona, Hong Kong, San Francisco, Venice, Sydney.',input_schema:{type:'object' as const,properties:{catalogId:{type:'string',description:'Optional catalog subtype or full recipe ID for all buildings in this block.'},designStyle:{type:'string'},massing:{type:'string'},city:{type:'string'},count:{type:'integer',minimum:1,maximum:25},spacing:{type:'number',minimum:8,maximum:100},seed:{type:'integer',minimum:0},detail:{type:'integer',minimum:1,maximum:3},x:{type:'number'},z:{type:'number'}}}},
     {name:'detail_building',description:'Add the next detail level to the latest individual building created with create_building. Levels add windows, then floor bands. Does not rebuild the building.',input_schema:{type:'object' as const,properties:{}}},
     {
       name: 'create_skyscraper',
@@ -258,6 +261,7 @@ export function contextToMessage(ctx: SelectionContext): string {
 
 export function buildLocalSystemPrompt(): string {
   return `You are Sight3D's local 3D modeling assistant. Use tools to change the model; text alone cannot create geometry.
+The local building catalog offers 100 subtypes across 20 categories, each with 10 design styles and 10 massing forms: 10,000 configurable concept recipes. These are exterior designs, not 10,000 distinct building classes or trained model weights. Use search_building_catalog to discover subtypes and obtain IDs; use create_building with catalogId, designStyle and massing to build them. Preserve catalog defaults unless the user requests overrides.
 For architecture use create_building: choose building type, footprint shape, roof, height, twist, taper and city inspiration from the user's request. Never turn every building into the same skyscraper. Houses can have gabled roofs; pavilions can be domed; towers can be round, elliptical, twisted or tapered; custom polygon footprints and loft sections are supported. For neighborhoods, skylines, city blocks or multiple city-inspired buildings use create_city. These are fictional city-inspired designs, not actual map data. For more detail on your latest building use detail_building. The legacy create_skyscraper tool is only for explicitly requested tiered Art Deco towers.
 For objects, curved shapes, furniture and a glass of water use create_object. Use apply_surface for colors, glass and water on selected or specified faces. For a box or cube, ALWAYS call create_box with numeric width, depth and height in meters. Default origin is 0,0,0. Do not use execute_script for boxes.
 Use read_state or inspect to understand existing or selected geometry. Never guess entity IDs. Ask a short question when the requested change is ambiguous. Preserve unrelated geometry.
@@ -580,6 +584,7 @@ export async function executeTool(api: IModelAPI, name: string, input: Record<st
   let ok = true;
   try {
     switch (name) {
+      case 'search_building_catalog': resultStr = JSON.stringify(searchBuildingCatalog(input)); break;
       case 'create_object': resultStr = JSON.stringify(createObject(api,input)); break;
       case 'apply_surface': resultStr = JSON.stringify(paintObject(api,input)); break;
       case 'create_building': resultStr = JSON.stringify(createBuilding(api,input)); break;

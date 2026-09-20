@@ -125,3 +125,20 @@ test('object prompts use direct tools and receipts prevent duplicate objects',()
  const messages=[{role:'assistant',content:[{type:'tool_use',id:'glass',name:'create_object',input:{type:'glass_of_water'}}]}, {role:'user',content:[{type:'tool_result',tool_use_id:'glass',content:JSON.stringify({ok:true,created:{faces:['a']},summary:'Created glass of water.'})}]}];
  expect(completedBrowserOperations({system:'',tools,messages})?.content?.[0].text).toBe('Created glass of water.');
 });
+
+
+test('catalog subtypes route to architecture while catalog browsing stays read-only',()=>{
+ const tools=[{name:'create_building',input_schema:{type:'object'}},{name:'create_object',input_schema:{type:'object'}},{name:'search_building_catalog',input_schema:{type:'object'}},{name:'create_city',input_schema:{type:'object'}}];
+ expect(browserTools({system:'',tools,messages:[{role:'user',content:'Build an airport terminal'}]}).map(t=>t.name)).toEqual(['create_building']);
+ expect(browserTools({system:'',tools,messages:[{role:'user',content:'Create a clinic with a chair'}]}).map(t=>t.name)).toEqual(['create_building']);
+ expect(browserTools({system:'',tools,messages:[{role:'user',content:'Show me types of buildings in the catalog'}]}).map(t=>t.name)).toEqual(['search_building_catalog']);
+ expect(browserTools({system:'',tools,messages:[{role:'user',content:'Make a neighborhood of cottages'}]}).map(t=>t.name)).toEqual(['create_city']);
+ const request=browserRequest({system:'',tools,messages:[{role:'user',content:'Create a terraced brutalist art museum'}]});
+ expect(request.messages[0].content).toContain('art_museum/brutalist/terraced');
+ expect(request.messages[0].content.length).toBeLessThan(4000);
+});
+test('catalog receipt answers without a second generation or geometry claims',()=>{
+ const result={recipeCount:10000,subtypeCount:100,results:[{id:'cottage',name:'cottage',category:'Detached homes',dimensions:{width:10,depth:8,height:6},feature:'chimney'}],nextOffset:null};
+ const response=completedBrowserOperations({system:'',tools:[],messages:[{role:'assistant',content:[{type:'tool_use',id:'search',name:'search_building_catalog',input:{}}]},{role:'user',content:[{type:'tool_result',tool_use_id:'search',content:JSON.stringify(result)}]}]});
+ expect(response?.content?.[0].text).toContain('10,000 configurable');expect(response?.content?.[0].text).toContain('cottage');
+});

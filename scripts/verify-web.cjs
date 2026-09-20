@@ -81,7 +81,35 @@ let browser, server;
   await page.setViewportSize({width:390,height:844});
   await page.screenshot({path:'/tmp/sight3d-objects-mobile.png'});
   assert.deepEqual(await page.locator('.ai-chat-error').allTextContents(),[]);
-  console.log('Production modeling, objects and undo/redo passed; checking refresh.');
+  await page.setViewportSize({width:1440,height:1000});
+  for(const [catalogId,prompt,height] of [
+    ['art_museum/brutalist/terraced','Create a terraced brutalist art museum, 48m wide, 30m deep and 20m tall.',20],
+    ['railway_station/traditional/compact','Create a traditional railway station, 70m wide.',17],
+    ['aircraft_hangar/contemporary/compact','Create an aircraft hangar.',24],
+  ]){
+    await page.evaluate(()=>window.modelAPI.deleteEntities(window.modelAPI.getAllFaces()));
+    await page.evaluate(catalogId=>{
+      const invoke=window.api.invoke.bind(window.api);let calls=0;
+      window.api.invoke=async(channel,args)=>channel!=='ai:chat'?invoke(channel,args):++calls===1
+        ? {content:[{type:'tool_use',id:'catalog-model',name:'create_building',input:{catalogId,detail:3}}],stop_reason:'tool_use'}
+        : {content:[{type:'text',text:`Verified ${catalogId}`}],stop_reason:'end_turn'};
+    },catalogId);
+    await page.locator('#ai-prompt-input').fill(prompt);
+    await page.getByRole('button',{name:'Send',exact:true}).click();
+    await page.getByText(`Verified ${catalogId}`,{exact:true}).waitFor();
+    const faceCount=await page.evaluate(()=>window.modelAPI.getAllFaces().length);
+    assert.ok(faceCount>20,`${catalogId} must create its building geometry`);
+    console.log(`Catalog: ${catalogId}, ${faceCount} faces`);
+    assert.ok(Math.abs(await page.evaluate(()=>window.modelAPI.getBoundingBox().max.y)-height)<.001);
+    await page.setViewportSize({width:1440,height:1000});
+    await page.screenshot({path:`/tmp/sight3d-catalog-${catalogId.split('/')[0]}.png`});
+    await page.getByRole('button',{name:'Undo',exact:true}).click();
+    assert.equal(await page.evaluate(()=>window.modelAPI.getAllFaces().length),0);
+  }
+  await page.getByRole('button',{name:'New chat',exact:true}).click();
+  await page.setViewportSize({width:390,height:844});
+  await page.screenshot({path:'/tmp/sight3d-catalog-mobile.png'});
+  console.log('Production catalog buildings, objects and undo/redo passed; checking refresh.');
   await page.reload();
   await page.getByText('Start modeling', { exact: true }).waitFor();
   assert.deepEqual(errors, [], 'Production site must not emit browser or HTTP errors');

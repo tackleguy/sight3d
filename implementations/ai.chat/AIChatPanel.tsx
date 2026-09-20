@@ -1,3 +1,4 @@
+import { buildingCatalogContext } from './building-catalog';
 import React, { useState, useRef, useEffect } from 'react';
 import { useApp } from '../window.main/AppContext';
 import { ChatMessage, buildLocalSystemPrompt, buildSelectionContext, contextToMessage, getToolDefinitions, executeTool } from './AIService';
@@ -10,6 +11,8 @@ const STARTERS = [
   ['A glass of water', 'Create a glass of water, radius 0.04m, height 0.12m.'],
   ['A colored arc', 'Create a blue arc with radius 2m and angle 180 degrees.'],
   ['A 3D chair', 'Create a wood chair, 0.5m wide, 0.5m deep and 0.9m tall.'],
+  ['Building catalog', 'Show me types of buildings in the catalog.'],
+  ['A terraced museum', 'Create a brutalist art museum with terraced massing, 48m wide and 20m tall.'],
   ['A house', 'Create a two-floor house, 12m wide, 9m deep and 7m tall, with a gable roof.'],
   ['A tower', 'Create a circular glass tower, 180m tall, 30m wide and 30m deep, twisted by 60 degrees, with a flat roof.'],
   ['A neighborhood', 'Design a Paris-inspired neighborhood with 6 buildings at detail level 2.'],
@@ -61,7 +64,7 @@ export function AIChatPanel({ visible = true }: { visible?: boolean }) {
       const result = await runChatTurn({
         messages: history,
         maxRounds: 6,
-        request: async messages => window.api.invoke('ai:chat', { system, messages, tools: mode === 'build' ? getToolDefinitions() : [] }) as any,
+        request: async messages => window.api.invoke('ai:chat', { system:system+buildingCatalogContext(text), messages, tools: mode === 'build' ? getToolDefinitions() : [] }) as any,
         execute: async (name, args) => {
           const result = await executeTool(api, name, ['create_building','create_city'].includes(name) ? {...args,brief:text} : args);
           (app as any)?.syncScene?.(); (app as any)?.syncSelection?.();
