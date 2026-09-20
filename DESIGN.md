@@ -9,3 +9,5 @@ The assistant occupies a docked 340px side panel (300px at intermediate widths),
 Reuse global theme variables, 12px system body typography, understated 1px borders and 4–6px control radii. New UI uses labeled controls and visible keyboard focus. Retain existing tool glyphs for compatibility; a future icon-system replacement is outside this change.
 
 Local AI settings expose LM Studio and Ollama presets, a loopback URL, a model field, discovery, connection progress and actionable failures. No API-key field is shown. The local model is chosen explicitly or defaults to the first available chat model.
+
+The website defaults to browser AI, with explicit download consent, size/memory guidance, loading progress, cancellation, retry and unload controls. AI settings offer the local-server option for advanced users. Device incompatibility never blocks manual modeling.

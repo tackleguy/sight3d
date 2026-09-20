@@ -14,6 +14,7 @@ export interface UserPreferences {
   recentFiles: string[];
   defaultTemplate: string;
   renderQuality: 'low' | 'medium' | 'high';
+  aiProvider: 'browser' | 'local';
   localAIUrl: string;
   localAIModel: string;
 }
@@ -61,6 +62,7 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   recentFiles: [],
   defaultTemplate: 'default',
   renderQuality: 'high',
+  aiProvider: 'browser',
   localAIUrl: 'http://127.0.0.1:1234/v1',
   localAIModel: '',
 };

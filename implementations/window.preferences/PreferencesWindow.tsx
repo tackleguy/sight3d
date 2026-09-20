@@ -1,5 +1,6 @@
 // @archigraph window.preferences
 import React, { useState, useEffect, useCallback } from 'react';
+import { BrowserAISetup } from '../ai.chat/BrowserAISetup';
 import { localBaseURL } from '../../src/core/local-ai';
 import { UserPreferences, DEFAULT_PREFERENCES } from '../../src/core/ipc-types';
 import { parseDistanceExpr, toDisplay, unitLabel, getCurrentUnit } from '../../src/core/units';
@@ -86,10 +87,11 @@ export function PreferencesWindow({ visible, onClose, onSaved, initialTab = 'uni
   };
 
   const handleSave = useCallback(async () => {
-    try { localBaseURL(prefs.localAIUrl); } catch (e) { setActiveTab('ai'); setAIStatus((e as Error).message); return; }
+    try { if ((window as any).__PLATFORM__ !== 'web' || prefs.aiProvider === 'local') localBaseURL(prefs.localAIUrl); } catch (e) { setActiveTab('ai'); setAIStatus((e as Error).message); return; }
     if (typeof window.api !== 'undefined') {
       await window.api.invoke('prefs:set', prefs);
     }
+    window.dispatchEvent(new Event('ai-preferences-changed'));
     onSaved?.(prefs);
     setModified(false);
     onClose();
@@ -224,6 +226,8 @@ export function PreferencesWindow({ visible, onClose, onSaved, initialTab = 'uni
             )}
             {activeTab === 'ai' && (
               <div className="prefs-section">
+                {(window as any).__PLATFORM__ === 'web' && <label className="pref-row"><span>AI runs in</span><select value={prefs.aiProvider} onChange={e => updatePref('aiProvider', e.target.value as 'browser' | 'local')}><option value="browser">This browser · free</option><option value="local">Local server · advanced</option></select></label>}
+                {(window as any).__PLATFORM__ === 'web' && prefs.aiProvider !== 'local' ? <BrowserAISetup force /> : <>
                 <label className="pref-row" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: 6 }}>
                   <span>Local server URL</span>
                   <input type="url" value={prefs.localAIUrl} disabled={checkingAI}
@@ -247,6 +251,7 @@ export function PreferencesWindow({ visible, onClose, onSaved, initialTab = 'uni
                 <p style={{ color: 'var(--text-secondary)', fontSize: 12, lineHeight: 1.6 }}>
                   Browser connection blocked? Enable CORS in LM Studio’s server settings. For Ollama, allow this app’s origin with OLLAMA_ORIGINS. Use OLLAMA_NO_CLOUD=1 to disable Ollama cloud models.
                 </p>
+                </>}
               </div>
             )}
             {activeTab === 'plugins' && (

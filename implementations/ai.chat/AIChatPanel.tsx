@@ -3,6 +3,8 @@ import { useApp } from '../window.main/AppContext';
 import { ChatMessage, buildLocalSystemPrompt, buildSelectionContext, contextToMessage, getToolDefinitions, executeTool } from './AIService';
 import { runChatTurn, ToolResult } from './chat-runner';
 import './assistant.css';
+import { BrowserAISetup } from './BrowserAISetup';
+import { stopBrowserAI } from '../../src/web/browser-ai';
 
 const STARTERS = [
   ['Create a room', 'Create an open-top room 5m wide, 4m deep and 2.8m tall with 15cm thick walls.'],
@@ -55,6 +57,7 @@ export function AIChatPanel({ visible = true }: { visible?: boolean }) {
         : buildLocalSystemPrompt() + '\nYou are the Sight3D modeling assistant. Use plain language, state assumptions about dimensions, and ask one focused question when intent is ambiguous. Preserve unrelated geometry. After editing, briefly explain what changed and that each modeling operation can be undone. Never claim an operation succeeded if its result failed.';
       const result = await runChatTurn({
         messages: history,
+        maxRounds: 6,
         request: async messages => window.api.invoke('ai:chat', { system, messages, tools: mode === 'build' ? getToolDefinitions() : [] }) as any,
         execute: async (name, args) => {
           const result = await executeTool(api, name, args);
@@ -83,12 +86,13 @@ export function AIChatPanel({ visible = true }: { visible?: boolean }) {
       </div>
       <p className="ai-mode-help">{mode === 'build' ? 'Describe it. The assistant can create and edit your model.' : 'Step-by-step help. Your model stays unchanged.'}</p>
       <div className="ai-context"><span>{selectedCount ? `${selectedCount} selected` : 'Whole model'}</span><span>Units: {units}</span></div>
+      <BrowserAISetup busy={loading} />
       <div className="ai-chat-messages" role="log" aria-label="Conversation" aria-live="polite">
         {messages.length === 0 && <div className="ai-chat-empty">
           <h2>{mode === 'build' ? 'What would you like to make?' : 'Learn by making.'}</h2>
           <p>{mode === 'build' ? 'Start with a shape, a room, or a piece of furniture. Include dimensions for a more useful result.' : 'Ask about a tool or follow a small project, one step at a time.'}</p>
           <div className="ai-starters">{(mode === 'build' ? STARTERS : [['Make my first model', 'Walk me through drawing a rectangle and turning it into a box with Push/Pull. Give me one step at a time.'], ['Explain this tool', `How do I use ${activeTool?.name || 'Select'}? Explain the clicks and keyboard shortcuts.`]]).map(([label, prompt]) => <button key={label} onClick={() => { setInput(prompt); inputRef.current?.focus(); }}>{label}<span aria-hidden="true">→</span></button>)}</div>
-          <div className="ai-setup"><strong>Local AI</strong><p>Runs through LM Studio or Ollama on this computer. No cloud API key required.</p><button onClick={() => window.dispatchEvent(new Event('show-ai-settings'))}>AI settings</button></div>
+          <div className="ai-setup"><strong>AI settings</strong><p>Use browser AI on the website, or optionally connect your own local server.</p><button onClick={() => window.dispatchEvent(new Event('show-ai-settings'))}>AI settings</button></div>
         </div>}
         {messages.map((msg, i) => <div key={i} className={`ai-chat-msg ai-chat-msg-${msg.role}`}>
           <div className="ai-chat-msg-role">{msg.role === 'user' ? 'You' : 'Sight3D'}</div>
@@ -103,7 +107,7 @@ export function AIChatPanel({ visible = true }: { visible?: boolean }) {
         <label htmlFor="ai-prompt-input">{mode === 'build' ? 'Describe your model or change' : 'Ask a modeling question'}</label>
         <textarea id="ai-prompt-input" ref={inputRef} value={input} onChange={e => setInput(e.target.value)} placeholder={mode === 'build' ? 'A bookshelf, 1m wide and 2m tall…' : 'How do I turn a flat shape into 3D?'} rows={3} disabled={loading}
           onKeyDown={e => { e.stopPropagation(); if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) { e.preventDefault(); void sendMessage(); } }} />
-        <div className="ai-compose-actions"><button disabled={!canUndo || loading} onClick={undo}>Undo last operation</button>{loading ? <button className="ai-chat-send" onClick={() => { stopRef.current = true; setProgress('Stopping after the current request or operation…'); }}>Stop</button> : <button className="ai-chat-send" onClick={() => void sendMessage()} disabled={!input.trim() || !app}>Send</button>}</div>
+        <div className="ai-compose-actions"><button disabled={!canUndo || loading} onClick={undo}>Undo last operation</button>{loading ? <button className="ai-chat-send" onClick={() => { stopRef.current = true; stopBrowserAI(); setProgress('Stopping after the current request or operation…'); }}>Stop</button> : <button className="ai-chat-send" onClick={() => void sendMessage()} disabled={!input.trim() || !app}>Send</button>}</div>
         <small>Enter to send · Edits may create several undo steps</small>
       </div>
     </section>

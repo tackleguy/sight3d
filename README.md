@@ -1,6 +1,6 @@
 # Sight3D
 
-SketchUp-style modeling with an easier tool workflow and a docked AI assistant. See [Sight3D quick start](SIGHT3D.md) for setup, AI configuration, and the new workflow. Original project documentation follows.
+SketchUp-style modeling with an easier tool workflow and a docked AI assistant. See [Sight3D quick start](SIGHT3D.md) for setup, AI configuration, and the new workflow. Website AI runs on your device with WebGPU: no API key, paid inference service, or local-server installation. Enable it in the assistant to download the model; a compatible GPU/browser is required. Original project documentation follows.
 
 # DraftDown
 

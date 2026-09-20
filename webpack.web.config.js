@@ -11,7 +11,7 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
+        use: { loader: 'ts-loader', options: { compilerOptions: { module: 'esnext', moduleResolution: 'node' } } },
         exclude: /node_modules/,
       },
       {
@@ -35,7 +35,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist/web'),
     filename: '[name].[contenthash].js',
-    publicPath: '/',
+    publicPath: 'auto',
     clean: true,
   },
   plugins: [

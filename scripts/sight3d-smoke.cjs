@@ -6,6 +6,7 @@ const assert = require('node:assert/strict');
   page.setDefaultTimeout(15000);
   const errors=[]; page.on('pageerror', e => errors.push(e.message));
   await page.route('**/__local_ai/**', route => route.fulfill({ status:200, contentType:'application/json', body:JSON.stringify({data:[]}) }));
+  await page.addInitScript(() => localStorage.setItem('draftdown-prefs', JSON.stringify({aiProvider:'local'})));
   await page.goto('http://127.0.0.1:3001');
   await page.getByText('Start modeling', { exact:true }).click();
   await page.waitForFunction(() => !!window.modelAPI);

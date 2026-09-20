@@ -7,6 +7,7 @@ const assert = require('node:assert/strict');
  page.setDefaultTimeout(20000);
  page.on('response', async response => { if(response.url().endsWith('/chat/completions')) { try { const data=await response.json(); console.log('Local response:', data.choices?.[0]?.finish_reason, data.choices?.[0]?.message?.tool_calls?.map(c=>c.function.name), data.error || ''); } catch {} } });
  const requests=[];page.on('request',r=>{if(r.method()==='POST')requests.push(r.url());});
+ await page.addInitScript(() => localStorage.setItem('draftdown-prefs', JSON.stringify({aiProvider:'local'})));
  await page.goto('http://127.0.0.1:3001');
  await page.getByText('Start modeling',{exact:true}).click();
  await page.waitForFunction(()=>!!window.modelAPI);

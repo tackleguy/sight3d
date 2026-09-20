@@ -3,6 +3,7 @@
 // Replaces Electron IPC with Web APIs (File API, localStorage, fetch).
 
 import type { WindowAPI, MainProcessAPI, RendererEvents, UserPreferences } from '../core/ipc-types';
+import { chatBrowser } from './browser-ai';
 import { chatLocal, listLocalModels } from '../core/local-ai';
 import { DEFAULT_PREFERENCES } from '../core/ipc-types';
 import { bytesToBase64, convertSkpViaService } from '../core/skp-convert-client';
@@ -238,7 +239,7 @@ export class WebPlatformBridge implements WindowAPI {
     'ai:chat': async (args: { messages: Array<{ role: string; content: unknown }>; tools: unknown[]; system: string }) => {
       let prefs: UserPreferences = DEFAULT_PREFERENCES;
       try { prefs = { ...prefs, ...JSON.parse(localStorage.getItem(PREFS_KEY) || '{}') }; } catch { /* use local defaults */ }
-      return chatLocal(args, prefs);
+      return prefs.aiProvider === 'local' ? chatLocal(args, prefs) : chatBrowser(args);
     },
   };
 
