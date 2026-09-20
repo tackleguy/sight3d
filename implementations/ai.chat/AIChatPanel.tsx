@@ -7,6 +7,8 @@ import { BrowserAISetup } from './BrowserAISetup';
 import { stopBrowserAI } from '../../src/web/browser-ai';
 
 const STARTERS = [
+  ['Build a skyscraper', 'Create a 48-floor glass skyscraper, 30m wide and 24m deep, with three setbacks and detail level 2.'],
+  ['Add more detail', 'Add the next level of detail to the skyscraper you just created.'],
   ['Create a room', 'Create an open-top room 5m wide, 4m deep and 2.8m tall with 15cm thick walls.'],
   ['Build a table', 'Create a simple table 1.5m wide, 0.8m deep and 0.75m tall with four legs.'],
   ['Edit my selection', 'Help me change the selected geometry. Ask what I want to change before editing.'],
@@ -63,6 +65,7 @@ export function AIChatPanel({ visible = true }: { visible?: boolean }) {
           const result = await executeTool(api, name, args);
           (app as any)?.syncScene?.(); (app as any)?.syncSelection?.();
           syncToolState(); syncPreviews();
+          if (name === 'create_skyscraper' && JSON.parse(result).ok) { api.setView('iso'); api.zoomExtents(); }
           return result;
         },
         stopped: () => stopRef.current,

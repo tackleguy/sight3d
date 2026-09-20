@@ -39,3 +39,13 @@ Protocol references: [LM Studio tool calling](https://lmstudio.ai/docs/developer
 Run `npm run build:web` and serve **dist/web** over HTTPS on a static host. No inference backend or secret environment variables are required. Worker and model-library chunks resolve relative to the site, including a hosted subdirectory. The host must allow worker scripts, WebAssembly compilation, and connections to Hugging Face and MLC model assets if it supplies a restrictive Content Security Policy. Model downloads are made directly by each visitor’s browser.
 
 Vercel uses the committed `vercel.json`: install with `npm ci`, build with `npm run build:web`, and publish `dist/web` using the Other framework preset. The default `npm run build` is for Electron and must not be used as the website build. GitHub CI builds and smoke-tests the static website on each push. Locally, run `npm run build:web && npm run test:web`; set `SIGHT3D_URL` to test a deployed URL instead. The legacy AWS script requires an explicit `SIGHT3D_S3_BUCKET` and is not used by Vercel.
+
+## Skyscrapers and progressive detail
+
+Ask for a skyscraper with a floor count, width/depth in meters, glass or Art Deco style, and setbacks. Example: “Create a 48-floor glass skyscraper, 30m wide and 24m deep, with three setbacks and detail level 2.” The assistant uses a procedural architecture tool instead of a plain box or AI-generated mesh script. The ~300 MB AI download is unchanged.
+
+- Detail 1: podium, stepped tower, rooftop crown and tapered spire.
+- Detail 2: individual glass panels on all four elevations and floor bands.
+- Detail 3: façade fins, terrace parapets, lobby glazing, canopy, columns, entrance steps, plaza and roof equipment.
+
+“Add more detail” advances the most recent tower by one level, up to level 3. Creation and each detail pass have a single undo step. The generator supports 8–100 tower floors, 12–100m footprints, and 0–5 setbacks. The podium and crown add height above the specified tower floors. These are exterior concept models; windows are surface panels, not interior rooms. Detail follow-ups track the latest generated tower in this session; after moving/editing it, undo those changes first. Reopened files retain geometry but do not retain the session's procedural editing reference.

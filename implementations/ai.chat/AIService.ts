@@ -1,3 +1,4 @@
+import { buildSkyscraper } from './skyscraper';
 // @archigraph ai.chat
 // AI service — exposes the DraftDown Ruby API JS façade as the AI's tool surface.
 //
@@ -30,6 +31,17 @@ export interface ChatMessage {
 
 export function getToolDefinitions() {
   return [
+    {
+      name: 'create_skyscraper',
+      description: 'Build a detailed skyscraper with podium, setbacks, tapered crown and facade. ALWAYS use for skyscrapers, high-rises and towers; never substitute a plain box. Defaults: 48 floors, 30m wide, 24m deep, glass, 3 setbacks, detail 2. All dimensions are meters.',
+      input_schema: { type: 'object' as const, properties: {
+        floors: { type: 'integer', minimum: 8, maximum: 100 }, width: { type: 'number', minimum: 12, maximum: 100 }, depth: { type: 'number', minimum: 12, maximum: 100 },
+        floorHeight: { type: 'number', minimum: 2.5, maximum: 6 }, setbacks: { type: 'integer', minimum: 0, maximum: 5 },
+        detail: { type: 'integer', minimum: 1, maximum: 3, description: '1 massing; 2 windows and floor bands; 3 fins, terraces, lobby, plaza and rooftop details.' },
+        style: { type: 'string', enum: ['glass', 'art_deco'] }, x: { type: 'number' }, y: { type: 'number' }, z: { type: 'number' },
+      } },
+    },
+    { name: 'detail_skyscraper', description: 'Add the next detail level to the most recently created skyscraper in this session. Use when asked to add more detail, windows, or facade details to that tower. Preserves existing geometry. One undo step.', input_schema: { type: 'object' as const, properties: {} } },
     {
       name: 'create_box',
       description: 'Create a solid box or cube with exact dimensions in meters. Use this instead of a script for boxes. Origin is the bottom-front-left corner; Y is up.',
@@ -228,6 +240,7 @@ export function contextToMessage(ctx: SelectionContext): string {
 
 export function buildLocalSystemPrompt(): string {
   return `You are Sight3D's local 3D modeling assistant. Use tools to change the model; text alone cannot create geometry.
+For skyscrapers, high-rises or towers ALWAYS use create_skyscraper, never create_box or a script. Interpret floors, footprint, glass vs Art Deco style, setbacks and detail level. Use detail 3 for highly detailed towers. For "add more detail" to the latest tower call detail_skyscraper, not create_skyscraper. Example: a detailed 60-floor skyscraper => create_skyscraper({floors:60,detail:3}). A skyscraper has a podium, repeated floor/window grid, setbacks, crown and roof equipment; it is not a single box.
 For a box or cube, ALWAYS call create_box with numeric width, depth and height in meters. Default origin is 0,0,0. Do not use execute_script for boxes.
 Use read_state or inspect to understand existing or selected geometry. Never guess entity IDs. Ask a short question when the requested change is ambiguous. Preserve unrelated geometry.
 For complex geometry, call read_api_reference before execute_script. That tool runs JavaScript with m=model=DraftDown.activeModel, Geom and UI already available. Use m.api_ helpers. Coordinates are meters; Y is up. Do not redeclare m/model or wrap scripts in a function. Use operationName to label edits.
@@ -549,6 +562,8 @@ export async function executeTool(api: IModelAPI, name: string, input: Record<st
   let ok = true;
   try {
     switch (name) {
+      case 'create_skyscraper': resultStr = JSON.stringify(buildSkyscraper(api, input)); break;
+      case 'detail_skyscraper': resultStr = JSON.stringify(buildSkyscraper(api, input, true)); break;
       case 'create_box': {
         const { width, depth, height } = input;
         const x = input.x ?? 0, y = input.y ?? 0, z = input.z ?? 0;

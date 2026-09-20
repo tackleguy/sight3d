@@ -821,13 +821,20 @@ export class HalfEdgeMesh {
     faceIndices: number[][],
     edgePairs: [number, number][], // pre-deduped [vertexIdx1, vertexIdx2] pairs
   ): { vertexIds: string[]; faceIds: string[] } {
-    // Bypass delta recording during bulk import — this is file load, not user edits.
-    // bulkAdd uses Map.prototype.set directly to skip TrackedMap overhead.
-    const rawVertexSet = Map.prototype.set.bind(this.vertices);
-    const rawEdgeSet = Map.prototype.set.bind(this.edges);
-    const rawFaceSet = Map.prototype.set.bind(this.faces);
+    // API imports can run inside an undoable modeling operation. TrackedMap is
+    // a normal Map when no recorder is active (ordinary document loads).
+    const rawVertexSet = this.vertices.set.bind(this.vertices);
+    const rawEdgeSet = this.edges.set.bind(this.edges);
+    const rawFaceSet = this.faces.set.bind(this.faces);
 
     let counter = this.vertices.size + this.edges.size + this.faces.size;
+    // Deleted entities leave gaps: map sizes alone can reuse a live numeric ID.
+    for (const map of [this.vertices, this.edges, this.faces]) {
+      for (const id of map.keys()) {
+        const match = /^[vef](\d+)$/.exec(id);
+        if (match) counter = Math.max(counter, Number(match[1]) + 1);
+      }
+    }
 
     // 1. Vertices — simple numeric IDs, inline position (no clone)
     const vertexIds: string[] = new Array(positions.length);
