@@ -20,6 +20,39 @@ let context;
   await page.waitForFunction(()=>{const text=document.querySelector('.browser-ai-setup [role=status]')?.textContent;return text?.startsWith('Ready') || !!document.querySelector('.browser-ai-setup button')?.textContent?.includes('Retry');},{},{timeout:620000});
  } finally {clearInterval(progress);}
  const status=await page.locator('.browser-ai-setup [role=status]').textContent();console.log('LOAD:',status);assert.match(status,/Ready/);
+ if(process.env.SIGHT3D_SCENARIO === 'architecture') {
+  const ask=async(prompt)=>{
+   await page.locator('#ai-prompt-input').fill(prompt);
+   await page.getByRole('button',{name:'Send',exact:true}).click();
+   await page.waitForFunction(()=>!document.querySelector('.ai-progress'),{},{timeout:240000});
+   assert.deepEqual(await page.locator('.ai-chat-error').allTextContents(),[]);
+   const answer=(await page.locator('.ai-chat-msg-assistant').allTextContents()).at(-1);
+   console.log('DESIGN:',answer);return answer;
+  };
+  await ask('Create a circular glass office building, 30m wide, 30m deep and 100m tall, twisted by 60 degrees, with a flat roof at detail level 2.');
+  assert.equal(await page.evaluate(()=>window.modelAPI.getBoundingBox().max.y),100);
+  const round=await page.evaluate(()=>window.modelAPI.getAllFaces().length);assert.ok(round>100);
+  await page.evaluate(()=>{window.modelAPI.setView('iso');window.modelAPI.zoomExtents();});await page.waitForTimeout(600);
+  await page.screenshot({path:'.impeccable/review/architecture-round.png'});
+  await page.getByRole('button',{name:'Undo last operation',exact:true}).click();
+  assert.equal(await page.evaluate(()=>window.modelAPI.getAllFaces().length),0);
+  const house=await ask('Create an L-shaped brick apartment building, 24m wide, 18m deep, 20m tall, 5 floors, flat roof at detail level 2.');
+  assert.match(house,/l-shape/);assert.equal(await page.evaluate(()=>window.modelAPI.getBoundingBox().max.y),20);
+  assert.notEqual(await page.evaluate(()=>window.modelAPI.getAllFaces().length),round);
+  await ask('Add more detail.');
+  await page.getByRole('button',{name:'Undo last operation',exact:true}).click();
+  await page.getByRole('button',{name:'Undo last operation',exact:true}).click();
+  assert.equal(await page.evaluate(()=>window.modelAPI.getAllFaces().length),0);
+  const city=await ask('Design a Paris-inspired neighborhood with 4 buildings at detail level 2.');
+  assert.match(city,/4 varied buildings/);assert.match(city,/Paris/);
+  await page.evaluate(()=>{window.modelAPI.setView('iso');window.modelAPI.zoomExtents();});await page.waitForTimeout(600);
+  await page.screenshot({path:'.impeccable/review/architecture-city.png'});
+  await page.getByRole('button',{name:'Undo last operation',exact:true}).click();
+  assert.equal(await page.evaluate(()=>window.modelAPI.getAllFaces().length),0);
+  assert.deepEqual(posts,[]);
+  console.log('PASS: varied building shapes, explicit sizes, city inspiration, detail and undo through real browser AI.');
+  await context.close();return;
+ }
  const tower = process.env.SIGHT3D_SCENARIO === 'tower';
  await page.locator('#ai-prompt-input').fill(tower ? 'Create a 48-floor glass skyscraper, 30 meters wide, 24 meters deep, with 3 setbacks and detail level 2.' : 'Create a 1 meter cube at the origin.');
  await page.getByRole('button',{name:'Send',exact:true}).click();

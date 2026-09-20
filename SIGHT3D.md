@@ -40,12 +40,20 @@ Run `npm run build:web` and serve **dist/web** over HTTPS on a static host. No i
 
 Vercel uses the committed `vercel.json`: install with `npm ci`, build with `npm run build:web`, and publish `dist/web` using the Other framework preset. The default `npm run build` is for Electron and must not be used as the website build. GitHub CI builds and smoke-tests the static website on each push. Locally, run `npm run build:web && npm run test:web`; set `SIGHT3D_URL` to test a deployed URL instead. The legacy AWS script requires an explicit `SIGHT3D_S3_BUCKET` and is not used by Vercel.
 
-## Skyscrapers and progressive detail
+## Buildings and city inspiration
 
-Ask for a skyscraper with a floor count, width/depth in meters, glass or Art Deco style, and setbacks. Example: “Create a 48-floor glass skyscraper, 30m wide and 24m deep, with three setbacks and detail level 2.” The assistant uses a procedural architecture tool instead of a plain box or AI-generated mesh script. The ~300 MB AI download is unchanged.
+The ~300 MB browser model now calls a flexible procedural architecture tool. Supported types include houses, apartments, offices, skyscrapers, warehouses, pavilions and civic buildings. Footprints include rectangles, round/oval forms, triangles, hexagons, L/U shapes and custom polygons. Twisting, tapering and custom loft profiles can vary the silhouette. Roofs include flat, gabled, hipped, dome, pyramid and spire forms; nonrectangular gables are converted to hips and reported that way.
 
-- Detail 1: podium, stepped tower, rooftop crown and tapered spire.
-- Detail 2: individual glass panels on all four elevations and floor bands.
-- Detail 3: façade fins, terrace parapets, lobby glazing, canopy, columns, entrance steps, plaza and roof equipment.
+Examples:
+- “Create a circular glass office, 30m wide, 30m deep and 100m tall, twisted 60 degrees, flat roof, detail 2.”
+- “Create an L-shaped apartment, 24m wide, 18m deep, 20m tall, 5 floors, flat roof.”
+- “Create a small house, 12m wide, 9m deep, 7m tall with a gable roof.”
+- “Generate a Paris neighborhood with 6 buildings, detail 2.”
 
-“Add more detail” advances the most recent tower by one level, up to level 3. Creation and each detail pass have a single undo step. The generator supports 8–100 tower floors, 12–100m footprints, and 0–5 setbacks. The podium and crown add height above the specified tower floors. These are exterior concept models; windows are surface panels, not interior rooms. Detail follow-ups track the latest generated tower in this session; after moving/editing it, undo those changes first. Reopened files retain geometry but do not retain the session's procedural editing reference.
+City presets: New York, Chicago, Paris, Tokyo, Dubai, Singapore, London, Barcelona, Hong Kong, San Francisco, Venice and Sydney. They influence proportions, roof forms and materials. Blocks contain varied buildings, streets and sidewalks. These are fictional city-inspired concept models, not real street maps or accurate reconstructions of landmarks.
+
+Individual buildings support 1–200 floors, total heights of 0.5–1,000m including roofs, and footprints up to 2,000m wide/deep. Custom polygons accept 3–32 points; lofts accept 2–12 profiles. Geometry budgets limit each building to 16,000 faces and a block to 50,000 faces / 25 buildings. Above 80 floors, window rows are simplified. This is a bounded concept generator, not unrestricted architectural CAD or a model trained on every city.
+
+Detail 1 generates the mass and roof, detail 2 adds window panels, and detail 3 adds floor bands. “Add more detail” advances the latest individual building in this session. Creation and detail passes each have one undo step; a whole city block also has one undo step. Reopened files preserve geometry but not the procedural refinement reference. Windows are exterior surface panels, not interior rooms. The older stepped Art Deco tower tool remains available to local tool-capable models.
+
+Run `SIGHT3D_SCENARIO=architecture node scripts/sight3d-browser-live.cjs` for a real browser-model check covering a twisted circular office, an L-shaped apartment, progressive detail, a Paris block and undo. Geometry tests cover all footprint and roof types plus custom lofts.

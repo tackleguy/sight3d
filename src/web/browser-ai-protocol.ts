@@ -8,12 +8,14 @@ export function browserTools(args: ChatArgs) {
   const assistant = [...args.messages].reverse().find(m => m.role === 'assistant' && typeof m.content === 'string');
   const previousReply = typeof assistant?.content === 'string' ? assistant.content : '';
   const request = prompt.split('\n\n').pop()!.trim();
-  const tower = /\b(skyscraper|high[- ]?rise|tower)\b/i;
+  const tower = /\b(skyscraper|skysraper|high[- ]?rise|tower|building|house|home|cottage|villa|apartment|office|warehouse|pavilion|museum|library|school|civic)\b/i;
   // A tiny model reliably fills parameters when it isn't distracted by a general
   // JavaScript tool. Learn mode still has no tools, and other edits keep theirs.
   const detail = (tower.test(prompt) || (/^(?:please )?add (?:more |extra )?detail[.!]?$/i.test(request) && tower.test(previousReply))) && /\b(add|more|increase|extra|next)\b[^.!?]*\bdetail\b/i.test(prompt);
   const create = tower.test(prompt) && /\b(create|build|make|design|generate)\b/i.test(prompt);
-  const name = detail ? 'detail_skyscraper' : create ? 'create_skyscraper' : null;
+  const city = (/\b(neighborhood|neighbourhood|skyline|city block|district)\b/i.test(request) || /\bbuildings\b/i.test(request) || (/\bcity\b/i.test(request) && !tower.test(request))) && /\b(create|build|make|design|generate)\b/i.test(request);
+  const available = (preferred:string, fallback:string) => tools.some(tool=>tool.name===preferred)?preferred:fallback;
+  const name = detail ? available('detail_building','detail_skyscraper') : city ? 'create_city' : create ? available('create_building','create_skyscraper') : null;
   return name && tools.some(tool => tool.name === name) ? tools.filter(tool => tool.name === name) : tools;
 }
 export function browserRequest(args: ChatArgs) {
@@ -26,14 +28,14 @@ export function browserRequest(args: ChatArgs) {
   const detail = typeof lastUser?.content === 'string' ? lastUser.content.match(/\bdetail(?:\s+level)?\s*[:=]?\s*([123])\b/i)?.[1] : undefined;
   const inputSchema = (tool: typeof tools[number]) => {
     const schema = tool.input_schema as { properties?: Record<string,unknown>; required?: string[] };
-    return tool.name === 'create_skyscraper' && detail ? { ...schema, properties: { ...schema.properties, detail: { const: Number(detail) } }, required: [...new Set([...(schema.required || []), 'detail'])] } : schema;
+    return ['create_skyscraper','create_building','create_city'].includes(tool.name) && detail ? { ...schema, properties: { ...schema.properties, detail: { const: Number(detail) } }, required: [...new Set([...(schema.required || []), 'detail'])] } : schema;
   };
   const schema = { type: 'object', properties: {
     reply: { type: 'string' },
-    calls: { type: 'array', maxItems: 6, items: { anyOf: tools.map(tool => ({ type: 'object', properties: { name: { const: tool.name }, arguments: inputSchema(tool) }, required: ['name', 'arguments'], additionalProperties: false })) } },
+    calls: { type: 'array', maxItems: tools.length===1 && ['create_building','create_city','detail_building'].includes(tools[0].name) ? 1 : 6, items: { anyOf: tools.map(tool => ({ type: 'object', properties: { name: { const: tool.name }, arguments: inputSchema(tool) }, required: ['name', 'arguments'], additionalProperties: false })) } },
   }, required: ['reply', 'calls'], additionalProperties: false };
   return {
-    messages: [{ role: 'system' as const, content: base + '\nReturn JSON with reply and calls. Each call has name and arguments (a JSON object matching the tool schema). For skyscrapers use create_skyscraper. For add more detail use detail_skyscraper. Only simple boxes use create_box. After success, return a brief reply and calls:[]; never repeat a completed action. Example: {"reply":"","calls":[{"name":"create_skyscraper","arguments":{"floors":48,"detail":2}}]}. Available tools:\n' + JSON.stringify(tools) }, ...messages],
+    messages: [{ role: 'system' as const, content: base + '\nReturn JSON with reply and calls. Each call has name and arguments (a JSON object matching the tool schema). For architecture use create_building with varied shapes, types, dimensions and roofs. For city-inspired blocks use create_city. For more detail use detail_building. Only simple boxes use create_box. After success, return a brief reply and calls:[]; never repeat a completed action.  Available tools:\n' + JSON.stringify(tools) }, ...messages],
     temperature: 0, max_tokens: 1024, stream: false as const,
     response_format: { type: 'json_object' as const, schema: JSON.stringify(schema) },
   };
@@ -62,7 +64,7 @@ export function completedBrowserOperations(args: ChatArgs): AIResponse | null {
   const previous = args.messages[args.messages.length - 2], last = args.messages[args.messages.length - 1];
   if (previous?.role !== 'assistant' || last?.role !== 'user' || !Array.isArray(previous.content) || !Array.isArray(last.content)) return null;
   const calls = previous.content.filter((block: any) => block.type === 'tool_use');
-  if (!calls.length || calls.some((call: any) => !['create_box','create_skyscraper','detail_skyscraper'].includes(call.name))) return null;
+  if (!calls.length || calls.some((call: any) => !['create_box','create_skyscraper','detail_skyscraper','create_building','create_city','detail_building'].includes(call.name))) return null;
   const receipts = last.content;
   const descriptions: string[] = [];
   for (const call of calls) {

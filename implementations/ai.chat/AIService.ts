@@ -1,3 +1,4 @@
+import { createBuilding, createCity, detailBuilding } from './architecture';
 import { buildSkyscraper } from './skyscraper';
 // @archigraph ai.chat
 // AI service — exposes the DraftDown Ruby API JS façade as the AI's tool surface.
@@ -31,9 +32,21 @@ export interface ChatMessage {
 
 export function getToolDefinitions() {
   return [
+    {name:'create_building',description:'Design any supported building type and shape, including houses, apartments, offices, skyscrapers, warehouses, pavilions and civic buildings. Supports city-inspired architecture, custom polygon footprints and loft profiles. Explicit user dimensions and shapes take priority. Height includes the roof. Use this instead of the legacy fixed skyscraper tool.',input_schema:{type:'object' as const,properties:{
+      type:{type:'string',enum:['house','apartment','office','skyscraper','warehouse','pavilion','civic']},
+      shape:{type:'string',enum:['rectangle','circle','ellipse','triangle','hexagon','l_shape','u_shape','custom']},
+      roof:{type:'string',enum:['flat','gable','hip','dome','pyramid','spire']},style:{type:'string',enum:['glass','brick','stone','concrete','terracotta','white']},
+      city:{type:'string',description:'City inspiration: new_york, chicago, paris, tokyo, dubai, singapore, london, barcelona, hong_kong, san_francisco, venice, sydney.'},
+      floors:{type:'integer',minimum:1,maximum:200},height:{type:'number',minimum:.5,maximum:1000},width:{type:'number',minimum:1,maximum:2000},depth:{type:'number',minimum:1,maximum:2000},
+      twist:{type:'number',minimum:-180,maximum:180},taper:{type:'number',minimum:0,maximum:.85},rotation:{type:'number'},detail:{type:'integer',minimum:1,maximum:3},x:{type:'number'},y:{type:'number'},z:{type:'number'},
+      footprint:{type:'array',description:'Custom outline in meters; use shape=custom.',minItems:3,maxItems:32,items:{type:'object',properties:{x:{type:'number'},z:{type:'number'}},required:['x','z']}},
+      sections:{type:'array',description:'Optional custom loft profiles ordered from at=0 to at=1; control taper, lean and twist.',minItems:2,maxItems:12,items:{type:'object',properties:{at:{type:'number'},scale:{type:'number'},rotation:{type:'number'},offsetX:{type:'number'},offsetZ:{type:'number'}},required:['at']}}
+    }}},
+    {name:'create_city',description:'Create a varied fictional city-inspired block with buildings, streets and sidewalks. This is not an actual map reconstruction. Use for a city, skyline, neighborhood or city block. Supported inspirations: New York, Chicago, Paris, Tokyo, Dubai, Singapore, London, Barcelona, Hong Kong, San Francisco, Venice, Sydney.',input_schema:{type:'object' as const,properties:{city:{type:'string'},count:{type:'integer',minimum:1,maximum:25},spacing:{type:'number',minimum:8,maximum:100},seed:{type:'integer',minimum:0},detail:{type:'integer',minimum:1,maximum:3},x:{type:'number'},z:{type:'number'}}}},
+    {name:'detail_building',description:'Add the next detail level to the latest individual building created with create_building. Levels add windows, then floor bands. Does not rebuild the building.',input_schema:{type:'object' as const,properties:{}}},
     {
       name: 'create_skyscraper',
-      description: 'Build a detailed skyscraper with podium, setbacks, tapered crown and facade. ALWAYS use for skyscrapers, high-rises and towers; never substitute a plain box. Defaults: 48 floors, 30m wide, 24m deep, glass, 3 setbacks, detail 2. All dimensions are meters.',
+      description: 'Build a detailed skyscraper with podium, setbacks, tapered crown and facade. Use only for explicitly requested stepped Art Deco towers; use create_building for other architecture. Defaults: 48 floors, 30m wide, 24m deep, glass, 3 setbacks, detail 2. All dimensions are meters.',
       input_schema: { type: 'object' as const, properties: {
         floors: { type: 'integer', minimum: 8, maximum: 100 }, width: { type: 'number', minimum: 12, maximum: 100 }, depth: { type: 'number', minimum: 12, maximum: 100 },
         floorHeight: { type: 'number', minimum: 2.5, maximum: 6 }, setbacks: { type: 'integer', minimum: 0, maximum: 5 },
@@ -240,7 +253,7 @@ export function contextToMessage(ctx: SelectionContext): string {
 
 export function buildLocalSystemPrompt(): string {
   return `You are Sight3D's local 3D modeling assistant. Use tools to change the model; text alone cannot create geometry.
-For skyscrapers, high-rises or towers ALWAYS use create_skyscraper, never create_box or a script. Interpret floors, footprint, glass vs Art Deco style, setbacks and detail level. Use detail 3 for highly detailed towers. For "add more detail" to the latest tower call detail_skyscraper, not create_skyscraper. Example: a detailed 60-floor skyscraper => create_skyscraper({floors:60,detail:3}). A skyscraper has a podium, repeated floor/window grid, setbacks, crown and roof equipment; it is not a single box.
+For architecture use create_building: choose building type, footprint shape, roof, height, twist, taper and city inspiration from the user's request. Never turn every building into the same skyscraper. Houses can have gabled roofs; pavilions can be domed; towers can be round, elliptical, twisted or tapered; custom polygon footprints and loft sections are supported. For neighborhoods, skylines, city blocks or multiple city-inspired buildings use create_city. These are fictional city-inspired designs, not actual map data. For more detail on your latest building use detail_building. The legacy create_skyscraper tool is only for explicitly requested tiered Art Deco towers.
 For a box or cube, ALWAYS call create_box with numeric width, depth and height in meters. Default origin is 0,0,0. Do not use execute_script for boxes.
 Use read_state or inspect to understand existing or selected geometry. Never guess entity IDs. Ask a short question when the requested change is ambiguous. Preserve unrelated geometry.
 For complex geometry, call read_api_reference before execute_script. That tool runs JavaScript with m=model=DraftDown.activeModel, Geom and UI already available. Use m.api_ helpers. Coordinates are meters; Y is up. Do not redeclare m/model or wrap scripts in a function. Use operationName to label edits.
@@ -562,6 +575,9 @@ export async function executeTool(api: IModelAPI, name: string, input: Record<st
   let ok = true;
   try {
     switch (name) {
+      case 'create_building': resultStr = JSON.stringify(createBuilding(api,input)); break;
+      case 'create_city': resultStr = JSON.stringify(createCity(api,input)); break;
+      case 'detail_building': resultStr = JSON.stringify(detailBuilding(api)); break;
       case 'create_skyscraper': resultStr = JSON.stringify(buildSkyscraper(api, input)); break;
       case 'detail_skyscraper': resultStr = JSON.stringify(buildSkyscraper(api, input, true)); break;
       case 'create_box': {

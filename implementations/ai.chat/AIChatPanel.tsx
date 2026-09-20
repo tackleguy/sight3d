@@ -7,8 +7,10 @@ import { BrowserAISetup } from './BrowserAISetup';
 import { stopBrowserAI } from '../../src/web/browser-ai';
 
 const STARTERS = [
-  ['Build a skyscraper', 'Create a 48-floor glass skyscraper, 30m wide and 24m deep, with three setbacks and detail level 2.'],
-  ['Add more detail', 'Add the next level of detail to the skyscraper you just created.'],
+  ['Twisted tower', 'Create a circular glass tower, 180m tall and 30m wide, twisted by 60 degrees, with a flat roof.'],
+  ['City-inspired block', 'Design a Paris-inspired neighborhood with 6 buildings at detail level 2.'],
+  ['A different shape', 'Create an L-shaped apartment building, 24m wide, 18m deep and 20m tall, with a flat roof.'],
+  ['Add more detail', 'Add more detail.'],
   ['Create a room', 'Create an open-top room 5m wide, 4m deep and 2.8m tall with 15cm thick walls.'],
   ['Build a table', 'Create a simple table 1.5m wide, 0.8m deep and 0.75m tall with four legs.'],
   ['Edit my selection', 'Help me change the selected geometry. Ask what I want to change before editing.'],
@@ -62,10 +64,10 @@ export function AIChatPanel({ visible = true }: { visible?: boolean }) {
         maxRounds: 6,
         request: async messages => window.api.invoke('ai:chat', { system, messages, tools: mode === 'build' ? getToolDefinitions() : [] }) as any,
         execute: async (name, args) => {
-          const result = await executeTool(api, name, args);
+          const result = await executeTool(api, name, ['create_building','create_city'].includes(name) ? {...args,brief:text} : args);
           (app as any)?.syncScene?.(); (app as any)?.syncSelection?.();
           syncToolState(); syncPreviews();
-          if (name === 'create_skyscraper' && JSON.parse(result).ok) { api.setView('iso'); api.zoomExtents(); }
+          if (['create_skyscraper','create_building','create_city'].includes(name) && JSON.parse(result).ok) { api.setView('iso'); api.zoomExtents(); }
           return result;
         },
         stopped: () => stopRef.current,

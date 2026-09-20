@@ -69,3 +69,14 @@ test('procedural tower receipt completes without another generation',()=>{
  expect(result?.content?.[0].text).toBe('Created a 48-floor tower.');
  expect(result?.stop_reason).toBe('end_turn');
 });
+
+test('architecture routing distinguishes individual buildings, blocks and detail',()=>{
+ const tools=['create_building','create_city','detail_building','execute_script'].map(name=>({name,input_schema:{type:'object'}}));
+ for(const [prompt,name] of [['Create a circular office inspired by New York city','create_building'],['Generate a Paris neighborhood with 4 buildings','create_city'],['Make 6 London buildings','create_city']]){
+  const request=browserRequest({system:'',tools,messages:[{role:'user',content:prompt}]});
+  const schema=JSON.parse(request.response_format!.schema);
+  expect(schema.properties.calls.maxItems).toBe(1);
+  expect(schema.properties.calls.items.anyOf[0].properties.name.const).toBe(name);
+ }
+ expect(browserTools({system:'',tools,messages:[{role:'assistant',content:'Created a house.'},{role:'user',content:'Add more detail.'}]}).map(t=>t.name)).toEqual(['detail_building']);
+});
