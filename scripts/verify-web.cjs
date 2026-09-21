@@ -109,6 +109,26 @@ let browser, server;
     await page.getByRole('button',{name:'Undo',exact:true}).click();
     assert.equal(await page.evaluate(()=>window.modelAPI.getAllFaces().length),0);
   }
+  for(const [input,prompt,label] of [
+    [{type:'semiconductor fabrication plant',detail:2},'Create a semiconductor fabrication plant.','family'],
+    [{buildingUse:'lunar archival facility',baseType:'civic',features:['canopy','skylights'],detail:2},'Create a lunar archival facility, 40m wide and 18m tall.','custom'],
+  ]){
+    await page.evaluate(input=>{
+      const invoke=window.api.invoke.bind(window.api);let calls=0;
+      window.api.invoke=async(channel,args)=>channel!=='ai:chat'?invoke(channel,args):++calls===1
+        ? {content:[{type:'tool_use',id:'extended-model',name:'create_building',input}],stop_reason:'tool_use'}
+        : {content:[{type:'text',text:'Extended building verified'}],stop_reason:'end_turn'};
+    },input);
+    await page.locator('#ai-prompt-input').fill(prompt);
+    await page.getByRole('button',{name:'Send',exact:true}).click();
+    await page.getByText('Extended building verified',{exact:true}).last().waitFor();
+    await page.waitForFunction(()=>!document.querySelector('.ai-progress'));
+    assert.ok(await page.evaluate(()=>window.modelAPI.getAllFaces().length)>20);
+    if(label==='custom')assert.ok(Math.abs(await page.evaluate(()=>window.modelAPI.getBoundingBox().max.y)-18)<.001);
+    assert.deepEqual(await page.locator('.ai-chat-error').allTextContents(),[]);
+    await page.getByRole('button',{name:'Undo',exact:true}).click();
+    assert.equal(await page.evaluate(()=>window.modelAPI.getAllFaces().length),0);
+  }
   await page.getByRole('button',{name:'New chat',exact:true}).click();
   await page.setViewportSize({width:390,height:844});
   await page.screenshot({path:'/tmp/sight3d-catalog-mobile.png'});

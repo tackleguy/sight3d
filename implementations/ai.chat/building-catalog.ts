@@ -1,9 +1,11 @@
+import { EXTENDED_BUILDING_ARCHETYPES } from './building-families';
 import { SPORTS, findSport } from './sports-venues';
 /** Procedural concept-design recipes, not a historical taxonomy or training dataset. */
 export interface BuildingArchetype {
   id:string; category:string; name:string; aliases:string[]; baseType:string;
-  width:number; depth:number; height:number; floors:number; roof:string; feature:BuildingFeature;
+  width:number; depth:number; height:number; floors:number; roof:string; feature:BuildingFeature; coverage?:'family';
 }
+export const BUILDING_FEATURES = ['porch','balconies','canopy','colonnade','loading_bays','chimney','spire','dome','skylights','platform','hangar_door','shopfront'] as const;
 export type BuildingFeature = 'porch'|'balconies'|'canopy'|'colonnade'|'loading_bays'|'chimney'|'spire'|'dome'|'skylights'|'platform'|'hangar_door'|'shopfront';
 type Row = [string,number,number,number,number,string,BuildingFeature,string?];
 const groups:Array<[string,string,Row[]]> = [
@@ -77,6 +79,9 @@ groups.push(['Indoor sports venues','arena', [
   ...SPORTS.filter(s=>s[1]==='arena').map(s=>[`${s[0]} arena`,s[2]/.62,s[3]/.62,20,1,'dome','canopy',s[5]] as Row),
 ]]);
 export const BUILDING_ARCHETYPES:BuildingArchetype[]=groups.flatMap(([category,baseType,rows])=>rows.map(([name,width,depth,height,floors,roof,feature,alias])=>({id:name.replace(/ /g,'_'),category,name,aliases:alias?alias.split('|'):[],baseType,width,depth,height,floors,roof,feature})));
+// Keep established IDs stable when a family also lists an existing subtype.
+for(const archetype of EXTENDED_BUILDING_ARCHETYPES)if(!BUILDING_ARCHETYPES.some(a=>a.id===archetype.id))BUILDING_ARCHETYPES.push(archetype);
+export const BUILDING_CATEGORIES=[...new Set(BUILDING_ARCHETYPES.map(a=>a.category))];
 export const DESIGN_STYLES = {
   contemporary:{label:'Contemporary',style:'glass',roof:undefined,bayWidth:3,windowRatio:.74,bandRatio:.03},
   minimalist:{label:'Minimalist',style:'white',roof:'flat',bayWidth:5,windowRatio:.65,bandRatio:.015},
@@ -104,35 +109,40 @@ export const MASSING_FORMS = {
 export type DesignStyle=keyof typeof DESIGN_STYLES;
 export type MassingForm=keyof typeof MASSING_FORMS;
 export const BUILDING_RECIPE_COUNT=BUILDING_ARCHETYPES.length*Object.keys(DESIGN_STYLES).length*Object.keys(MASSING_FORMS).length;
-const normalize=(text:string)=>text.toLowerCase().replace(/[_-]/g,' ').replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();
+const normalize=(text:string)=>text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[’']/g,'').replace(/[_-]/g,' ').replace(/\bcentre\b/g,'center').replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();
+const plural=(text:string)=>/[^aeiou]y$/.test(text)?text.slice(0,-1)+'ies':/(?:ch|sh|s|x)$/.test(text)?text+'es':text+'s';
 function phrase(text:string,value:string){return (` ${normalize(text)} `).includes(` ${normalize(value)} `);}
 export function findBuildingArchetype(text:string):BuildingArchetype|undefined {
   const sport=findSport(text);
   if(sport)return BUILDING_ARCHETYPES.find(a=>a.name===`${sport[0]} ${sport[1]}`);
   return BUILDING_ARCHETYPES.flatMap(item=>[item.name,...item.aliases].map(name=>({item,name})))
-    .filter(({name})=>phrase(text,name)||phrase(text,`${name}s`)).sort((a,b)=>b.name.length-a.name.length)[0]?.item;
+    .filter(({name})=>phrase(text,name)||phrase(text,plural(name))).sort((a,b)=>b.name.length-a.name.length)[0]?.item;
 }
-export interface BuildingRecipe { id:string; name:string; archetype:BuildingArchetype; designStyle:DesignStyle; form:MassingForm; defaults:Record<string,unknown>; }
+export interface BuildingRecipe { id:string; name:string; archetype:BuildingArchetype; designStyle:DesignStyle; form:MassingForm; defaults:Record<string,unknown>; approximation?:string; }
 export function buildingRecipe(archetypeId:string,designStyle:DesignStyle='contemporary',form:MassingForm='compact'):BuildingRecipe {
   const a=BUILDING_ARCHETYPES.find(a=>a.id===archetypeId);
   if(!a)throw new Error(`Unknown building subtype: ${archetypeId}. Search the building catalog first.`);
   if(!Object.hasOwn(DESIGN_STYLES,designStyle)||!Object.hasOwn(MASSING_FORMS,form))throw new Error('Unknown design style or massing form. Search the building catalog for options.');
   const style=DESIGN_STYLES[designStyle],massing=MASSING_FORMS[form];
   const shape=a.id==='grain_silo'||a.id==='lighthouse'?'circle':a.id==='courtyard_house'&&form==='compact'?'u_shape':massing.shape;
-  return {id:`${a.id}/${designStyle}/${form}`,name:`${style.label} ${a.name} · ${massing.label}`,archetype:a,designStyle,form,defaults:{type:a.baseType,...(['stadium','arena'].includes(a.baseType)?{sport:findSport(a.name)?.[0]??'multi sport'}:{}),width:a.width*massing.width,depth:a.depth*massing.depth,height:a.height*massing.height,floors:a.floors,shape,roof:['stadium','arena'].includes(a.baseType)?a.roof:style.roof??a.roof,style:a.id==='greenhouse'?'glass':style.style,taper:massing.taper,
+  return {...(a.coverage==='family'?{approximation:`Family-level ${a.category.toLowerCase()} exterior using shared concept proportions; specialized interiors and equipment are not modeled.`}:{}),id:`${a.id}/${designStyle}/${form}`,name:`${style.label} ${a.name} · ${massing.label}`,archetype:a,designStyle,form,defaults:{type:a.baseType,...(['stadium','arena'].includes(a.baseType)?{sport:findSport(a.name)?.[0]??'multi sport'}:{}),width:a.width*massing.width,depth:a.depth*massing.depth,height:a.height*massing.height,floors:a.floors,shape,roof:['stadium','arena'].includes(a.baseType)?a.roof:style.roof??a.roof,style:a.id==='greenhouse'?'glass':style.style,taper:massing.taper,
     ...(form==='terraced'?{sections:[{at:0,scale:1},{at:.48,scale:1},{at:.5,scale:.78},{at:.78,scale:.78},{at:.8,scale:.55},{at:1,scale:.55}]}:{})}};
 }
 export function resolveBuildingRecipe(input:Record<string,unknown>):BuildingRecipe|undefined {
   const brief=typeof input.brief==='string'?input.brief:'';
   let id=input.catalogId,style=input.designStyle,form=input.massing;
-  const mentioned=findBuildingArchetype(brief)||(!input.catalogId&&typeof input.sport==='string'&&['stadium','arena'].includes(String(input.type))?findBuildingArchetype(input.sport):undefined);
+  const mentioned=findBuildingArchetype(brief)||(typeof input.buildingUse==='string'?findBuildingArchetype(input.buildingUse):undefined)||(!input.catalogId&&typeof input.sport==='string'&&['stadium','arena'].includes(String(input.type))?findBuildingArchetype(input.sport):undefined);
   if(mentioned)id=mentioned.id;
   else if(id===undefined&&typeof input.type==='string')id=findBuildingArchetype(input.type)?.id;
-  if(id===undefined)return undefined;
-  if(typeof id!=='string')throw new Error('catalogId must be a catalog ID.');
-  const parts=id.split('/');if(parts.length!==1&&parts.length!==3)throw new Error('Use subtype or subtype/style/form as catalogId.');
   for(const key of Object.keys(DESIGN_STYLES))if(phrase(brief,key))style=key;
   for(const key of Object.keys(MASSING_FORMS))if(phrase(brief,key))form=key;
+  if(id===undefined){
+    const use=input.buildingUse??(typeof input.type==='string'&&!['house','apartment','office','skyscraper','warehouse','pavilion','civic','stadium','arena'].includes(input.type)?input.type:undefined)??inferBuildingUse(brief);
+    if(use!==undefined)return customBuildingRecipe(use,{...input,designStyle:style,massing:form});
+    return undefined;
+  }
+  if(typeof id!=='string')throw new Error('catalogId must be a catalog ID.');
+  const parts=id.split('/');if(parts.length!==1&&parts.length!==3)throw new Error('Use subtype or subtype/style/form as catalogId.');
   return buildingRecipe(parts[0],(style??parts[1]??'contemporary') as DesignStyle,(form??parts[2]??'compact') as MassingForm);
 }
 export function searchBuildingCatalog(input:Record<string,unknown>={}) {
@@ -141,14 +151,40 @@ export function searchBuildingCatalog(input:Record<string,unknown>={}) {
   if(typeof offset!=='number'||!Number.isInteger(offset)||offset<0||typeof limit!=='number'||!Number.isInteger(limit)||limit<1||limit>20)throw new Error('Use a nonnegative offset and limit from 1 to 20.');
   const aliases:Record<string,string>={housing:'homes housing apartment residence',medical:'healthcare',school:'education school',transportation:'transport',religious:'worship',industrial:'industry',residential:'homes housing',commercial:'retail office food',hotel:'hotel hospitality'};
   const terms=(aliases[query]??query).split(' ').filter(Boolean);
-  const ranked=BUILDING_ARCHETYPES.map(a=>({a,score:terms.reduce((n,t)=>n+(normalize([a.name,a.category,...a.aliases].join(' ')).includes(t)?1:0),0)})).filter(r=>!query||r.score>0).sort((a,b)=>b.score-a.score);
+  const ranked=BUILDING_ARCHETYPES.map(a=>({a,score:(query&&[a.name,...a.aliases].some(name=>normalize(name)===query)?100:0)+terms.reduce((n,t)=>n+(phrase(a.name,t)?4:a.aliases.some(name=>phrase(name,t))?3:phrase(a.category,t)?1:0),0)})).filter(r=>!query||r.score>0).sort((a,b)=>b.score-a.score);
   return {recipeCount:BUILDING_RECIPE_COUNT,subtypeCount:BUILDING_ARCHETYPES.length,matchCount:ranked.length,offset,nextOffset:offset+limit<ranked.length?offset+limit:null,
-    categories:groups.map(([name])=>name),designStyles:Object.keys(DESIGN_STYLES),massingForms:Object.keys(MASSING_FORMS),
-    results:ranked.slice(offset,offset+limit).map(({a})=>({id:a.id,name:a.name,category:a.category,dimensions:{width:a.width,depth:a.depth,height:a.height},floors:a.floors,roof:a.roof,feature:a.feature})),
+    categories:BUILDING_CATEGORIES,designStyles:Object.keys(DESIGN_STYLES),massingForms:Object.keys(MASSING_FORMS),
+    results:ranked.slice(offset,offset+limit).map(({a})=>({id:a.id,name:a.name,category:a.category,dimensions:{width:a.width,depth:a.depth,height:a.height},floors:a.floors,roof:a.roof,feature:a.feature,coverage:a.coverage??'dedicated'})),
     note:`${BUILDING_ARCHETYPES.length} concept subtypes × 10 style treatments × 10 massing forms. Editable concepts, including sports venues; not construction plans or certified competition layouts.`};
 }
 export function buildingCatalogContext(text:string):string {
   const recipe=resolveBuildingRecipe({brief:text});
-  if(!recipe)return /catalog|building types|types of buildings/i.test(text)?`\nLocal building catalog: ${BUILDING_RECIPE_COUNT} exterior concept recipes, from ${BUILDING_ARCHETYPES.length} subtypes, 10 styles and 10 forms. Categories: ${groups.map(([name])=>name).join(', ')}. Use search_building_catalog to browse or search; it does not modify geometry.`:'';
-  return `\nRelevant local building recipe: ${JSON.stringify({catalogId:recipe.id,name:recipe.name,defaults:recipe.defaults,feature:recipe.archetype.feature})}. Use create_building with this catalogId. Explicit user dimensions override recipe defaults. This is a procedural exterior concept; do not promise interiors or code compliance.`;
+  if(!recipe)return /catalog|building types|types of buildings/i.test(text)?`\nLocal building catalog: ${BUILDING_RECIPE_COUNT} exterior concept recipes, from ${BUILDING_ARCHETYPES.length} subtypes, 10 styles and 10 forms. Categories: ${BUILDING_CATEGORIES.join(', ')}. Use search_building_catalog to browse or search; it does not modify geometry.`:'';
+  return `\nRelevant local building recipe: ${JSON.stringify({catalogId:recipe.id,name:recipe.name,defaults:recipe.defaults,feature:recipe.archetype.feature,approximation:recipe.approximation})}. ${recipe.id.startsWith('custom/')?'Use create_building with buildingUse='+JSON.stringify(recipe.archetype.name)+' and the supplied defaults; do not pass the custom ID as catalogId.':'Use create_building with this catalogId.'} Explicit user dimensions override recipe defaults. This is a procedural exterior concept; do not promise interiors or code compliance.`;
+}
+
+
+/** Only infer a building use when the creation request contains a building noun.
+ * Arbitrary objects and edits must remain on their own tool paths. */
+export function inferBuildingUse(text:string):string|undefined {
+  const match=text.match(/\b(?:create|build|make|design|generate)\s+(?:me\s+)?(?:an?\s+)?([a-z][a-z '’-]{1,90}?\b(?:building|facility|center|centre|station|house|hall|tower|plant|warehouse|school|hospital|temple|museum|library|laboratory|terminal|shelter|residence|pavilion|hotel|office|complex))(?=[,.;!?]|\s+(?:with|at|for|that|which|measuring|in|on|\d)|$)/i);
+  return match?.[1].trim();
+}
+function customBuildingRecipe(value:unknown,input:Record<string,unknown>):BuildingRecipe {
+  if(typeof value!=='string'||!value.trim()||value.length>120||/[\x00-\x1f]/.test(value))throw new Error('buildingUse must be a name of 1–120 characters.');
+  const name=value.trim(),text=normalize(name);
+  const rules:Array<[RegExp,string]>=[
+    [/\b(warehouse|factory|manufacturing|plant|storage|workshop|depot|shed|hangar)\b/,'warehouse'],
+    [/\b(house|home|cabin|cottage|hut)\b/,'house'],
+    [/\b(housing|residence|apartment|hotel|hostel|dormitory)\b/,'apartment'],
+    [/\b(office|headquarters|business)\b/,'office'],
+    [/\b(pavilion|shelter|kiosk)\b/,'pavilion'],
+  ];
+  const inferred=rules.find(([pattern])=>pattern.test(text))?.[1]??'civic';
+  const base=typeof input.baseType==='string'?input.baseType:inferred;
+  const exemplars:Record<string,string>={house:'bungalow',apartment:'midrise_apartment',office:'coworking_hub',skyscraper:'office_tower',warehouse:'workshop',pavilion:'sports_pavilion',civic:'community_center'};
+  if(!Object.hasOwn(exemplars,base))throw new Error('Custom buildings support house, apartment, office, skyscraper, warehouse, pavilion or civic as baseType.');
+  const reference=BUILDING_ARCHETYPES.find(a=>a.id===exemplars[base])??BUILDING_ARCHETYPES.find(a=>a.baseType===base)!;
+  const recipe=buildingRecipe(reference.id,(input.designStyle??'contemporary') as DesignStyle,(input.massing??'compact') as MassingForm);
+  return {...recipe,id:`custom/${normalize(name).replace(/ /g,'_')}`,name:`Concept ${name}`,archetype:{...reference,name,baseType:base},defaults:{...recipe.defaults,type:base},approximation:`No dedicated recipe for "${name}". Using an editable ${base} exterior with inferred proportions; specialized structure, interiors and equipment are not modeled.`};
 }

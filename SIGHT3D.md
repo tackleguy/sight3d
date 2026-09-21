@@ -66,9 +66,9 @@ Try the new starter prompts, or ask “Create a purple sphere with radius 2m”,
 
 Browser inference has no paid API quota, but GPU memory, context, generation and geometry safeguards still apply. The model upgrade requires a new download; old cached assets are not reused as the larger model.
 
-## Building catalog: 10,000 configurable recipes
+## Broad building catalog and custom concepts
 
-The local catalog contains **100 named building subtypes in 20 categories × 10 design styles × 10 massing forms = 10,000 addressable exterior concept recipes**. It adds retrieval and procedural geometry to the existing AI; it does not retrain the model or claim 10,000 independent architectural classes. Recipes are generated on demand, so the full catalog is never stuffed into the model context.
+The local catalog contains **683 named building subtypes in 63 categories × 10 design styles × 10 massing forms = 68,300 addressable exterior concept recipes**. It adds retrieval and procedural geometry to the existing AI; it does not retrain the model or claim 68,300 independent architectural classes. Recipes are generated on demand, so the full catalog is never stuffed into the model context.
 
 Categories cover homes, multi-family housing, hospitality, offices, retail, food, education, healthcare, culture, performance, civic administration, emergency services, worship, sport, passenger transport, industry, agriculture and utilities. Examples include cottages, banks, castles, research laboratories, clinics, museums, railway stations, hangars, greenhouses and lighthouses. The catalog search tool returns categories, subtype IDs, typical concept dimensions and modeled features; it supports up to 20 results per page. These dimensions are design defaults, not architectural standards.
 
@@ -84,3 +84,12 @@ Style treatments: contemporary, minimalist, industrial, traditional, Mediterrane
 A recipe ID such as `art_museum/brutalist/terraced` can be passed to `create_building` as `catalogId`. A subtype ID alone uses contemporary/compact defaults; `designStyle` and `massing` override those defaults. Explicit prompt dimensions, shapes and roof requests take priority over recipe defaults. Width/depth describe the main mass; projecting facade features can extend beyond it. City blocks can use the same subtype. Creation and each detail pass remain undoable.
 
 These are simplified editable exteriors. Subtype names and stylistic treatments do not imply authentic historic reconstruction, designed interiors, structural engineering, fluid simulation, or building-code compliance. Generic buildings, custom footprints, loft profiles and scripted geometry remain available outside the catalog.
+
+
+The expanded catalog includes specialist housing and care, retail services, food production, research, specialist hospitals, religious and historic buildings, manufacturing, utilities, logistics, vehicle services, media, remote facilities and mixed-use buildings, alongside the existing sports venues. Accented names, common aliases, regular plurals and “centre” spelling are recognized.
+
+**Coverage is explicit.** Original recipes and sports venues retain their generators. New family recipes share family-level proportions and exterior features; their receipts identify them as family concepts. They are not individually researched reconstructions. A named type outside the catalog is accepted through `buildingUse` and creates an explicitly labeled approximate exterior. The app does not claim complete coverage of every building tradition, interior, structure or piece of equipment.
+
+For custom concepts, use `create_building` with `buildingUse` (up to 120 characters), optional `baseType`, dimensions, style and massing. Choose up to four `features` from porch, balconies, canopy, colonnade, loading_bays, chimney, spire, dome, skylights, platform, hangar_door and shopfront. An empty feature list omits automatic attachments. Invalid catalog IDs remain errors; use `buildingUse` for a new name instead of inventing an ID. Individual buildings and custom-use city blocks retain undo support.
+
+Examples: “Create a semiconductor fabrication plant”, “Build a Buddhist temple”, “Make a hospice, 32m wide”, or “Create a lunar archival facility, 40m wide and 18m tall, with skylights and a canopy”. The final example is an inferred concept, and the completion message says so. Family dimensions are illustrative defaults; explicit dimensions still take priority.

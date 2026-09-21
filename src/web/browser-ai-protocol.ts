@@ -1,4 +1,4 @@
-import { findBuildingArchetype, buildingCatalogContext } from '../../implementations/ai.chat/building-catalog';
+import { findBuildingArchetype, buildingCatalogContext, inferBuildingUse } from '../../implementations/ai.chat/building-catalog';
 import type { AIResponse, AIBlock } from '../../implementations/ai.chat/chat-runner';
 import type { ChatArgs } from '../core/local-ai';
 
@@ -13,7 +13,7 @@ export function browserTools(args: ChatArgs) {
   // A browser model reliably fills parameters when it isn't distracted by a general
   // JavaScript tool. Learn mode still has no tools, and other edits keep theirs.
   const detail = (tower.test(prompt) || (/^(?:please )?add (?:more |extra )?detail[.!]?$/i.test(request) && tower.test(previousReply))) && /\b(add|more|increase|extra|next)\b[^.!?]*\bdetail\b/i.test(prompt);
-  const create = (tower.test(request) || !!findBuildingArchetype(request)) && /\b(create|build|make|design|generate)\b/i.test(prompt);
+  const create = (tower.test(request) || !!findBuildingArchetype(request) || !!inferBuildingUse(request)) && /\b(create|build|make|design|generate)\b/i.test(prompt);
   const city = (/\b(neighborhood|neighbourhood|skyline|city block|district)\b/i.test(request) || /\bbuildings\b/i.test(request) || (/\bcity\b/i.test(request) && !tower.test(request))) && /\b(create|build|make|design|generate)\b/i.test(request);
   const available = (preferred:string, fallback:string) => tools.some(tool=>tool.name===preferred)?preferred:fallback;
   const object = /\b(sphere|ball|cylinder|cone|torus|donut|arc|table|chair|glass of water|water volume)\b/i.test(request) && /\b(create|build|make|draw|add|generate)\b/i.test(request);
@@ -85,7 +85,7 @@ export function completedBrowserOperations(args: ChatArgs): AIResponse | null {
       if(!receipt)return null;
       let result;try{result=JSON.parse(receipt.content);}catch{return null;}
       if(!Array.isArray(result.results))return {error:result.error||'The catalog search did not finish.'};
-      descriptions.push(`${result.recipeCount.toLocaleString()} configurable building recipes: ${result.subtypeCount} subtypes × 10 styles × 10 forms.\n${result.results.map((item:any)=>`• ${item.name} (${item.category}) — ${item.dimensions.width} × ${item.dimensions.depth} m, ${item.dimensions.height} m tall; ${item.feature.replace(/_/g,' ')}. ID: ${item.id}`).join('\n')}\n${result.results.length?'Ask to create one of these, with any dimensions you want.':'No matching subtypes. Try a broader category such as housing, education or transport.'}${result.nextOffset!==null?` More results: search with offset ${result.nextOffset}.`:''}`);
+      descriptions.push(`${result.recipeCount.toLocaleString()} configurable building recipes: ${result.subtypeCount} subtypes × 10 styles × 10 forms.\n${result.results.map((item:any)=>`• ${item.name} (${item.coverage==='family'?'family concept; ':''}${item.category}) — ${item.dimensions.width} × ${item.dimensions.depth} m, ${item.dimensions.height} m tall; ${item.feature.replace(/_/g,' ')}. ID: ${item.id}`).join('\n')}\n${result.results.length?'Ask to create one of these, with any dimensions you want.':'No matching subtypes. Try a broader category, or ask to create a building by name for an explicitly approximate concept.'}${result.nextOffset!==null?` More results: search with offset ${result.nextOffset}.`:''}`);
     }
     return {content:[{type:'text',text:descriptions.join('\n\n')}],stop_reason:'end_turn'};
   }

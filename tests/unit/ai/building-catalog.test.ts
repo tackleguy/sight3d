@@ -8,7 +8,7 @@ import type { ICameraController } from '../../../src/core/interfaces';
 function setup(){const doc=new ModelDocument(new GeometryEngine());return {doc,api:new ModelAPI(doc,()=>{},{} as ICameraController)};}
 test('catalog has unique subtypes and addressable recipes',()=>{
  expect(BUILDING_ARCHETYPES.length).toBeGreaterThan(100);expect(new Set(BUILDING_ARCHETYPES.map(a=>a.id)).size).toBe(BUILDING_ARCHETYPES.length);
- expect(new Set(BUILDING_ARCHETYPES.map(a=>a.category)).size).toBe(22);expect(BUILDING_RECIPE_COUNT).toBe(BUILDING_ARCHETYPES.length*100);
+ expect(new Set(BUILDING_ARCHETYPES.map(a=>a.category)).size).toBeGreaterThan(50);expect(BUILDING_RECIPE_COUNT).toBe(BUILDING_ARCHETYPES.length*100);
  const ids=new Set<string>();
  for(const a of BUILDING_ARCHETYPES)for(const style of Object.keys(DESIGN_STYLES))for(const form of Object.keys(MASSING_FORMS)){
   const recipe=buildingRecipe(a.id,style as DesignStyle,form as MassingForm);ids.add(recipe.id);
@@ -21,7 +21,7 @@ test('catalog has unique subtypes and addressable recipes',()=>{
   }
  }
  expect(ids.size).toBe(BUILDING_RECIPE_COUNT);
-},60000);
+},180000);
 test.each([['Create an airport terminal','airport_terminal'],['Make a dental clinic','dental_clinic'],['Build a train station','railway_station'],['Make an art museum','art_museum'],['Create a courthouse','courthouse']])('specific subtype retrieval: %s',(text,id)=>{
  expect(findBuildingArchetype(text)?.id).toBe(id);expect(buildingCatalogContext(text)).toContain(id);
 });

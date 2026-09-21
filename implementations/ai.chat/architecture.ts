@@ -1,6 +1,6 @@
 // @archigraph ai.chat
 import { findSport, sportsMesh } from './sports-venues';
-import { resolveBuildingRecipe, DESIGN_STYLES, type BuildingFeature, type DesignStyle } from './building-catalog';
+import { resolveBuildingRecipe, DESIGN_STYLES, BUILDING_FEATURES, type BuildingFeature, type DesignStyle } from './building-catalog';
 import { ShapeUtils, Vector2 } from 'three';
 import type { IModelAPI } from '../api.model/ModelAPI';
 import type { Vec3 } from '../../src/core/types';
@@ -11,7 +11,7 @@ export type BuildingOptions = {
   sport?:string; type:string; shape:string; roof:string; style:string; city:string; floors:number; height:number;
   width:number; depth:number; rotation:number; twist:number; taper:number; detail:number;
   x:number; y:number; z:number; footprint:Point[]; sections:Section[];
-  catalogId?:string; catalogName?:string; feature?:BuildingFeature; designStyle?:DesignStyle;
+  catalogId?:string; catalogName?:string; approximation?:string; features?:BuildingFeature[]; feature?:BuildingFeature; designStyle?:DesignStyle;
 };
 export type ArchitectureMesh = { vertices:Vec3[]; faces:number[][]; colors:number[] };
 const TYPES = ['house','apartment','office','skyscraper','warehouse','pavilion','civic','stadium','arena'];
@@ -84,7 +84,7 @@ export function architectureBrief(text:string):Record<string,unknown> {
 }
 export function buildingOptions(raw:Record<string,unknown>):BuildingOptions {
   const explicit=typeof raw.brief==='string'?architectureBrief(raw.brief):{};
-  const recipe=resolveBuildingRecipe(raw);
+  const recipe=resolveBuildingRecipe(typeof raw.catalogId==='string'&&raw.catalogId.startsWith('custom/')&&typeof raw.catalogName==='string'?{...raw,catalogId:undefined,buildingUse:raw.catalogName.replace(/^Concept /,'')}:raw);
   const input:Record<string,unknown>=recipe
     ? (typeof raw.brief==='string'?{...raw,...recipe.defaults,...explicit}:{...recipe.defaults,...raw,...explicit})
     : {...raw,...explicit};
@@ -99,6 +99,7 @@ export function buildingOptions(raw:Record<string,unknown>):BuildingOptions {
     if(explicit.city)for(const key of ['style','roof'])if(explicit[key]===undefined)delete input[key];
     if(!/\b(section|loft|profile)\b/i.test(raw.brief)&&!recipe)delete input.sections;
   }
+  if(input.features!==undefined&&(!Array.isArray(input.features)||input.features.length>4||!input.features.every(f=>BUILDING_FEATURES.includes(f as BuildingFeature))))throw new Error('Choose up to four supported building features.');
   const type=choice(input,'type','office',TYPES), preset=PRESETS[type];
   const city=cityKey(input.city), regional=city?CITY[city]:null;
   const defaults={...preset,...(regional ? { style:regional.style, roof:regional.roof, ...(input.type===undefined?regional:{}) } : {})};
@@ -126,7 +127,7 @@ export function buildingOptions(raw:Record<string,unknown>):BuildingOptions {
   }
   if(input.roof==='gable'&&shape!=='rectangle')input.roof='hip';
   if(input.sport!==undefined&&(typeof input.sport!=='string'||input.sport.length>100))throw new Error('sport must be a name of up to 100 characters.');
-  return {sport:typeof input.sport==='string'?input.sport:undefined,...(recipe?{catalogId:recipe.id,catalogName:recipe.name,feature:recipe.archetype.feature,designStyle:recipe.designStyle}:{}),type,shape,roof:choice(input,'roof',shape==='custom'?'flat':String(defaults.roof),ROOFS),style:choice(input,'style',String(defaults.style),STYLES),city,
+  return {features:Array.isArray(input.features)?[...new Set(input.features)] as BuildingFeature[]:undefined,sport:typeof input.sport==='string'?input.sport:undefined,...(recipe?{catalogId:recipe.id,catalogName:recipe.name,approximation:recipe.approximation,feature:recipe.archetype.feature,designStyle:recipe.designStyle}:{}),type,shape,roof:choice(input,'roof',shape==='custom'?'flat':String(defaults.roof),ROOFS),style:choice(input,'style',String(defaults.style),STYLES),city,
     floors,height,width:footprint.length?Math.max(...footprint.map(p=>p.x)):width,depth:footprint.length?Math.max(...footprint.map(p=>p.z)):depth,
     rotation:numeric(input,'rotation',0,-360,360),twist:numeric(input,'twist',0,-180,180),taper:numeric(input,'taper',0,0,.85),detail:numeric(input,'detail',2,1,3,true),
     x:numeric(input,'x',0,-100000,100000),y:numeric(input,'y',0,-100000,100000),z:numeric(input,'z',0,-100000,100000),footprint,sections};
@@ -167,7 +168,8 @@ export function buildingMesh(o:BuildingOptions):ArchitectureMesh {
   // Normalize to CCW in plan; custom footprints can be entered either way.
   if(base.reduce((s,p,i)=>s+p.x*base[(i+1)%base.length].z-base[(i+1)%base.length].x*p.z,0)<0)base.reverse();
   const material=o.style==='glass'?0:o.style==='brick'||o.style==='terracotta'?6:o.style==='stone'?5:o.style==='white'?7:0;
-  const featureHeight=o.feature==='spire'?o.height*.3:o.feature==='dome'?o.height*.22:o.feature==='chimney'?o.height*.15:o.feature==='skylights'?Math.min(.04,o.height*.025):0;
+  const features=o.features??(o.feature?[o.feature]:[]);
+  const featureHeight=Math.max(0,...features.map(feature=>feature==='spire'?o.height*.3:feature==='dome'?o.height*.22:feature==='chimney'?o.height*.15:feature==='skylights'?Math.min(.04,o.height*.025):0));
   const roofHeight=Math.max(featureHeight,o.roof==='flat'?0:Math.min(o.height*.22,Math.min(o.width,o.depth)*.35));
   const wallHeight=o.height-roofHeight;
   const ring=(t:number,y=wallHeight*t,scaleExtra=1):Vec3[]=>{
@@ -233,7 +235,7 @@ export function buildingMesh(o:BuildingOptions):ArchitectureMesh {
       triangulate(upper,3,true);
     }else for(let j=0;j<base.length;j++)writer.face([top[j],center,top[(j+1)%base.length]],3);
   }
-  if(o.feature){
+  for(const feature of features){
     // Anchor facade features to an actual footprint edge, including curved plans.
     let edge=0;
     for(let j=1;j<bottom.length;j++)if(Math.hypot(bottom[(j+1)%bottom.length].x-bottom[j].x,bottom[(j+1)%bottom.length].z-bottom[j].z)>Math.hypot(bottom[(edge+1)%bottom.length].x-bottom[edge].x,bottom[(edge+1)%bottom.length].z-bottom[edge].z))edge=j;
@@ -249,22 +251,22 @@ export function buildingMesh(o:BuildingOptions):ArchitectureMesh {
       block([p,q,{...q,x:q.x+nx*projection,z:q.z+nz*projection},{...p,x:p.x+nx*projection,z:p.z+nz*projection}],height,color);
     };
     const trim=Math.min(.3,o.height*.025),entry=Math.min(wallHeight*.8,3.5);
-    if(o.feature==='canopy'||o.feature==='porch'||o.feature==='shopfront'){
+    if(feature==='canopy'||feature==='porch'||feature==='shopfront'){
       front(.2,entry,.6,trim,Math.min(3,o.depth*.12),2);
-      if(o.feature==='porch')front(.15,0,.7,trim,Math.min(3,o.depth*.15),material);
+      if(feature==='porch')front(.15,0,.7,trim,Math.min(3,o.depth*.15),material);
       if(o.detail>=2)front(.23,.1,.54,entry-.2,.045,1);
-    }else if(o.feature==='balconies'){
+    }else if(feature==='balconies'){
       for(let floor=1;floor<Math.min(o.floors,24);floor++)front(.12,wallHeight*floor/o.floors,.76,trim,Math.min(1.5,o.depth*.08),2);
-    }else if(o.feature==='colonnade'){
+    }else if(feature==='colonnade'){
       front(.1,entry,.8,trim,Math.min(3,o.depth*.12),2);
       for(let i=0;i<6;i++)front(.1+i*.15,0,.025,entry,Math.min(1,o.depth*.05),material);
-    }else if(o.feature==='loading_bays'||o.feature==='hangar_door'){
-      const bays=o.feature==='hangar_door'?1:4;
+    }else if(feature==='loading_bays'||feature==='hangar_door'){
+      const bays=feature==='hangar_door'?1:4;
       if(o.detail>=2)for(let i=0;i<bays;i++)front(.08+i*.84/bays,.15,.7/bays,Math.min(wallHeight*.8,8),.07,1);
       front(.04,0,.92,trim,Math.min(4,o.depth*.1),2);
-    }else if(o.feature==='platform'){
+    }else if(feature==='platform'){
       front(0,0,1,trim,Math.min(6,o.depth*.2),2);front(.05,entry,.9,trim,Math.min(5,o.depth*.18),2);
-    }else if(o.feature==='skylights'){
+    }else if(feature==='skylights'){
       // Inset panes into real roof triangles, so courtyards and tapered roofs
       // never get skylights floating outside the roof footprint.
       const roofFaces=writer.mesh.faces.map((face,i)=>({face,color:writer.mesh.colors[i]})).filter(f=>f.color===3).map(({face})=>{
@@ -283,9 +285,9 @@ export function buildingMesh(o:BuildingOptions):ArchitectureMesh {
       // Rooftop landmarks stay inside the requested total height.
       const center=top.reduce((p,v)=>({x:p.x+v.x/top.length,y:0,z:p.z+v.z/top.length}),{x:0,y:0,z:0});
       const radius=Math.min(o.width,o.depth)*.09,y=o.y+wallHeight*.72,cap=o.y+o.height;
-      if(o.feature==='chimney')block([{x:center.x-radius,y,z:center.z-radius},{x:center.x+radius,y,z:center.z-radius},{x:center.x+radius,y,z:center.z+radius},{x:center.x-radius,y,z:center.z+radius}],cap-y,material);
+      if(feature==='chimney')block([{x:center.x-radius,y,z:center.z-radius},{x:center.x+radius,y,z:center.z-radius},{x:center.x+radius,y,z:center.z+radius},{x:center.x-radius,y,z:center.z+radius}],cap-y,material);
       else {
-        const dome=o.feature==='dome',n=16,radius2=dome?Math.min(o.width,o.depth)*.24:radius;
+        const dome=feature==='dome',n=16,radius2=dome?Math.min(o.width,o.depth)*.24:radius;
         const baseY=o.y+wallHeight*.75;
         let lower=Array.from({length:n},(_,i)=>({x:center.x+radius2*Math.cos(i*2*Math.PI/n),y:baseY,z:center.z+radius2*Math.sin(i*2*Math.PI/n)}));
         for(let layer=1;layer<=6;layer++){
@@ -318,7 +320,7 @@ const latest=new WeakMap<IModelAPI,{options:BuildingOptions; layers:string[][]; 
 export function createBuilding(api:IModelAPI,input:Record<string,unknown>){
   const options=buildingOptions(input),mesh=buildingMesh(options),faces=commitMeshes(api,[mesh],'Create building');
   latest.set(api,{options,layers:[faces],anchor:faces.map(id=>api.getFaceInfo(id)!.vertices)});
-  return {ok:true,created:{faces},catalogId:options.catalogId,summary:`Created ${options.catalogName?options.catalogName+' · a':'a'} ${options.shape.replace('_','-')} ${options.type}: ${options.width} × ${options.depth} m, ${options.height} m tall, ${options.type==='stadium'||options.type==='arena'?`${options.sport??'multi sport'} concept seating bowl`:`${options.floors} floors`}, ${options.roof} roof, ${options.style} facade${options.twist?`, ${options.twist}° twist`:''}${options.taper?`, ${Math.round(options.taper*100)}% taper`:''}${options.city?`. Inspired by ${CITY[options.city as keyof typeof CITY].label}; not a map reconstruction`:''}. Detail ${options.detail}/3.${options.floors>80?' Facade simplified to 80 window rows for performance.':''} Undo reverses this building.`};
+  return {ok:true,created:{faces},catalogId:options.catalogId,approximation:options.approximation,summary:`Created ${options.catalogName?options.catalogName+' · a':'a'} ${options.shape.replace('_','-')} ${options.type}: ${options.width} × ${options.depth} m, ${options.height} m tall, ${options.type==='stadium'||options.type==='arena'?`${options.sport??'multi sport'} concept seating bowl`:`${options.floors} floors`}, ${options.roof} roof, ${options.style} facade${options.twist?`, ${options.twist}° twist`:''}${options.taper?`, ${Math.round(options.taper*100)}% taper`:''}${options.city?`. Inspired by ${CITY[options.city as keyof typeof CITY].label}; not a map reconstruction`:''}. Detail ${options.detail}/3.${options.floors>80?' Facade simplified to 80 window rows for performance.':''} Undo reverses this building.${options.approximation?` ${options.approximation}`:''}`};
 }
 export function createCity(api:IModelAPI,raw:Record<string,unknown>){
   const parsed=typeof raw.brief==='string'?architectureBrief(raw.brief):{};
@@ -338,7 +340,7 @@ export function createCity(api:IModelAPI,raw:Record<string,unknown>){
   for(let i=0;i<count;i++){
     const variation=random(),floors=Math.max(1,Math.round(Number(recipe?.defaults.floors??regional.floors)*(recipe?(.75+variation*.5):(.35+variation*.95))));
     const shape=key==='paris'?(i%3===0?'u_shape':'rectangle'):key==='dubai'?['ellipse','circle','hexagon','rectangle'][i%4]:['rectangle','l_shape','rectangle','u_shape'][i%4];
-    const o=buildingOptions({...(recipe?{catalogId:recipe.id}:{}),type:floors>18?'skyscraper':floors>3?'apartment':'house',city:key||undefined,floors,height:recipe?Number(recipe.defaults.height)*(.8+variation*.4):floors*3.4,width:Number(recipe?.defaults.width??regional.width)*(.7+random()*.45),depth:Number(recipe?.defaults.depth??regional.depth)*(.7+random()*.45),shape:recipe?.defaults.shape??shape,roof:recipe?.defaults.roof??regional.roof,style:recipe?.defaults.style??regional.style,detail,x:x+(i%columns)*(plot+spacing)+plot*.1,z:z+Math.floor(i/columns)*(plot+spacing)+plot*.1,twist:key==='dubai'&&i%3===0?30:0,taper:recipe?.defaults.taper??(key==='dubai'?.25:0)});
+    const o=buildingOptions({...(recipe?(recipe.id.startsWith('custom/')?{buildingUse:recipe.archetype.name,baseType:recipe.archetype.baseType}:{catalogId:recipe.id}):{}),type:floors>18?'skyscraper':floors>3?'apartment':'house',city:key||undefined,floors,height:recipe?Number(recipe.defaults.height)*(.8+variation*.4):floors*3.4,width:Number(recipe?.defaults.width??regional.width)*(.7+random()*.45),depth:Number(recipe?.defaults.depth??regional.depth)*(.7+random()*.45),shape:recipe?.defaults.shape??shape,roof:recipe?.defaults.roof??regional.roof,style:recipe?.defaults.style??regional.style,detail,x:x+(i%columns)*(plot+spacing)+plot*.1,z:z+Math.floor(i/columns)*(plot+spacing)+plot*.1,twist:key==='dubai'&&i%3===0?30:0,taper:recipe?.defaults.taper??(key==='dubai'?.25:0)});
     designs.push(o);meshes.push(buildingMesh(o));
   }
   const street=new MeshWriter(),rows=Math.ceil(count/columns),w=columns*(plot+spacing),d=rows*(plot+spacing);
@@ -348,7 +350,7 @@ export function createCity(api:IModelAPI,raw:Record<string,unknown>){
     street.face([{x:px,y:-.02,z:pz},{x:px,y:-.02,z:pz+plot},{x:px+plot,y:-.02,z:pz+plot},{x:px+plot,y:-.02,z:pz}],2);
   }
   meshes.push(street.mesh);const faces=commitMeshes(api,meshes,'Create city block');latest.delete(api);
-  return {ok:true,created:{faces},summary:`Created ${count} varied ${recipe?recipe.archetype.name+' buildings':'buildings'} with streets and sidewalks${key?`, inspired by ${regional.label}`:''}. Heights ${Math.min(...designs.map(o=>o.height)).toFixed(1)}–${Math.max(...designs.map(o=>o.height)).toFixed(1)} m. Seed ${seed}; detail ${detail}/3. This is a fictional city-inspired layout, not actual map data. Undo reverses the entire block.`};
+  return {ok:true,created:{faces},summary:`Created ${count} varied ${recipe?recipe.archetype.name+' buildings':'buildings'} with streets and sidewalks${key?`, inspired by ${regional.label}`:''}. Heights ${Math.min(...designs.map(o=>o.height)).toFixed(1)}–${Math.max(...designs.map(o=>o.height)).toFixed(1)} m. Seed ${seed}; detail ${detail}/3. This is a fictional city-inspired layout, not actual map data. Undo reverses the entire block.${recipe?.approximation?` ${recipe.approximation}`:''}`};
 }
 
 export function detailBuilding(api:IModelAPI){
