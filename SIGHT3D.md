@@ -93,3 +93,20 @@ The expanded catalog includes specialist housing and care, retail services, food
 For custom concepts, use `create_building` with `buildingUse` (up to 120 characters), optional `baseType`, dimensions, style and massing. Choose up to four `features` from porch, balconies, canopy, colonnade, loading_bays, chimney, spire, dome, skylights, platform, hangar_door and shopfront. An empty feature list omits automatic attachments. Invalid catalog IDs remain errors; use `buildingUse` for a new name instead of inventing an ID. Individual buildings and custom-use city blocks retain undo support.
 
 Examples: “Create a semiconductor fabrication plant”, “Build a Buddhist temple”, “Make a hospice, 32m wide”, or “Create a lunar archival facility, 40m wide and 18m tall, with skylights and a canopy”. The final example is an inferred concept, and the completion message says so. Family dimensions are illustrative defaults; explicit dimensions still take priority.
+
+### Quick stadium presets without an AI download
+
+In Create mode, the **Quick stadium preset** starter fill requests you can send immediately. Explicit quick/preset stadium and arena creation requests use the existing procedural generator directly and confirm its actual result, without depending on an AI model choosing a tool. Try “Create a quick soccer stadium preset 200m wide and 140m deep” or “Create a quick basketball arena preset with an open roof”. Undo reverses the whole venue. Questions, edits, multiple objects and specialized requests still use the assistant. Ask for help mode does not take this direct creation path. Venue geometry remains a conceptual seating bowl and playing surface, not a certified competition layout.
+
+The production browser smoke test now submits venue prompts through the real chat with AI disabled, asserts zero AI calls, checks geometry and undo, and uses no mocked model reply for these scenarios.
+
+
+## Design from learned examples
+
+Ordinary design requests now prefer `create_design`: the model chooses a known example or typical form from its pretrained knowledge, names the inspiration and defining features, and outputs a multi-part assembly. It can position and rotate boxes, ellipsoids, elliptical cylinders and cones with colors and materials. This path preserves the model’s proportions and placements instead of replacing them with catalog defaults. The entire assembly validates before creation and undoes in one step.
+
+Try “Create a lighthouse inspired by a traditional coastal lighthouse” or “Make a tower inspired by the Eiffel Tower, using its recognizable structure”. These are memory-based approximations, not retrieval of a training image or browsing for verified references. The model weights have not changed; the 1.5B browser model’s knowledge, spatial reasoning and output budget still limit quality. Local-server models use the same tool and may produce better plans.
+
+The browser reserves 3,072 output tokens for these plans, retrying once with 4,096 if truncated. Plans support up to 96 parts; prompts recommend 8–24 recognizable parts first. Parts form an assembly rather than a watertight boolean union. Explicit quick/catalog requests retain the procedural tools, and exact primitive requests retain their smaller schemas. Learn mode cannot execute the assembly tool.
+
+`node scripts/verify-knowledge-live.cjs` optionally tests a real model on an already-running LM Studio loopback server, then validates and executes its generated plan and checks undo. `SIGHT3D_TEST_MODEL` selects a served model and `SIGHT3D_TEST_PROMPT` changes the example. This does not test browser WebGPU inference.

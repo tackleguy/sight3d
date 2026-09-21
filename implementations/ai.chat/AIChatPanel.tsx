@@ -1,3 +1,5 @@
+import { wantsKnowledgeDesign } from './knowledge-design';
+import { directSportsRequest, createDirectSportsResponder } from './direct-sports';
 import { buildingCatalogContext } from './building-catalog';
 import React, { useState, useRef, useEffect } from 'react';
 import { useApp } from '../window.main/AppContext';
@@ -8,6 +10,8 @@ import { BrowserAISetup } from './BrowserAISetup';
 import { stopBrowserAI } from '../../src/web/browser-ai';
 
 const STARTERS = [
+  ['Quick stadium preset', 'Create a quick soccer stadium preset.'],
+  ['A familiar example', 'Create a lighthouse inspired by a traditional coastal lighthouse, with its recognizable parts.'],
   ['A glass of water', 'Create a glass of water, radius 0.04m, height 0.12m.'],
   ['A colored arc', 'Create a blue arc with radius 2m and angle 180 degrees.'],
   ['A 3D chair', 'Create a wood chair, 0.5m wide, 0.5m deep and 0.9m tall.'],
@@ -61,15 +65,16 @@ export function AIChatPanel({ visible = true }: { visible?: boolean }) {
       const system = mode === 'learn'
         ? 'You are Sight3D’s friendly modeling instructor. Explain SketchUp-style modeling in short, concrete steps using the active tool and selection context. You cannot edit geometry in Learn mode. Never claim to have made changes. Teach Rectangle (R), Push/Pull (P), Orbit (O), Move (M), and typed dimensions. Ask one focused question when the request is ambiguous.'
         : buildLocalSystemPrompt() + '\nYou are the Sight3D modeling assistant. Use plain language, state assumptions about dimensions, and ask one focused question when intent is ambiguous. Preserve unrelated geometry. After editing, briefly explain what changed and that each modeling operation can be undone. Never claim an operation succeeded if its result failed.';
+      const direct = mode === 'build' && /\b(quick|preset)\b/i.test(text) && directSportsRequest(text) ? createDirectSportsResponder(text) : null;
       const result = await runChatTurn({
         messages: history,
         maxRounds: 6,
-        request: async messages => window.api.invoke('ai:chat', { system:system+buildingCatalogContext(text), messages, tools: mode === 'build' ? getToolDefinitions() : [] }) as any,
+        request: async messages => direct ? direct(messages) : window.api.invoke('ai:chat', { system:system+(wantsKnowledgeDesign(text)?'':buildingCatalogContext(text)), messages, tools: mode === 'build' ? getToolDefinitions() : [] }) as any,
         execute: async (name, args) => {
           const result = await executeTool(api, name, ['create_building','create_city'].includes(name) ? {...args,brief:text} : args);
           (app as any)?.syncScene?.(); (app as any)?.syncSelection?.();
           syncToolState(); syncPreviews();
-          if (['create_skyscraper','create_building','create_city'].includes(name) && JSON.parse(result).ok) { api.setView('iso'); api.zoomExtents(); }
+          if (['create_design','create_skyscraper','create_building','create_city'].includes(name) && JSON.parse(result).ok) { api.setView('iso'); api.zoomExtents(); }
           return result;
         },
         stopped: () => stopRef.current,
@@ -97,7 +102,7 @@ export function AIChatPanel({ visible = true }: { visible?: boolean }) {
         <BrowserAISetup busy={loading} />
         {messages.length === 0 && <div className="ai-chat-empty">
           <h2>{mode === 'build' ? 'What would you like to make?' : 'Learn by making.'}</h2>
-          <p>{mode === 'build' ? 'Use your own words, or choose an example to edit. Sizes are optional.' : 'Ask about a tool or follow a small project, one step at a time.'}</p>
+          <p>{mode === 'build' ? 'Use your own words, or choose an example to edit. Sizes are optional. Ask for an example or describe its defining features. Quick stadium presets work without loading AI.' : 'Ask about a tool or follow a small project, one step at a time.'}</p>
           <div className="ai-starters">{(mode === 'build' ? STARTERS : [['Make my first model', 'Walk me through drawing a rectangle and turning it into a box with Push/Pull. Give me one step at a time.'], ['Explain this tool', `How do I use ${activeTool?.name || 'Select'}? Explain the clicks and keyboard shortcuts.`]]).map(([label, prompt]) => <button key={label} onClick={() => { setInput(prompt); inputRef.current?.focus(); }}>{label}</button>)}</div>
 
         </div>}

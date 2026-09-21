@@ -36,7 +36,7 @@ export const SPORTS = [
   ['multi sport','stadium',100,60,'grass','multisport|multi purpose|custom sport'],
 ] as const;
 export type Sport = typeof SPORTS[number];
-const normalized=(s:string)=>s.toLowerCase().replace(/[_-]/g,' ').replace(/\s+/g,' ').trim();
+const normalized=(s:string)=>s.toLowerCase().replace(/[_-]/g,' ').replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();
 export function findSport(text:string):Sport|undefined {
   const value=` ${normalized(text)} `;
   return SPORTS.flatMap(s=>[s[0],...s[5].split('|').filter(Boolean)].map(alias=>({s,alias})))

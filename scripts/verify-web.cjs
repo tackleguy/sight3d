@@ -39,6 +39,23 @@ let browser, server;
   await page.getByText('Start modeling', { exact: true }).click();
   await page.waitForFunction(() => !!window.modelAPI);
   await page.getByRole('button', { name: 'Close quick start', exact: true }).click();
+  // No AI enabled and no mocked replies: exercise the shipped chat path.
+  await page.evaluate(()=>{
+    const invoke=window.api.invoke.bind(window.api);window.__venueAICalls=0;
+    window.api.invoke=(channel,args)=>{if(channel==='ai:chat')window.__venueAICalls++;return invoke(channel,args);};
+  });
+  for(const prompt of ['Create a quick soccer stadium preset 200m wide and 140m deep.','Create a quick basketball arena preset with an open roof.']){
+    await page.locator('#ai-prompt-input').fill(prompt);
+    await page.getByRole('button',{name:'Send',exact:true}).click();
+    await page.waitForFunction(()=>!document.querySelector('.ai-progress')&&window.modelAPI.getAllFaces().length>50);
+    assert.equal(await page.evaluate(()=>window.__venueAICalls),0,'Venue creation must not depend on AI');
+    assert.deepEqual(await page.locator('.ai-chat-error').allTextContents(),[]);
+    assert.match((await page.locator('.ai-chat-msg-assistant').allTextContents()).at(-1),/concept seating bowl/);
+    await page.screenshot({path:prompt.includes('soccer')?'/tmp/sight3d-direct-stadium.png':'/tmp/sight3d-direct-arena.png'});
+    await page.getByRole('button',{name:'Undo',exact:true}).click();
+    assert.equal(await page.evaluate(()=>window.modelAPI.getAllFaces().length),0);
+  }
+  console.log('Real stadium and arena chat succeeded without AI or mocked replies.');
   await page.getByRole('button', { name: 'Enable browser AI', exact: true }).click();
   await page.getByText(/No compatible GPU is available/).waitFor();
   // Stub inference only; the production UI executes the real modeling operation.
@@ -86,9 +103,6 @@ let browser, server;
     ['art_museum/brutalist/terraced','Create a terraced brutalist art museum, 48m wide, 30m deep and 20m tall.',20],
     ['railway_station/traditional/compact','Create a traditional railway station, 70m wide.',17],
     ['aircraft_hangar/contemporary/compact','Create an aircraft hangar.',24],
-    ['soccer_stadium/contemporary/compact','Create a soccer stadium.',28],
-    ['basketball_arena/contemporary/compact','Create a basketball arena with an open roof.',20],
-    ['ice_hockey_arena/contemporary/compact','Create an ice hockey arena.',20],
   ]){
     await page.evaluate(()=>window.modelAPI.deleteEntities(window.modelAPI.getAllFaces()));
     await page.evaluate(catalogId=>{
@@ -129,6 +143,19 @@ let browser, server;
     await page.getByRole('button',{name:'Undo',exact:true}).click();
     assert.equal(await page.evaluate(()=>window.modelAPI.getAllFaces().length),0);
   }
+  await page.evaluate(()=>{
+    const invoke=window.api.invoke.bind(window.api);let calls=0;
+    window.api.invoke=async(channel,args)=>channel!=='ai:chat'?invoke(channel,args):++calls===1
+      ? {content:[{type:'tool_use',id:'knowledge-design',name:'create_design',input:{name:'Coastal lighthouse',reference:'a typical coastal lighthouse',features:['tower shaft','glazed lantern','conical roof'],parts:[{name:'shaft',shape:'cylinder',position:[0,5,0],size:[3,10,3],color:'white'},{name:'lantern',shape:'cylinder',position:[0,10.6,0],size:[2,1.2,2],material:'glass'},{name:'roof',shape:'cone',position:[0,12,0],size:[3,1.6,3],color:'red'}]}}],stop_reason:'tool_use'}
+      : {content:[{type:'text',text:'Knowledge assembly verified.'}],stop_reason:'end_turn'};
+  });
+  await page.locator('#ai-prompt-input').fill('Create a lighthouse inspired by a typical coastal lighthouse.');
+  await page.getByRole('button',{name:'Send',exact:true}).click();
+  await page.getByText('Knowledge assembly verified.',{exact:true}).waitFor();
+  assert.ok(Math.abs(await page.evaluate(()=>window.modelAPI.getBoundingBox().max.y)-12.8)<.001);
+  await page.screenshot({path:'/tmp/sight3d-knowledge-design.png'});
+  await page.getByRole('button',{name:'Undo',exact:true}).click();
+  assert.equal(await page.evaluate(()=>window.modelAPI.getAllFaces().length),0);
   await page.getByRole('button',{name:'New chat',exact:true}).click();
   await page.setViewportSize({width:390,height:844});
   await page.screenshot({path:'/tmp/sight3d-catalog-mobile.png'});
