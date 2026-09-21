@@ -22,6 +22,7 @@ export function BrowserAISetup({ busy = false, force = false }: { busy?: boolean
       <p>Prompts stay on this device. Model files download from Hugging Face and MLC and are cached when storage allows. AI needs a compatible browser and roughly 2–3 GB of graphics memory.</p>
       <p>Photo AI reads selected images. It downloads a larger vision model and needs at least 4 GB of graphics memory, with additional space for context. Photos load from Wikimedia.</p>
       {!state.vision&&state.phase!=='loading'&&<button disabled={busy} onClick={()=>void enableBrowserAI(true)}>Enable photo AI</button>}
+      {state.vision&&state.phase!=='loading'&&<button disabled={busy} onClick={()=>{window.dispatchEvent(new Event('ai-text-mode'));void enableBrowserAI(false);}}>Use text AI instead</button>}
       {state.phase === 'loading' && <p>{state.message}</p>}
       {ready && <button disabled={busy} onClick={releaseBrowserAI}>Turn off AI</button>}
     </details>

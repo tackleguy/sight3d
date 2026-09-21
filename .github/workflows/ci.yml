@@ -41,3 +41,6 @@ jobs:
 
       - name: Verify 150-object batch queue
         run: node scripts/verify-batch-web.cjs
+
+      - name: Verify text AI request routing
+        run: node scripts/verify-ai-startup.cjs

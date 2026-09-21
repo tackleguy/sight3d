@@ -6,7 +6,7 @@ export function PhotoLibraryPanel({busy,enabled,onEnabled,selected,onSelect}:{bu
   async function search(){if(!query.trim()||loading)return;setLoading(true);setError('');try{const [results,stats]=await Promise.all([photoLibrary().search(query),photoLibrary().stats()]);setPhotos(results);setCount(stats.photoCount);setSearched(true);}catch(e){setError(e instanceof Error?e.message:'Photo search failed. Retry when connected.');}finally{setLoading(false);}}
   return <section className="photo-library" aria-label="Photo reference library">
     <label className="photo-mode"><input type="checkbox" checked={enabled} disabled={busy} onChange={e=>onEnabled(e.target.checked)}/> Find a photo for new buildings</label>
-    <p>Choose a view, or describe a building and let search find one. Photo AI turns the image into an editable concept.</p>
+    <p>Optional. Photo modeling needs Photo AI or a local vision model. Leave photo search off to create from your description.</p>
     <label htmlFor="photo-search">Search building photos</label>
     <div className="photo-search"><input id="photo-search" value={query} disabled={busy||loading} placeholder="Allianz Arena, Burj Khalifa…" onChange={e=>setQuery(e.target.value)} onKeyDown={e=>{e.stopPropagation();if(e.key==='Enter'){e.preventDefault();void search();}}}/><button disabled={busy||loading||!query.trim()} onClick={()=>void search()}>{loading?'Searching…':'Find'}</button></div>
     {count!==null&&<small>{count.toLocaleString()} photo records · images load on demand</small>}

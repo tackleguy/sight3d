@@ -40,7 +40,7 @@ export function AIChatPanel({ visible = true }: { visible?: boolean }) {
   const [error, setError] = useState<string | null>(null);
   const [lastPrompt, setLastPrompt] = useState('');
   const [liveTools, setLiveTools] = useState<ToolResult[]>([]);
-  const [usePhotos,setUsePhotos]=useState(true);
+  const [usePhotos,setUsePhotos]=useState(false);
   const [selectedPhoto,setSelectedPhoto]=useState<PhotoReference|null>(null);
   const stopRef = useRef(false);
   const busyRef = useRef(false);
@@ -54,8 +54,9 @@ export function AIChatPanel({ visible = true }: { visible?: boolean }) {
       setMode((e as CustomEvent).detail?.mode || 'learn');
       inputRef.current?.focus();
     };
-    window.addEventListener('ai-prompt', suggest);
-    return () => window.removeEventListener('ai-prompt', suggest);
+    const textMode=()=>{setUsePhotos(false);setSelectedPhoto(null);setError(null);};
+    window.addEventListener('ai-prompt', suggest);window.addEventListener('ai-text-mode',textMode);
+    return () => {window.removeEventListener('ai-prompt', suggest);window.removeEventListener('ai-text-mode',textMode);};
   }, []);
 
   async function sendMessage() {
@@ -128,8 +129,8 @@ export function AIChatPanel({ visible = true }: { visible?: boolean }) {
       <p className="ai-mode-help">{mode === 'build' ? 'Describe what you want to make or change.' : 'Get instructions without changing your model.'}</p>
       <div className="ai-context"><span>{selectedCount ? `${selectedCount} selected` : 'Nothing selected'}</span><span>Units: {units}</span></div>
       <div className="ai-chat-messages" role="log" aria-label="Conversation" aria-live="polite">
-        {mode==='build'&&<PhotoLibraryPanel busy={loading} enabled={usePhotos} onEnabled={value=>{setUsePhotos(value);if(!value)setSelectedPhoto(null);}} selected={selectedPhoto} onSelect={photo=>{setSelectedPhoto(photo);if(photo){setInput(`Create a concept inspired by this photo of ${photo.landmark}.`);inputRef.current?.focus();}}}/>}
         <BrowserAISetup busy={loading} />
+        {mode==='build'&&<PhotoLibraryPanel busy={loading} enabled={usePhotos} onEnabled={value=>{setUsePhotos(value);if(!value)setSelectedPhoto(null);}} selected={selectedPhoto} onSelect={photo=>{setSelectedPhoto(photo);if(photo){setInput(`Create a concept inspired by this photo of ${photo.landmark}.`);inputRef.current?.focus();}}}/>}
         {messages.length === 0 && <div className="ai-chat-empty">
           <h2>{mode === 'build' ? 'What would you like to make?' : 'Learn by making.'}</h2>
           <p>{mode === 'build' ? 'Use your own words, or choose an example to edit. Sizes are optional. Ask for an example or describe its defining features. Quick stadium presets work without loading AI.' : 'Ask about a tool or follow a small project, one step at a time.'}</p>

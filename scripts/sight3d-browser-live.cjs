@@ -20,6 +20,17 @@ let context;
   await page.waitForFunction(()=>{const text=document.querySelector('.browser-ai-setup [role=status]')?.textContent;return text?.startsWith('Ready') || !!document.querySelector('.browser-ai-setup button')?.textContent?.includes('Retry');},{},{timeout:620000});
  } finally {clearInterval(progress);}
  const status=await page.locator('.browser-ai-setup [role=status]').textContent();console.log('LOAD:',status);assert.match(status,/Ready/);
+ if(process.env.SIGHT3D_SCENARIO === 'startup') {
+  assert.equal(await page.getByRole('checkbox',{name:'Find a photo for new buildings'}).isChecked(),false);
+  await page.locator('#ai-prompt-input').fill('Create a small house, 12m wide, 9m deep and 7m tall, with a gable roof.');
+  await page.getByRole('button',{name:'Send',exact:true}).click();
+  await page.waitForFunction(()=>!document.querySelector('.ai-progress') && (document.querySelector('.ai-chat-error') || window.modelAPI.getAllFaces().length>0),{},{timeout:300000});
+  const error=await page.locator('.ai-chat-error').allTextContents();console.log('STARTUP RESULT:',error,(await page.locator('.ai-chat-msg-assistant').allTextContents()).at(-1));
+  assert.deepEqual(error,[]);assert.ok(await page.evaluate(()=>window.modelAPI.getAllFaces().length)>0);
+  assert.equal(posts.filter(url=>!url.includes('__webpack')).length,0);
+  console.log('PASS: real text AI loads and creates a house without requiring photo AI.');
+  await context.close();context=null;return;
+ }
  if(process.env.SIGHT3D_SCENARIO === 'batch') {
   // This wording deliberately bypasses the deterministic creation-list shortcut.
   await page.locator('#ai-prompt-input').fill('Build 15 chairs in a grid, using wood material.');

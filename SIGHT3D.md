@@ -121,7 +121,7 @@ See `data/architecture/README.md` for attribution and refresh instructions, and 
 
 ### Photo-first building concepts
 
-The assistant now defaults to finding a photo for new building requests. Search a building by name and choose a view, or send a building request to select a matching view automatically. Clear the photo and turn off “Find a photo for new buildings” to use the text-reference path above. Exact primitive operations and quick presets remain available.
+Building requests use text AI by default. Photo search is optional because photos require a separate vision-capable model. Search a building by name and choose a view, or turn on “Find a photo for new buildings” to select a matching view automatically. Clear the selected photo and keep that option off to use text AI. If photo-model loading fails, “Use text AI instead” switches back to the text model. Exact primitive operations and quick presets remain available.
 
 The static photo database contains 400,000 distinct source photo IDs/URLs across 52,536 architectural landmark labels from Google Landmarks v2. Images are loaded on demand from Wikimedia, with source links and author/license credits. It is not 400,000 locally downloaded images or a visually audited survey. The lazy landmark search index and bounded shard cache avoid loading all photo records into application memory. See `data/photos/README.md` for selection rules, licenses and refresh instructions.
 
