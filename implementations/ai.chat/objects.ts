@@ -16,7 +16,8 @@ export function surfaceOptions(input:Record<string,unknown>) {
   const surface = SURFACES[name as keyof typeof SURFACES];
   const raw = input.color ?? surface.color;
   if (typeof raw !== 'string') throw new Error('Color must be a name or #RRGGBB.');
-  const hex = COLORS[raw.toLowerCase()] || raw;
+  const value=raw.trim();
+  const hex = COLORS[value.toLowerCase()] || (/^#[0-9a-f]{3}$/i.test(value)?'#'+[...value.slice(1)].map(c=>c+c).join(''):value);
   if (!/^#[0-9a-f]{6}$/i.test(hex)) throw new Error('Use a basic color name or #RRGGBB.');
   const color:Color = {r:parseInt(hex.slice(1,3),16)/255,g:parseInt(hex.slice(3,5),16)/255,b:parseInt(hex.slice(5,7),16)/255};
   return { name:`${name} ${hex}`, color, opacity:surface.opacity, roughness:surface.roughness, metalness:surface.metalness };

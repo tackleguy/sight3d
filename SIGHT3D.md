@@ -110,3 +110,11 @@ Try “Create a lighthouse inspired by a traditional coastal lighthouse” or �
 The browser reserves 3,072 output tokens for these plans, retrying once with 4,096 if truncated. Plans support up to 96 parts; prompts recommend 8–24 recognizable parts first. Parts form an assembly rather than a watertight boolean union. Explicit quick/catalog requests retain the procedural tools, and exact primitive requests retain their smaller schemas. Learn mode cannot execute the assembly tool.
 
 `node scripts/verify-knowledge-live.cjs` optionally tests a real model on an already-running LM Studio loopback server, then validates and executes its generated plan and checks undo. `SIGHT3D_TEST_MODEL` selects a served model and `SIGHT3D_TEST_PROMPT` changes the example. This does not test browser WebGPU inference.
+
+### Sourced architectural examples
+
+Ordinary AI design requests now retrieve real building references before generation, on both the browser and local-server paths. Search accepts named buildings, teams, leagues, cities, and building categories. `search_architecture_references` browses the same sources. `create_design` accepts up to three `referenceIds` and includes their source links in its successful receipt; unknown IDs are rejected before edits.
+
+The offline snapshot combines Wikidata building/venue facts, a GeoNames inventory of populated places above 200,000, and researched form notes for selected landmarks and residential projects. Small, explicitly invented geometry exercises help the model place stadium stands, tower tiers, and balconies coherently. User dimensions override reference dimensions. Missing local examples and missing shape information are disclosed instead of turning an arbitrary preset into a claimed replica.
+
+See `data/architecture/README.md` for attribution and refresh instructions, and `data/architecture/coverage.json` for exact counts, incomplete queries, team/venue links, and city coverage gaps. This adds example retrieval, not model-weight training. Coverage is incomplete: a city entry is not a sourced building, residential does not mean condominium ownership, and indexed league memberships are not verified current rosters.

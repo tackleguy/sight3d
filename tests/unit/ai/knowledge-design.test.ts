@@ -1,3 +1,4 @@
+import { designReferenceConstraints } from '../../../implementations/ai.chat/architecture-references';
 jest.mock('../../../implementations/data.materials/ProceduralTextures',()=>({generateBuiltinMaterials:()=>[]}));
 import { createKnowledgeDesign, wantsKnowledgeDesign } from '../../../implementations/ai.chat/knowledge-design';
 import { browserTools, browserRequest, completedBrowserOperations } from '../../../src/web/browser-ai-protocol';
@@ -39,7 +40,8 @@ test('assembly receipts finish once and report approximation rather than a web s
 
 test('invalid AI assemblies get one corrective attempt before any geometry is exposed',async()=>{
  const {generateBrowserResponse}=await import('../../../src/web/browser-ai-protocol');
- const generate=jest.fn().mockResolvedValueOnce({choices:[{message:{content:JSON.stringify({reply:'',calls:[{name:'create_design',arguments:{...plan,reference:''}}]})},finish_reason:'stop'}]}).mockResolvedValueOnce({choices:[{message:{content:JSON.stringify({reply:'',calls:[{name:'create_design',arguments:plan}]})},finish_reason:'stop'}]});
+ const correctedPlan={...plan,referenceIds:designReferenceConstraints('Create a coastal lighthouse').references.slice(0,1)};
+ const generate=jest.fn().mockResolvedValueOnce({choices:[{message:{content:JSON.stringify({reply:'',calls:[{name:'create_design',arguments:{...plan,reference:''}}]})},finish_reason:'stop'}]}).mockResolvedValueOnce({choices:[{message:{content:JSON.stringify({reply:'',calls:[{name:'create_design',arguments:correctedPlan}]})},finish_reason:'stop'}]});
  const response=await generateBrowserResponse({system:'',tools:getToolDefinitions(),messages:[{role:'user',content:'Create a coastal lighthouse'}]},generate);
  expect(generate).toHaveBeenCalledTimes(2);expect(generate.mock.calls[1][0].messages[0].content).toContain('reference must contain');expect(response.content?.[0].input?.reference).toBe(plan.reference);
 });

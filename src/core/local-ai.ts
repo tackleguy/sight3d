@@ -1,3 +1,6 @@
+import { completedBrowserOperations } from '../web/browser-ai-protocol';
+import { wantsKnowledgeDesign, validateKnowledgeDesign } from '../../implementations/ai.chat/knowledge-design';
+import { architectureReferenceContext, REFERENCE_CONTEXT_HEADER, constrainDesignTool, validateDesignRequest, designDemonstration } from '../../implementations/ai.chat/architecture-references';
 /** Local-only OpenAI-compatible transport for LM Studio and Ollama. No cloud fallback. */
 import type { AIResponse, AIBlock, TurnMessage } from '../../implementations/ai.chat/chat-runner';
 
@@ -80,18 +83,42 @@ export function fromLocalResponse(data: any): AIResponse {
 
 export async function chatLocal(args: ChatArgs, settings: LocalAISettings, fetcher: Fetcher = fetch): Promise<AIResponse> {
   try {
+    const completed=completedBrowserOperations(args);if(completed)return completed;
     const base = localBaseURL(settings.localAIUrl);
     // Check installed models before sending any prompt; do not ask Ollama to use a cloud model.
     const available = await listLocalModels(base, fetcher);
     if (available.error) throw new Error(available.error);
     const model = settings.localAIModel?.trim() || available.models[0];
     if (!model || !available.models.includes(model)) throw new Error('Load a local chat model in LM Studio or Ollama, then choose it in AI settings.');
-    const tools = args.tools.map((tool: any) => ({ type: 'function', function: { name: tool.name, description: tool.description, parameters: tool.input_schema } }));
-    const data = await jsonRequest(`${base}/chat/completions`, {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model, messages: toLocalMessages(args.system, args.messages), stream: false, max_tokens: 2048, temperature: 0.2, ...(tools.length ? { tools } : {}) }),
-    }, fetcher, 180000);
-    return fromLocalResponse(data);
+    const latestText=String([...args.messages].reverse().find(m=>m.role==='user'&&typeof m.content==='string')?.content||'').split('\n\n').pop()!;
+    const knowledge=wantsKnowledgeDesign(latestText)&&args.tools.some((t:any)=>t.name==='create_design');
+    const selectedTools=knowledge?args.tools.filter((t:any)=>t.name==='create_design').map((t:any)=>constrainDesignTool(t,latestText)):args.tools;
+    const tools = selectedTools.map((tool: any) => ({ type: 'function', function: { name: tool.name, description: tool.description, parameters: tool.input_schema } }));
+    const sourceContext=args.system.includes(REFERENCE_CONTEXT_HEADER)?'':architectureReferenceContext(latestText);
+    let correction='';
+    for(let attempt=0;attempt<2;attempt++) {
+      const conversation=toLocalMessages(args.system+sourceContext+correction,args.messages);
+      if(knowledge)conversation.splice(1,0,...designDemonstration(latestText));
+      const data = await jsonRequest(`${base}/chat/completions`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model, messages:conversation, stream:false, max_tokens:4096, temperature:0.2, ...(tools.length?{tools,...(knowledge?{tool_choice:{type:'function',function:{name:'create_design'}}}:{})}:{}) }),
+      }, fetcher, 180000);
+      try {
+        const response=fromLocalResponse(data);
+        if(knowledge&&response.stop_reason==='max_tokens')throw new Error('The design was cut short. Return a shorter complete assembly; omit optional arguments.');
+        if(knowledge&&!response.content?.some(b=>b.type==='tool_use'&&b.name==='create_design'))throw new Error('Use create_design to build the requested assembly; a text-only claim cannot create geometry.');
+        if(knowledge&&response.content?.filter(b=>b.type==='tool_use').length!==1)throw new Error('Return exactly one create_design action for the complete assembly.');
+        for(const block of response.content||[])if(block.type==='tool_use'){
+          if(knowledge&&block.name!=='create_design')throw new Error('Use the available create_design action.');
+          if(block.name==='create_design'){validateKnowledgeDesign(block.input||{});validateDesignRequest(block.input||{},latestText);}
+        }
+        return response;
+      } catch(error) {
+        if(!knowledge||attempt===1)throw error;
+        correction='\nThe previous plan was rejected before execution: '+(error instanceof Error?error.message:String(error))+'. Return a corrected complete plan using the supplied sources and worked geometry examples.';
+      }
+    }
+    throw new Error('No complete design was generated.');
   } catch (e) { return { error: localError(e) }; }
 }
 

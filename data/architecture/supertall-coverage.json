@@ -1,0 +1,16 @@
+{
+  "generatedAt": "2026-09-21T18:46:34.948120+00:00",
+  "sources": [
+    {
+      "source": "https://en.wikipedia.org/wiki/List_of_supertall_skyscrapers",
+      "rowsImported": 272,
+      "license": "CC BY-SA 4.0; factual table subset adapted from Wikipedia contributors"
+    },
+    {
+      "source": "https://en.wikipedia.org/wiki/List_of_megatall_skyscrapers",
+      "rowsImported": 4,
+      "license": "CC BY-SA 4.0; factual table subset adapted from Wikipedia contributors"
+    }
+  ],
+  "scope": "Every row of the fetched completed/topped-out supertall and completed megatall tables. Does not certify complete worldwide coverage or include all proposals."
+}

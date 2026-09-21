@@ -1,0 +1,6046 @@
+{
+  "generatedAt": "2026-09-21T20:05:37.306Z",
+  "kind": "Deterministic retrieval and geometry integration checks; no language-model generations",
+  "total": 1000,
+  "passed": 996,
+  "failed": 4,
+  "durationMs": 71443,
+  "groups": {
+    "team-stadium": {
+      "total": 250,
+      "passed": 250,
+      "failed": 0
+    },
+    "supertall": {
+      "total": 200,
+      "passed": 200,
+      "failed": 0
+    },
+    "residential": {
+      "total": 200,
+      "passed": 200,
+      "failed": 0
+    },
+    "city": {
+      "total": 150,
+      "passed": 146,
+      "failed": 4
+    },
+    "geometry-and-undo": {
+      "total": 100,
+      "passed": 100,
+      "failed": 0
+    },
+    "invalid-plan-rejection": {
+      "total": 100,
+      "passed": 100,
+      "failed": 0
+    }
+  },
+  "results": [
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Memphis Grizzlies",
+      "pass": true,
+      "ms": 100
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Houston Rockets",
+      "pass": true,
+      "ms": 75
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Boston Celtics",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Atlanta Hawks",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for New York Knicks",
+      "pass": true,
+      "ms": 81
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Los Angeles Lakers",
+      "pass": true,
+      "ms": 83
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Chicago Bulls",
+      "pass": true,
+      "ms": 71
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Charlotte Hornets",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Minnesota Timberwolves",
+      "pass": true,
+      "ms": 68
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Indiana Pacers",
+      "pass": true,
+      "ms": 68
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Sacramento Kings",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Oklahoma City Thunder",
+      "pass": true,
+      "ms": 83
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Cleveland Cavaliers",
+      "pass": true,
+      "ms": 71
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Portland Trail Blazers",
+      "pass": true,
+      "ms": 82
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Miami Heat",
+      "pass": true,
+      "ms": 71
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Detroit Pistons",
+      "pass": true,
+      "ms": 69
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for San Antonio Spurs",
+      "pass": true,
+      "ms": 85
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for New Orleans Pelicans",
+      "pass": true,
+      "ms": 83
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Phoenix Mercury",
+      "pass": true,
+      "ms": 69
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Minnesota Lynx",
+      "pass": true,
+      "ms": 67
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Indiana Fever",
+      "pass": true,
+      "ms": 68
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Dallas Wings",
+      "pass": true,
+      "ms": 69
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Portland Fire",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Washington Mystics",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Atlanta Dream",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Las Vegas Aces",
+      "pass": true,
+      "ms": 84
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Chicago Sky",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Kansas City Chiefs",
+      "pass": true,
+      "ms": 84
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Seattle Seahawks",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Cleveland Browns",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Jacksonville Jaguars",
+      "pass": true,
+      "ms": 71
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Detroit Lions",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for New England Patriots",
+      "pass": true,
+      "ms": 78
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Green Bay Packers",
+      "pass": true,
+      "ms": 79
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Tennessee Titans",
+      "pass": true,
+      "ms": 67
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Indianapolis Colts",
+      "pass": true,
+      "ms": 71
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for New York Giants",
+      "pass": true,
+      "ms": 78
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Cincinnati Bengals",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Buffalo Bills",
+      "pass": true,
+      "ms": 71
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Houston Texans",
+      "pass": true,
+      "ms": 71
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Denver Broncos",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Miami Dolphins",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for San Francisco 49ers",
+      "pass": true,
+      "ms": 84
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Minnesota Vikings",
+      "pass": true,
+      "ms": 66
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Atlanta Falcons",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Las Vegas Raiders",
+      "pass": true,
+      "ms": 86
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for San Jose Sharks",
+      "pass": true,
+      "ms": 84
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Washington Capitals",
+      "pass": true,
+      "ms": 71
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Winnipeg Jets",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for New York Rangers",
+      "pass": true,
+      "ms": 78
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Ottawa Senators",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Vancouver Canucks",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Minnesota Wild",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Toronto Maple Leafs",
+      "pass": true,
+      "ms": 83
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for St. Louis Blues",
+      "pass": true,
+      "ms": 85
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Los Angeles Kings",
+      "pass": true,
+      "ms": 83
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Calgary Flames",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Philadelphia Flyers",
+      "pass": true,
+      "ms": 71
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Buffalo Sabres",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Utah Mammoth",
+      "pass": true,
+      "ms": 67
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Vegas Golden Knights",
+      "pass": true,
+      "ms": 79
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Edmonton Oilers",
+      "pass": true,
+      "ms": 71
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Seattle Kraken",
+      "pass": true,
+      "ms": 81
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for New York Islanders",
+      "pass": true,
+      "ms": 79
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Carolina Hurricanes",
+      "pass": true,
+      "ms": 67
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Rosario Central",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Aldosivi",
+      "pass": true,
+      "ms": 56
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Huracán",
+      "pass": true,
+      "ms": 54
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Argentinos Juniors",
+      "pass": true,
+      "ms": 67
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for River Plate",
+      "pass": true,
+      "ms": 67
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Banfield",
+      "pass": true,
+      "ms": 54
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for San Lorenzo",
+      "pass": true,
+      "ms": 74
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Lanús",
+      "pass": true,
+      "ms": 62
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Newell's Old Boys",
+      "pass": true,
+      "ms": 79
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Gimnasia La Plata",
+      "pass": true,
+      "ms": 78
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Platense",
+      "pass": true,
+      "ms": 54
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Independiente Rivadavia",
+      "pass": true,
+      "ms": 66
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Racing Club",
+      "pass": true,
+      "ms": 69
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Defensa y Justicia",
+      "pass": true,
+      "ms": 66
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Independiente",
+      "pass": true,
+      "ms": 56
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Atlético Tucumán",
+      "pass": true,
+      "ms": 67
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Estudiantes de Río Cuarto",
+      "pass": true,
+      "ms": 90
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Estudiantes de La Plata",
+      "pass": true,
+      "ms": 89
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Melbourne Victory",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Adelaide United",
+      "pass": true,
+      "ms": 71
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Central Coast Mariners",
+      "pass": true,
+      "ms": 87
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Brisbane Roar",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Sydney FC",
+      "pass": true,
+      "ms": 69
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Newcastle Jets",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Western Sydney Wanderers",
+      "pass": true,
+      "ms": 81
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for São Paulo",
+      "pass": true,
+      "ms": 77
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Botafogo",
+      "pass": true,
+      "ms": 53
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Athletico-PR",
+      "pass": true,
+      "ms": 66
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Remo",
+      "pass": true,
+      "ms": 54
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Mirassol",
+      "pass": true,
+      "ms": 54
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Grêmio",
+      "pass": true,
+      "ms": 54
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Flamengo",
+      "pass": true,
+      "ms": 56
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Fluminense",
+      "pass": true,
+      "ms": 54
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Corinthians",
+      "pass": true,
+      "ms": 55
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Santos",
+      "pass": true,
+      "ms": 58
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Palmeiras",
+      "pass": true,
+      "ms": 54
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Atlético-MG",
+      "pass": true,
+      "ms": 66
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Brighton & Hove Albion",
+      "pass": true,
+      "ms": 83
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Crystal Palace",
+      "pass": true,
+      "ms": 66
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Newcastle United",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Leeds United",
+      "pass": true,
+      "ms": 69
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Sunderland",
+      "pass": true,
+      "ms": 54
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Arsenal",
+      "pass": true,
+      "ms": 54
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Manchester United",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Fulham",
+      "pass": true,
+      "ms": 55
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Aston Villa",
+      "pass": true,
+      "ms": 67
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Manchester City",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Tottenham Hotspur",
+      "pass": true,
+      "ms": 74
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Brentford",
+      "pass": true,
+      "ms": 55
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Alavés",
+      "pass": true,
+      "ms": 55
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Celta Vigo",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Sevilla",
+      "pass": true,
+      "ms": 58
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Real Madrid",
+      "pass": true,
+      "ms": 59
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Atlético Madrid",
+      "pass": true,
+      "ms": 71
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Athletic Club",
+      "pass": true,
+      "ms": 67
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Racing Santander",
+      "pass": true,
+      "ms": 68
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Real Betis",
+      "pass": true,
+      "ms": 55
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Elche",
+      "pass": true,
+      "ms": 58
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Espanyol",
+      "pass": true,
+      "ms": 54
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Villarreal",
+      "pass": true,
+      "ms": 54
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Lens",
+      "pass": true,
+      "ms": 54
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Toulouse",
+      "pass": true,
+      "ms": 59
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Paris Saint-Germain",
+      "pass": true,
+      "ms": 83
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Lorient",
+      "pass": true,
+      "ms": 55
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Strasbourg",
+      "pass": true,
+      "ms": 58
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Angers",
+      "pass": true,
+      "ms": 55
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Le Mans",
+      "pass": true,
+      "ms": 67
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for AJ Auxerre",
+      "pass": true,
+      "ms": 68
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Le Havre AC",
+      "pass": true,
+      "ms": 77
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Nice",
+      "pass": true,
+      "ms": 57
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Lyon",
+      "pass": true,
+      "ms": 58
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Werder Bremen",
+      "pass": true,
+      "ms": 71
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Hamburg SV",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Bayer Leverkusen",
+      "pass": true,
+      "ms": 67
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Bayern Munich",
+      "pass": true,
+      "ms": 71
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for TSG Hoffenheim",
+      "pass": true,
+      "ms": 67
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for SV Elversberg",
+      "pass": true,
+      "ms": 66
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for FC Cologne",
+      "pass": true,
+      "ms": 67
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for 1. FC Union Berlin",
+      "pass": true,
+      "ms": 83
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Mainz",
+      "pass": true,
+      "ms": 58
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for SC Freiburg",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for AS Roma",
+      "pass": true,
+      "ms": 67
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Lazio",
+      "pass": true,
+      "ms": 55
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Parma",
+      "pass": true,
+      "ms": 61
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Genoa",
+      "pass": true,
+      "ms": 64
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Napoli",
+      "pass": true,
+      "ms": 61
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Bologna",
+      "pass": true,
+      "ms": 63
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Lecce",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for AC Milan",
+      "pass": true,
+      "ms": 79
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Internazionale",
+      "pass": true,
+      "ms": 65
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Juventus",
+      "pass": true,
+      "ms": 65
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Como",
+      "pass": true,
+      "ms": 62
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Cagliari",
+      "pass": true,
+      "ms": 63
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for V-Varen Nagasaki",
+      "pass": true,
+      "ms": 82
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for FC Tokyo",
+      "pass": true,
+      "ms": 84
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Nagoya Grampus",
+      "pass": true,
+      "ms": 80
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Urawa Red Diamonds",
+      "pass": true,
+      "ms": 95
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Vissel Kobe",
+      "pass": true,
+      "ms": 77
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Yokohama F. Marinos",
+      "pass": true,
+      "ms": 79
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Cerezo Osaka",
+      "pass": true,
+      "ms": 75
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Kawasaki Frontale",
+      "pass": true,
+      "ms": 86
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Avispa Fukuoka",
+      "pass": true,
+      "ms": 92
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Shimizu S-Pulse",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Kyoto Sanga",
+      "pass": true,
+      "ms": 74
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Sanfrecce Hiroshima",
+      "pass": true,
+      "ms": 75
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Al Ettifaq",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Al Fateh",
+      "pass": true,
+      "ms": 77
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Al Taawoun",
+      "pass": true,
+      "ms": 75
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Pachuca",
+      "pass": true,
+      "ms": 79
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Puebla",
+      "pass": true,
+      "ms": 75
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for América",
+      "pass": true,
+      "ms": 60
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Atlante",
+      "pass": true,
+      "ms": 63
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for FC Juarez",
+      "pass": true,
+      "ms": 101
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Guadalajara",
+      "pass": true,
+      "ms": 109
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Querétaro",
+      "pass": true,
+      "ms": 133
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Atlético de San Luis",
+      "pass": true,
+      "ms": 147
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Tijuana",
+      "pass": true,
+      "ms": 69
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Monterrey",
+      "pass": true,
+      "ms": 104
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Feyenoord Rotterdam",
+      "pass": true,
+      "ms": 85
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Ajax Amsterdam",
+      "pass": true,
+      "ms": 95
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Fortuna Sittard",
+      "pass": true,
+      "ms": 74
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for FC Groningen",
+      "pass": true,
+      "ms": 83
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Willem II",
+      "pass": true,
+      "ms": 74
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Go Ahead Eagles",
+      "pass": true,
+      "ms": 86
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Sparta Rotterdam",
+      "pass": true,
+      "ms": 84
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for FC Twente",
+      "pass": true,
+      "ms": 75
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Excelsior",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for NEC Nijmegen",
+      "pass": true,
+      "ms": 75
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for PSV Eindhoven",
+      "pass": true,
+      "ms": 76
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for C.D. Nacional",
+      "pass": true,
+      "ms": 60
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Académico de Viseu",
+      "pass": true,
+      "ms": 85
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for FC Porto",
+      "pass": true,
+      "ms": 76
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Benfica",
+      "pass": true,
+      "ms": 78
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Rio Ave",
+      "pass": true,
+      "ms": 79
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Gil Vicente",
+      "pass": true,
+      "ms": 74
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Moreirense",
+      "pass": true,
+      "ms": 59
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Arouca",
+      "pass": true,
+      "ms": 57
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for FC Famalicao",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Casa Pia",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Estrela",
+      "pass": true,
+      "ms": 60
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for St. Louis CITY SC",
+      "pass": true,
+      "ms": 102
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Inter Miami CF",
+      "pass": true,
+      "ms": 93
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for LA Galaxy",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Colorado Rapids",
+      "pass": true,
+      "ms": 76
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Real Salt Lake",
+      "pass": true,
+      "ms": 71
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Philadelphia Union",
+      "pass": true,
+      "ms": 75
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Portland Timbers",
+      "pass": true,
+      "ms": 74
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Seattle Sounders FC",
+      "pass": true,
+      "ms": 86
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Houston Dynamo FC",
+      "pass": true,
+      "ms": 85
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for San Jose Earthquakes",
+      "pass": true,
+      "ms": 87
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Sporting Kansas City",
+      "pass": true,
+      "ms": 90
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Orlando City SC",
+      "pass": true,
+      "ms": 87
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Atlanta United FC",
+      "pass": true,
+      "ms": 96
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for LAFC",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Austin FC",
+      "pass": true,
+      "ms": 85
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Columbus Crew",
+      "pass": true,
+      "ms": 76
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for San Diego FC",
+      "pass": true,
+      "ms": 88
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Red Bull New York",
+      "pass": true,
+      "ms": 97
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Chicago Stars FC",
+      "pass": true,
+      "ms": 89
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Utah Royals",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Seattle Reign FC",
+      "pass": true,
+      "ms": 117
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Houston Dash",
+      "pass": true,
+      "ms": 107
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for North Carolina Courage",
+      "pass": true,
+      "ms": 106
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Washington Spirit",
+      "pass": true,
+      "ms": 91
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Angel City FC",
+      "pass": true,
+      "ms": 88
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for San Diego Wave FC",
+      "pass": true,
+      "ms": 105
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Kansas City Current",
+      "pass": true,
+      "ms": 91
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Los Angeles Angels",
+      "pass": true,
+      "ms": 91
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Toronto Blue Jays",
+      "pass": true,
+      "ms": 90
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Chicago Cubs",
+      "pass": true,
+      "ms": 86
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Colorado Rockies",
+      "pass": true,
+      "ms": 74
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Los Angeles Dodgers",
+      "pass": true,
+      "ms": 92
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Detroit Tigers",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for San Francisco Giants",
+      "pass": true,
+      "ms": 91
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Cincinnati Reds",
+      "pass": true,
+      "ms": 77
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Philadelphia Phillies",
+      "pass": true,
+      "ms": 75
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for St. Louis Cardinals",
+      "pass": true,
+      "ms": 88
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Pittsburgh Pirates",
+      "pass": true,
+      "ms": 79
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for New York Mets",
+      "pass": true,
+      "ms": 86
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Washington Nationals",
+      "pass": true,
+      "ms": 90
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for New York Yankees",
+      "pass": true,
+      "ms": 98
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Miami Marlins",
+      "pass": true,
+      "ms": 76
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Atlanta Braves",
+      "pass": true,
+      "ms": 78
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Texas Rangers",
+      "pass": true,
+      "ms": 74
+    },
+    {
+      "group": "team-stadium",
+      "prompt": "Create a stadium for Kansas City Royals",
+      "pass": true,
+      "ms": 89
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create 111 West 57th Street",
+      "pass": true,
+      "ms": 76
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create 2 International Finance Centre",
+      "pass": true,
+      "ms": 64
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create 23 Marina",
+      "pass": true,
+      "ms": 53
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create 35 Hudson Yards",
+      "pass": true,
+      "ms": 61
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create 432 Park Avenue",
+      "pass": true,
+      "ms": 61
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create 520 Fifth Avenue",
+      "pass": true,
+      "ms": 62
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create 85 Sky Tower",
+      "pass": true,
+      "ms": 61
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create ADNOC Headquarters",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Abu Dhabi Plaza",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Address Boulevard",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Al Hamra Tower",
+      "pass": true,
+      "ms": 61
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Almas Tower",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Amna Tower",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Aon Center",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Aspire Tower",
+      "pass": true,
+      "ms": 47
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Australia 108",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Azabudai Hills Mori JP Tower",
+      "pass": true,
+      "ms": 84
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Baiyoke Tower II",
+      "pass": true,
+      "ms": 60
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Bank of America Plaza",
+      "pass": true,
+      "ms": 61
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Bank of China Tower",
+      "pass": true,
+      "ms": 63
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Baoneng Shenyang Global Financial Centre Tower 2",
+      "pass": true,
+      "ms": 136
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Blue Tower",
+      "pass": true,
+      "ms": 50
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Burj Khalifa",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Burj Mohammed Bin Rashid",
+      "pass": true,
+      "ms": 74
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create CBRT Tower",
+      "pass": true,
+      "ms": 50
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create CCCC Southern Financial Investment Building",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create CITIC Pacific Plaza",
+      "pass": true,
+      "ms": 62
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Cayan Tower",
+      "pass": true,
+      "ms": 50
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Central Park Tower",
+      "pass": true,
+      "ms": 64
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Changsha IFS Tower T1",
+      "pass": true,
+      "ms": 88
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Changsha IFS Tower T2",
+      "pass": true,
+      "ms": 87
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create China Merchants Bank Global Headquarters Main Tower",
+      "pass": true,
+      "ms": 112
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create China Resources Metropolitan City Center Landmark Tower",
+      "pass": true,
+      "ms": 113
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create China World Trade Center Tower 3",
+      "pass": true,
+      "ms": 84
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create China Zun",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Chongqing World Financial Center",
+      "pass": true,
+      "ms": 83
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Chrysler Building",
+      "pass": true,
+      "ms": 38
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create City Tower One",
+      "pass": true,
+      "ms": 64
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create City of Capitals: Moscow Tower",
+      "pass": true,
+      "ms": 86
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Citymark Center",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create DAMAC Heights",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Dalian International Trade Center",
+      "pass": true,
+      "ms": 84
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Deji Plaza Phase 2",
+      "pass": true,
+      "ms": 62
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Diwang International Fortune Center",
+      "pass": true,
+      "ms": 76
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Doosan Haeundae We've the Zenith Tower A",
+      "pass": true,
+      "ms": 97
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Elite Residence",
+      "pass": true,
+      "ms": 47
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Emirates Tower One",
+      "pass": true,
+      "ms": 88
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Empire State Building",
+      "pass": true,
+      "ms": 50
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Eton Place Dalian Tower 1",
+      "pass": true,
+      "ms": 83
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Eurasia",
+      "pass": true,
+      "ms": 35
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Fanya International Finance Building South",
+      "pass": true,
+      "ms": 75
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Federation Tower",
+      "pass": true,
+      "ms": 50
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Fortune Center",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Four Seasons Place KLCC",
+      "pass": true,
+      "ms": 74
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Franklin Center",
+      "pass": true,
+      "ms": 51
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Galaxy Tower 1",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Gate of the Orient",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Gevora Hotel",
+      "pass": true,
+      "ms": 47
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Golden Corridor 22-1 Project Tower 1",
+      "pass": true,
+      "ms": 86
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Golden Eagle Tiandi Tower A",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Golden Eagle Tiandi Tower B",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Gran Torre Santiago",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Greenland Bund Centre Tower 1",
+      "pass": true,
+      "ms": 77
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Greenland Center 1",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Greenland Group Suzhou Center",
+      "pass": true,
+      "ms": 83
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Greenland Puli Center",
+      "pass": true,
+      "ms": 61
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Guangdong Business Center",
+      "pass": true,
+      "ms": 61
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Guangdong Landmark Building",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Guangfa Securities Headquarters",
+      "pass": true,
+      "ms": 62
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Guangxi Finance Plaza",
+      "pass": true,
+      "ms": 60
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Guangxi Financial Investment Center",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Guangxi Wealth Financial Center",
+      "pass": true,
+      "ms": 74
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Guangzhou International Cultural Center",
+      "pass": true,
+      "ms": 86
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Guangzhou International Finance Center",
+      "pass": true,
+      "ms": 84
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Hanking Center",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Heartland 66 Office Tower",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Hengfeng Guiyang Center Tower 1",
+      "pass": true,
+      "ms": 84
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Hengyu Jinrong Center Block A",
+      "pass": true,
+      "ms": 75
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Hilton Wenzhou City Center",
+      "pass": true,
+      "ms": 85
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Hong Plaza Main Tower (CBD Central Plaza)",
+      "pass": true,
+      "ms": 108
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Honglou Times Square",
+      "pass": true,
+      "ms": 62
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Huachuang International Plaza Tower 1",
+      "pass": true,
+      "ms": 74
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Huijin Center 1",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create ICC Thang Long Global Center",
+      "pass": true,
+      "ms": 88
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Iconic Tower",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create International Commerce Centre",
+      "pass": true,
+      "ms": 66
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create International Land-Sea Center",
+      "pass": true,
+      "ms": 77
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create JPMorgan Chase Tower",
+      "pass": true,
+      "ms": 64
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create JPMorgan Chase World Headquarters",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create JW Marriott Marquis Dubai Tower 1",
+      "pass": true,
+      "ms": 96
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Jiangxi Nanchang Greenland Central Plaza, Parcel A",
+      "pass": true,
+      "ms": 107
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Jiangxi Nanchang Greenland Central Plaza, Parcel B",
+      "pass": true,
+      "ms": 107
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Jiefangbei Book City",
+      "pass": true,
+      "ms": 62
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Jiulong Lake Knowledge Tower",
+      "pass": true,
+      "ms": 74
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Jiuzhou International Tower",
+      "pass": true,
+      "ms": 62
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Jumeirah Emirates Towers Hotel",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Jumeirah Nanjing Hotel & International Youth Cultural Centre Tower 2",
+      "pass": true,
+      "ms": 130
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Junchao Plaza",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create KK100",
+      "pass": true,
+      "ms": 35
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Keangnam Hanoi Landmark Tower",
+      "pass": true,
+      "ms": 81
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Kingdom Centre",
+      "pass": true,
+      "ms": 50
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create LCT Landmark Tower",
+      "pass": true,
+      "ms": 63
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create LCT Residence Tower A",
+      "pass": true,
+      "ms": 61
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Lakhta Center",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Landmark 81",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Leatop Plaza",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Lokhandwala Minerva",
+      "pass": true,
+      "ms": 50
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Longxi International Hotel",
+      "pass": true,
+      "ms": 62
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Luminary Tower",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Lusail Plaza Tower 3",
+      "pass": true,
+      "ms": 62
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Lusail Plaza Tower 4",
+      "pass": true,
+      "ms": 64
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Marina 101",
+      "pass": true,
+      "ms": 51
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Mecca Royal Clock Tower",
+      "pass": true,
+      "ms": 71
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Meixi Lake Changsha Jinmao Building",
+      "pass": true,
+      "ms": 85
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Mercury City Tower",
+      "pass": true,
+      "ms": 64
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Merdeka 118",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Minsheng Bank Building",
+      "pass": true,
+      "ms": 50
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Minying International Trade Center T2",
+      "pass": true,
+      "ms": 86
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Modern Media Center",
+      "pass": true,
+      "ms": 60
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create NBK Tower",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Nanshan Science and Technology Union Building",
+      "pass": true,
+      "ms": 75
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Neva Towers 2",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Nina Tower",
+      "pass": true,
+      "ms": 50
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Ningbo Central Plaza Tower 1",
+      "pass": true,
+      "ms": 83
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Northeast Asia Trade Tower",
+      "pass": true,
+      "ms": 74
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create OCT Tower",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create OKO: South Tower",
+      "pass": true,
+      "ms": 62
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create One Bloor West",
+      "pass": true,
+      "ms": 61
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create One Manhattan West",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create One Vanderbilt",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create One World Trade Center",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create One Za'abeel The Tower",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create PIF Tower",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Palais Royale",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Parc1 Tower 1",
+      "pass": true,
+      "ms": 51
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Petronas Tower 1",
+      "pass": true,
+      "ms": 69
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Petronas Tower 2",
+      "pass": true,
+      "ms": 50
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Ping An Financial Center Tower",
+      "pass": true,
+      "ms": 74
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Poly Pazhou C2",
+      "pass": true,
+      "ms": 60
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Princess Tower",
+      "pass": true,
+      "ms": 50
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Qingdao Hai Tian Center",
+      "pass": true,
+      "ms": 85
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Qingdao Landmark Tower 1",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Raffles City Chongqing T3N",
+      "pass": true,
+      "ms": 84
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Regalia",
+      "pass": true,
+      "ms": 36
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Riverview Plaza (1 Corporate Avenue)",
+      "pass": true,
+      "ms": 74
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create SLS Dubai",
+      "pass": true,
+      "ms": 64
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create SO/ Sofitel Residences",
+      "pass": true,
+      "ms": 62
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Salesforce Tower",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Shanghai World Financial Center",
+      "pass": true,
+      "ms": 86
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Shengjing Finance Plaza T2",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Shenzhen CFC Changfu Centre",
+      "pass": true,
+      "ms": 84
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Shenzhen Center",
+      "pass": true,
+      "ms": 60
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Shenzhen Urban Construction & Tower",
+      "pass": true,
+      "ms": 85
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Shimao Global Finance Center",
+      "pass": true,
+      "ms": 74
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Shimao International Plaza",
+      "pass": true,
+      "ms": 61
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Shum Yip Upperhills Tower 1",
+      "pass": true,
+      "ms": 75
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Sinar Mas Center 1",
+      "pass": true,
+      "ms": 62
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Spring City 66",
+      "pass": true,
+      "ms": 62
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Suning Plaza Tower 1",
+      "pass": true,
+      "ms": 63
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Suzhou ICC",
+      "pass": true,
+      "ms": 59
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Suzhou IFS",
+      "pass": true,
+      "ms": 60
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create TEDA IFC",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Taipei 101",
+      "pass": true,
+      "ms": 60
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create The A-Tower",
+      "pass": true,
+      "ms": 39
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create The Address Beach Resort",
+      "pass": true,
+      "ms": 88
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create The Address Residence - Fountain View III",
+      "pass": true,
+      "ms": 96
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create The Brooklyn Tower",
+      "pass": true,
+      "ms": 60
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create The Center",
+      "pass": true,
+      "ms": 37
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create The Exchange 106",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create The Landmark",
+      "pass": true,
+      "ms": 36
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create The Marina Torch",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create The Pinnacle",
+      "pass": true,
+      "ms": 88
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create The Spiral",
+      "pass": true,
+      "ms": 41
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Three World Trade Center",
+      "pass": true,
+      "ms": 82
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Tianjin Modern City Office Tower",
+      "pass": true,
+      "ms": 101
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Tianjin World Financial Center",
+      "pass": true,
+      "ms": 87
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Trump International Hotel and Tower",
+      "pass": true,
+      "ms": 76
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Twin Towers Guiyang, West Tower",
+      "pass": true,
+      "ms": 96
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Two Prudential Plaza",
+      "pass": true,
+      "ms": 61
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Uptown Tower",
+      "pass": true,
+      "ms": 50
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Varso",
+      "pass": true,
+      "ms": 38
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Wasl Tower",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Wells Fargo Plaza",
+      "pass": true,
+      "ms": 59
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Wenzhou World Trade Center",
+      "pass": true,
+      "ms": 83
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Willis Tower",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Wuhan Greenland Center",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Wuhan Tower",
+      "pass": true,
+      "ms": 60
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Wuxi International Finance Square",
+      "pass": true,
+      "ms": 86
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Wuxi Maoye City",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Wuxi Suning Plaza 1",
+      "pass": true,
+      "ms": 78
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Xiamen Cross Strait Financial Centre",
+      "pass": true,
+      "ms": 103
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Xiangjiang Fortune Finance Center Tower 1",
+      "pass": true,
+      "ms": 87
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Xujiahui Center",
+      "pass": true,
+      "ms": 51
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Yantai Shimao No.1 The Harbour",
+      "pass": true,
+      "ms": 85
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Yuexiu Fortune Center 1",
+      "pass": true,
+      "ms": 61
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create YunDing Tower",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Zhangjiang Science Gate Tower 1",
+      "pass": true,
+      "ms": 76
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Zhangjiang Science Gate Tower 2",
+      "pass": true,
+      "ms": 78
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Zhuhai Tower",
+      "pass": true,
+      "ms": 62
+    },
+    {
+      "group": "supertall",
+      "prompt": "Create Zifeng Tower",
+      "pass": true,
+      "ms": 50
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Flithoff",
+      "pass": true,
+      "ms": 78
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Prédio João Paz Moreira",
+      "pass": true,
+      "ms": 114
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Fischhausstraße 15, Dresden",
+      "pass": true,
+      "ms": 101
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Cobenzlgasse 46",
+      "pass": true,
+      "ms": 89
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Lienina Street 2, Minsk",
+      "pass": true,
+      "ms": 126
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Hackenbroicher Straße 114",
+      "pass": true,
+      "ms": 120
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Bogenhaus",
+      "pass": true,
+      "ms": 77
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Tecla house",
+      "pass": true,
+      "ms": 85
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Bahnhofstraße 9, Friesach",
+      "pass": true,
+      "ms": 86
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Wohnhaus Fabrikstraße 9",
+      "pass": true,
+      "ms": 86
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Am Wiesengrund 1-13, Chemnitz-Gablenz",
+      "pass": true,
+      "ms": 122
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Edifício London",
+      "pass": true,
+      "ms": 87
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Wormser Straße 66",
+      "pass": true,
+      "ms": 97
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Wohnhaus Spindeltal 32, Spindeltal 34 in Eichstätt",
+      "pass": true,
+      "ms": 128
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Wieck-Haus",
+      "pass": true,
+      "ms": 86
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Grunaer Straße 7-17",
+      "pass": true,
+      "ms": 99
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Casa-fàbrica Amigó",
+      "pass": true,
+      "ms": 102
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Villa Sinigallia",
+      "pass": true,
+      "ms": 88
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Casa-fabrica Abril-Vila",
+      "pass": true,
+      "ms": 110
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Casa-fàbrica Bosch",
+      "pass": true,
+      "ms": 98
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Grossheimat",
+      "pass": true,
+      "ms": 71
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Bebelstraße 21, Hannover",
+      "pass": true,
+      "ms": 99
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by residential building Hollenbeckerstraße 25",
+      "pass": true,
+      "ms": 97
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Cases Borràs",
+      "pass": true,
+      "ms": 84
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Dorfstraße 40",
+      "pass": true,
+      "ms": 86
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Edifici d'habitatges d'Avellana Ortiz",
+      "pass": true,
+      "ms": 109
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Building in plaça Reial, 7",
+      "pass": true,
+      "ms": 86
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Gollstraße 19, Hannover",
+      "pass": true,
+      "ms": 99
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Cieszkowskiego 13-15 Bydgoszcz",
+      "pass": true,
+      "ms": 108
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Soler-Estruch house",
+      "pass": true,
+      "ms": 96
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Casa-fàbrica Eudald Fargas",
+      "pass": true,
+      "ms": 121
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Casa-fàbrica Vermell-Martí",
+      "pass": true,
+      "ms": 109
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Gran Vía de Colón 40, Granada",
+      "pass": true,
+      "ms": 137
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Alter Postweg 2",
+      "pass": true,
+      "ms": 85
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Jungfernstieg 3a, Stralsund",
+      "pass": true,
+      "ms": 97
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Oberrege 22",
+      "pass": true,
+      "ms": 84
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Casa Modolell",
+      "pass": true,
+      "ms": 90
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Atenser Allee 119",
+      "pass": true,
+      "ms": 98
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Building in carrer Méndez Núñez 10",
+      "pass": true,
+      "ms": 109
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Casa-fàbrica Faura",
+      "pass": true,
+      "ms": 97
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Döllingstraße 4; 6; 8, Leipzig",
+      "pass": true,
+      "ms": 90
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Casa Alexandre Gioan",
+      "pass": true,
+      "ms": 98
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Contour, Manchester",
+      "pass": true,
+      "ms": 88
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Casa Manuel Cañellas",
+      "pass": true,
+      "ms": 101
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Casa del carrer Bolívia, 210",
+      "pass": true,
+      "ms": 124
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Residential building (after 1750)",
+      "pass": true,
+      "ms": 101
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Station Building Effretikon",
+      "pass": true,
+      "ms": 89
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Residential building (1706)",
+      "pass": true,
+      "ms": 91
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Gatekeeper's house (1716/1717)",
+      "pass": true,
+      "ms": 110
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Residential house with Store (4th quarter 18th c.)",
+      "pass": true,
+      "ms": 131
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Torre Gironella (Col·legi Santa Dorotea)",
+      "pass": true,
+      "ms": 134
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Casa Enric Viñas",
+      "pass": true,
+      "ms": 97
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Casa Joan Sanpera Torras",
+      "pass": true,
+      "ms": 111
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Casa Josefa Piñol (II)",
+      "pass": true,
+      "ms": 119
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by building in carrer Pintor Fortuny, 32",
+      "pass": true,
+      "ms": 113
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Can Mumbrú",
+      "pass": true,
+      "ms": 89
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Casa del carrer Pérez Galdós, 31",
+      "pass": true,
+      "ms": 133
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Casa Josefa Pla, Vda. de Vives",
+      "pass": true,
+      "ms": 132
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Casa Carme Carsi de Puig",
+      "pass": true,
+      "ms": 124
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Casa-fàbrica Mestres",
+      "pass": true,
+      "ms": 97
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Edificis d'habitatges de la Caixa de Pensions",
+      "pass": true,
+      "ms": 141
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Edifici del carrer Santa Anna, 10",
+      "pass": true,
+      "ms": 134
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Casa Emília Artés de Mayolas",
+      "pass": true,
+      "ms": 121
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Casa Joaquim Maria Espina",
+      "pass": true,
+      "ms": 110
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by buildings in carrer del Rec 60 i 62",
+      "pass": true,
+      "ms": 121
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Obere Steinbeisstraße 14, Ölbronn",
+      "pass": true,
+      "ms": 111
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by building in baixada de Sant Miquel, 9",
+      "pass": true,
+      "ms": 111
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Casa Josep Salas",
+      "pass": true,
+      "ms": 96
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Casa Marià Illa",
+      "pass": true,
+      "ms": 100
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Casa Domènec Bernet",
+      "pass": true,
+      "ms": 107
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Casa Josep Boscà",
+      "pass": true,
+      "ms": 97
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by casa del carrer de l'Oli, 6",
+      "pass": true,
+      "ms": 118
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by building in placeta de Montcada, 7",
+      "pass": true,
+      "ms": 97
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Casa Miquel Elias",
+      "pass": true,
+      "ms": 97
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by residential building (1819) in Büren zum Hof",
+      "pass": true,
+      "ms": 119
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Altonaer Straße 2a",
+      "pass": true,
+      "ms": 99
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Puippe or Adelaïde House",
+      "pass": true,
+      "ms": 111
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by residential buildung (end of 18. century) in Rubigen",
+      "pass": true,
+      "ms": 140
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Vinkelboda",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Thomass-Eck",
+      "pass": true,
+      "ms": 89
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Västra Esplanadgatan 9",
+      "pass": true,
+      "ms": 87
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Seelhorststraße 16",
+      "pass": true,
+      "ms": 85
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Kopfstation",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Borris Railway Station",
+      "pass": true,
+      "ms": 99
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Residential building for RIV employees",
+      "pass": true,
+      "ms": 96
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Behringstraße 9",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Am Lachenweg 1",
+      "pass": true,
+      "ms": 196
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Anne Baillie Building",
+      "pass": true,
+      "ms": 92
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by 220 Central Park South",
+      "pass": true,
+      "ms": 111
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Heinrich-Schütz-Haus Bad Köstritz",
+      "pass": true,
+      "ms": 125
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Rennerbergstraße 7",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Singel 50, Amsterdam",
+      "pass": true,
+      "ms": 100
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Lijsterstraat 1, Kerkrade",
+      "pass": true,
+      "ms": 85
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Vijverlaan 77, Arnhem",
+      "pass": true,
+      "ms": 97
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Casa Martí Ventosa",
+      "pass": true,
+      "ms": 98
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Floßmannstraße 9/11",
+      "pass": true,
+      "ms": 85
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Sosaer Straße 16",
+      "pass": true,
+      "ms": 99
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Canons' Houses on the cathedral square",
+      "pass": true,
+      "ms": 122
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Antiga Torre Bayer",
+      "pass": true,
+      "ms": 96
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Hildachstraße 17 (Munich)",
+      "pass": true,
+      "ms": 100
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Casa Josep Molleras",
+      "pass": true,
+      "ms": 97
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Building in carrer Sant Miquel, 39",
+      "pass": true,
+      "ms": 137
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Casa Pere Carbonell",
+      "pass": true,
+      "ms": 97
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Arbeiterwohnhaus",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by 26, Sheep Street",
+      "pass": true,
+      "ms": 97
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Gellertstraße 17",
+      "pass": true,
+      "ms": 84
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Rietveld houses at Erasmuslaan",
+      "pass": true,
+      "ms": 103
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Campagne de l'Élysée",
+      "pass": true,
+      "ms": 119
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Silbergasse House",
+      "pass": true,
+      "ms": 90
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by residential building Rathausgasse 4",
+      "pass": true,
+      "ms": 86
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Former Weaver's House",
+      "pass": true,
+      "ms": 104
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Promasens Parish Orphanage",
+      "pass": true,
+      "ms": 164
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Marschall-Haus",
+      "pass": true,
+      "ms": 98
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Schlössli St. Fiden",
+      "pass": true,
+      "ms": 98
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Zur Weissen Rose House",
+      "pass": true,
+      "ms": 109
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Wohnstock beim Mühlehof",
+      "pass": true,
+      "ms": 99
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Zum Licht House",
+      "pass": true,
+      "ms": 96
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by House Dr. Hirzel",
+      "pass": true,
+      "ms": 95
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Gliwice, Rynek 6",
+      "pass": true,
+      "ms": 85
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Arsenal de la Carraca",
+      "pass": true,
+      "ms": 114
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Retz Altstadt Haus Znaimer Straße 18",
+      "pass": true,
+      "ms": 136
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Wohnhaus Billrothgasse 6, Graz",
+      "pass": true,
+      "ms": 104
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Wohnhaus - ehem. Getreidekasten, Schärding",
+      "pass": true,
+      "ms": 113
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Ehemalige Taverne in Wullersdorf",
+      "pass": true,
+      "ms": 101
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Schwindgasse 7",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Former brewery Schrems",
+      "pass": true,
+      "ms": 102
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Spitz Ottenschlägerstraße 14",
+      "pass": true,
+      "ms": 99
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Kapuzinergasse 20, Innsbruck",
+      "pass": true,
+      "ms": 99
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Weißenkirchen in der Wachau 101",
+      "pass": true,
+      "ms": 111
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Josef Egger-Straße 3",
+      "pass": true,
+      "ms": 97
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Fichtenhof St. Lorenzen",
+      "pass": true,
+      "ms": 99
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Posthorngasse 5, Vienna",
+      "pass": true,
+      "ms": 87
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Ehemaliges Hotel Baumann, Leoben",
+      "pass": true,
+      "ms": 164
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Bräugasse 20",
+      "pass": true,
+      "ms": 95
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Kongregation",
+      "pass": true,
+      "ms": 84
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Maingasse 14",
+      "pass": true,
+      "ms": 88
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Ehemaliges Ackerbürgeranwesen, Wohnhaus in Lauf an der Pegnitz",
+      "pass": true,
+      "ms": 144
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Wohnhaus Kraftshofer Hauptstraße 192",
+      "pass": true,
+      "ms": 111
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Raiņa bulvāris 1",
+      "pass": true,
+      "ms": 97
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by House in carrer de Salomó ben Adret, 7",
+      "pass": true,
+      "ms": 142
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Casa Joaquima Vendrell",
+      "pass": true,
+      "ms": 99
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Conjunt fàbrica i habitatge El Tint de Dalt",
+      "pass": true,
+      "ms": 144
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Baltic Quay",
+      "pass": true,
+      "ms": 89
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Hohentichelnstraße 6",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Bornaer Straße 68-80 Chemnitz-Borna/Heinersdorf",
+      "pass": true,
+      "ms": 156
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Dorfstraße 29, Chemnitz-Glösa",
+      "pass": true,
+      "ms": 110
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Clausstraße 128-130, Chemnitz-Lutherviertel",
+      "pass": true,
+      "ms": 123
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Salzstraße 52, Chemnitz-Schloßchemnitz",
+      "pass": true,
+      "ms": 112
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Mittelstraße 4",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Hauptstraße 25",
+      "pass": true,
+      "ms": 84
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Bahnhofstraße 25, Werdau",
+      "pass": true,
+      "ms": 96
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Lausa 17 Belgern-Schildau",
+      "pass": true,
+      "ms": 110
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Bahnhof Berggießhübel",
+      "pass": true,
+      "ms": 89
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Bahnhofstraße 35",
+      "pass": true,
+      "ms": 92
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Brückenstraße 7, Grimma",
+      "pass": true,
+      "ms": 93
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Kreuzstraße 35, Grimma",
+      "pass": true,
+      "ms": 97
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Leipziger Straße 47, Grimma",
+      "pass": true,
+      "ms": 109
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Seilerberg 7",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Breite Straße 14 Torgau",
+      "pass": true,
+      "ms": 115
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Erzenstraße 12 Torgau",
+      "pass": true,
+      "ms": 96
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Holzweißigstraße 8 Torgau",
+      "pass": true,
+      "ms": 85
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Neustraße 14 Torgau",
+      "pass": true,
+      "ms": 95
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Rosa-Luxemburg-Platz 5 Torgau",
+      "pass": true,
+      "ms": 111
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Wintergrüne 4 Torgau",
+      "pass": true,
+      "ms": 83
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by 1905. gada iela 12",
+      "pass": true,
+      "ms": 106
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Hotel Goldenes Lamm, Wiedner Hauptstraße",
+      "pass": true,
+      "ms": 122
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Pāles iela 8",
+      "pass": true,
+      "ms": 85
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Casa Isabel Pomar",
+      "pass": true,
+      "ms": 100
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Barthstraße 6 (Lauf an der Pegnitz)",
+      "pass": true,
+      "ms": 112
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Elvirasteig 28",
+      "pass": true,
+      "ms": 84
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Břevnovský mrakodrap",
+      "pass": true,
+      "ms": 86
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Mirker Straße 41",
+      "pass": true,
+      "ms": 98
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Friedrich-Ebert-Straße 386",
+      "pass": true,
+      "ms": 111
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Bismarckstraße 47",
+      "pass": true,
+      "ms": 82
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Briller Straße 170/172",
+      "pass": true,
+      "ms": 109
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Mozartstraße 64",
+      "pass": true,
+      "ms": 86
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Sadowastraße 9",
+      "pass": true,
+      "ms": 74
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Arrenberger Straße 49",
+      "pass": true,
+      "ms": 96
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Friedrich-Ebert-Straße 116 a",
+      "pass": true,
+      "ms": 110
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Gutenbergstraße 12",
+      "pass": true,
+      "ms": 84
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Moritzstraße 10",
+      "pass": true,
+      "ms": 84
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Simonsstraße 31",
+      "pass": true,
+      "ms": 84
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Kaiser-Wilhelm-Allee 17",
+      "pass": true,
+      "ms": 109
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Tiergartenstraße 245",
+      "pass": true,
+      "ms": 84
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Komsomolskoye shosse, 6",
+      "pass": true,
+      "ms": 86
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by 25 Saksahanskoho Street, Kyiv",
+      "pass": true,
+      "ms": 112
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by House at 32 Jaime Sanz Roca street",
+      "pass": true,
+      "ms": 132
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by In der Streng 15",
+      "pass": true,
+      "ms": 96
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Casa Ignasi de Puig",
+      "pass": true,
+      "ms": 108
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Casa Josepa Nadal",
+      "pass": true,
+      "ms": 96
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Building in c. Consolat de Mar, 15",
+      "pass": true,
+      "ms": 108
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Building in c. Sta. Maria, 18",
+      "pass": true,
+      "ms": 98
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Casa Joan Sanpera (Pg. Pujades, 4)",
+      "pass": true,
+      "ms": 120
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Restes arquitectòniques dels habitatges a la plaça Major, 38-39-40",
+      "pass": true,
+      "ms": 179
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Hauptstraße 65",
+      "pass": true,
+      "ms": 87
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Kottmarsdorfer Straße 2",
+      "pass": true,
+      "ms": 90
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Building at 417–419 Lee Street",
+      "pass": true,
+      "ms": 108
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Carmen de la Victoria",
+      "pass": true,
+      "ms": 111
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Görlitzer Straße 3",
+      "pass": true,
+      "ms": 86
+    },
+    {
+      "group": "residential",
+      "prompt": "Create a residential building inspired by Wohnhaus Agnesgasse 7 in Nürnberg",
+      "pass": true,
+      "ms": 96
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in East London",
+      "pass": true,
+      "ms": 62
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Maputo",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Yazd",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Quetta",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Sanandaj",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Sylhet",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Qazvin",
+      "pass": true,
+      "ms": 51
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Medan",
+      "pass": true,
+      "ms": 52
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Türkmenabat",
+      "pass": true,
+      "ms": 58
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Udaipur",
+      "pass": true,
+      "ms": 58
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Srinagar",
+      "pass": true,
+      "ms": 50
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Kollam",
+      "pass": true,
+      "ms": 50
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Nagpur",
+      "pass": true,
+      "ms": 51
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Lucknow",
+      "pass": true,
+      "ms": 50
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Jaipur",
+      "pass": true,
+      "ms": 53
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Hisar",
+      "pass": true,
+      "ms": 50
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Delhi",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Bhubaneswar",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Bāli",
+      "pass": true,
+      "ms": 51
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Ajmer",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Pātan",
+      "pass": true,
+      "ms": 52
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Pathein",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Bandar Abbas",
+      "pass": true,
+      "ms": 62
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Zanzibar",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Shymkent",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Astana",
+      "pass": true,
+      "ms": 53
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Thanh Hóa",
+      "pass": true,
+      "ms": 66
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Cao Lãnh",
+      "pass": true,
+      "ms": 68
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Bandar Lampung",
+      "pass": true,
+      "ms": 63
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Purwokerto",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Madiun",
+      "pass": true,
+      "ms": 74
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Denpasar",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Vientiane",
+      "pass": true,
+      "ms": 47
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Hsinchu",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in San Fernando",
+      "pass": true,
+      "ms": 65
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Malolos",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Antipolo",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Ipoh",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Kuantan",
+      "pass": true,
+      "ms": 50
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Zhuzhou",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Yulin",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Xining",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Wuhan",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Tai’an",
+      "pass": true,
+      "ms": 57
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Ningbo",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Zhijiang",
+      "pass": true,
+      "ms": 50
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Jinhua",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Hefei",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Dazhou",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Beijing",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Wŏnju",
+      "pass": true,
+      "ms": 52
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Gyeongju",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Chungju",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Changwon",
+      "pass": true,
+      "ms": 50
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Toyota",
+      "pass": true,
+      "ms": 53
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Osaka",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Matsudo",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Kobe",
+      "pass": true,
+      "ms": 47
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Hiratsuka",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Fukuoka",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Sariwŏn-si",
+      "pass": true,
+      "ms": 95
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Matsuyama",
+      "pass": true,
+      "ms": 56
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Daqing",
+      "pass": true,
+      "ms": 51
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Morioka",
+      "pass": true,
+      "ms": 50
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Hakodate",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Melbourne",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Misratah",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Luanda",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Bouaké",
+      "pass": true,
+      "ms": 52
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Yola",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Port Harcourt",
+      "pass": true,
+      "ms": 64
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Lagos",
+      "pass": true,
+      "ms": 51
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Ibadan",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Abuja",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Cotonou",
+      "pass": true,
+      "ms": 50
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Sousse",
+      "pass": true,
+      "ms": 52
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Rabat",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Al Hoceïma",
+      "pass": true,
+      "ms": 66
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Southampton",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Northampton",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Leeds",
+      "pass": true,
+      "ms": 51
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Cardiff",
+      "pass": true,
+      "ms": 50
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Vienna",
+      "pass": true,
+      "ms": 47
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Gaza",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Dubai",
+      "pass": true,
+      "ms": 50
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Netanya",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Paris 15 Vaugirard",
+      "pass": true,
+      "ms": 79
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Paris",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Lille",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Budapest",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Łódź",
+      "pass": true,
+      "ms": 58
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Bydgoszcz",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Oslo",
+      "pass": true,
+      "ms": 52
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Milan",
+      "pass": true,
+      "ms": 50
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Batman",
+      "pass": true,
+      "ms": 52
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Adana",
+      "pass": true,
+      "ms": 53
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Gonder",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Quilmes",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Asunción",
+      "pass": true,
+      "ms": 54
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Reynosa",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Cuernavaca",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Port Said",
+      "pass": true,
+      "ms": 63
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Tegucigalpa",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in San Cristóbal",
+      "pass": true,
+      "ms": 68
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Manizales",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Panama City",
+      "pass": true,
+      "ms": 64
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Bahía Blanca",
+      "pass": false,
+      "error": "Unexpected top five: Arena Fonte Nova",
+      "ms": 69
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Concepción",
+      "pass": true,
+      "ms": 53
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Tacna",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Zapopan",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Monterrey",
+      "pass": false,
+      "error": "Unexpected top five: Estadio BBVA",
+      "ms": 52
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Guadalajara",
+      "pass": false,
+      "error": "Unexpected top five: Oakland-Alameda County Coliseum",
+      "ms": 53
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Huntsville",
+      "pass": true,
+      "ms": 51
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Miami",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Isfahan",
+      "pass": true,
+      "ms": 53
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Baton Rouge",
+      "pass": true,
+      "ms": 63
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Durham",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Cincinnati",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Nashville",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Houston",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Virginia Beach",
+      "pass": true,
+      "ms": 70
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Detroit",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Newark",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Rochester",
+      "pass": true,
+      "ms": 47
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Gilbert",
+      "pass": true,
+      "ms": 47
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Bakersfield",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Riverside",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Colorado Springs",
+      "pass": false,
+      "error": "Unexpected top five: Dick's Sporting Goods Park",
+      "ms": 63
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Reno",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Spokane",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Brampton",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Kaunas",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Karagandy",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Toronto",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Homyel'",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Helsinki",
+      "pass": true,
+      "ms": 47
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Vinnytsya",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Odesa",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Lutsk",
+      "pass": true,
+      "ms": 47
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Kharkiv",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Chernihiv",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Sofia",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Umraniye",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Natore",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Lublin",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Harare",
+      "pass": true,
+      "ms": 62
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Lilongwe",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Welkom",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Randburg",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "city",
+      "prompt": "Find building examples in Baghdad",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 1",
+      "pass": true,
+      "ms": 22
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 2",
+      "pass": true,
+      "ms": 16
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 3",
+      "pass": true,
+      "ms": 21
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 4",
+      "pass": true,
+      "ms": 16
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 5",
+      "pass": true,
+      "ms": 51
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 6",
+      "pass": true,
+      "ms": 47
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 7",
+      "pass": true,
+      "ms": 50
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 8",
+      "pass": true,
+      "ms": 44
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 9",
+      "pass": true,
+      "ms": 94
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 10",
+      "pass": true,
+      "ms": 90
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 11",
+      "pass": true,
+      "ms": 2
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 12",
+      "pass": true,
+      "ms": 12
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 13",
+      "pass": true,
+      "ms": 14
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 14",
+      "pass": true,
+      "ms": 42
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 15",
+      "pass": true,
+      "ms": 18
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 16",
+      "pass": true,
+      "ms": 43
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 17",
+      "pass": true,
+      "ms": 44
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 18",
+      "pass": true,
+      "ms": 83
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 19",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 20",
+      "pass": true,
+      "ms": 88
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 21",
+      "pass": true,
+      "ms": 11
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 22",
+      "pass": true,
+      "ms": 12
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 23",
+      "pass": true,
+      "ms": 18
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 24",
+      "pass": true,
+      "ms": 16
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 25",
+      "pass": true,
+      "ms": 47
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 26",
+      "pass": true,
+      "ms": 43
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 27",
+      "pass": true,
+      "ms": 52
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 28",
+      "pass": true,
+      "ms": 47
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 29",
+      "pass": true,
+      "ms": 89
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 30",
+      "pass": true,
+      "ms": 89
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 31",
+      "pass": true,
+      "ms": 1
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 32",
+      "pass": true,
+      "ms": 15
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 33",
+      "pass": true,
+      "ms": 14
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 34",
+      "pass": true,
+      "ms": 37
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 35",
+      "pass": true,
+      "ms": 19
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 36",
+      "pass": true,
+      "ms": 52
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 37",
+      "pass": true,
+      "ms": 42
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 38",
+      "pass": true,
+      "ms": 85
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 39",
+      "pass": true,
+      "ms": 53
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 40",
+      "pass": true,
+      "ms": 101
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 41",
+      "pass": true,
+      "ms": 13
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 42",
+      "pass": true,
+      "ms": 12
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 43",
+      "pass": true,
+      "ms": 15
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 44",
+      "pass": true,
+      "ms": 13
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 45",
+      "pass": true,
+      "ms": 43
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 46",
+      "pass": true,
+      "ms": 42
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 47",
+      "pass": true,
+      "ms": 45
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 48",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 49",
+      "pass": true,
+      "ms": 86
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 50",
+      "pass": true,
+      "ms": 91
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 51",
+      "pass": true,
+      "ms": 1
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 52",
+      "pass": true,
+      "ms": 14
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 53",
+      "pass": true,
+      "ms": 13
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 54",
+      "pass": true,
+      "ms": 40
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 55",
+      "pass": true,
+      "ms": 16
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 56",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 57",
+      "pass": true,
+      "ms": 42
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 58",
+      "pass": true,
+      "ms": 82
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 59",
+      "pass": true,
+      "ms": 50
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 60",
+      "pass": true,
+      "ms": 87
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 61",
+      "pass": true,
+      "ms": 13
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 62",
+      "pass": true,
+      "ms": 12
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 63",
+      "pass": true,
+      "ms": 16
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 64",
+      "pass": true,
+      "ms": 14
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 65",
+      "pass": true,
+      "ms": 43
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 66",
+      "pass": true,
+      "ms": 42
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 67",
+      "pass": true,
+      "ms": 47
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 68",
+      "pass": true,
+      "ms": 48
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 69",
+      "pass": true,
+      "ms": 84
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 70",
+      "pass": true,
+      "ms": 87
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 71",
+      "pass": true,
+      "ms": 1
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 72",
+      "pass": true,
+      "ms": 13
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 73",
+      "pass": true,
+      "ms": 13
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 74",
+      "pass": true,
+      "ms": 37
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 75",
+      "pass": true,
+      "ms": 16
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 76",
+      "pass": true,
+      "ms": 43
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 77",
+      "pass": true,
+      "ms": 41
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 78",
+      "pass": true,
+      "ms": 81
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 79",
+      "pass": true,
+      "ms": 49
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 80",
+      "pass": true,
+      "ms": 86
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 81",
+      "pass": true,
+      "ms": 12
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 82",
+      "pass": true,
+      "ms": 13
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 83",
+      "pass": true,
+      "ms": 16
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 84",
+      "pass": true,
+      "ms": 13
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 85",
+      "pass": true,
+      "ms": 47
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 86",
+      "pass": true,
+      "ms": 39
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 87",
+      "pass": true,
+      "ms": 45
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 88",
+      "pass": true,
+      "ms": 43
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 89",
+      "pass": true,
+      "ms": 82
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 90",
+      "pass": true,
+      "ms": 85
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 91",
+      "pass": true,
+      "ms": 1
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 92",
+      "pass": true,
+      "ms": 12
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 93",
+      "pass": true,
+      "ms": 14
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 94",
+      "pass": true,
+      "ms": 37
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 95",
+      "pass": true,
+      "ms": 17
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 96",
+      "pass": true,
+      "ms": 42
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 97",
+      "pass": true,
+      "ms": 41
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 98",
+      "pass": true,
+      "ms": 83
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 99",
+      "pass": true,
+      "ms": 47
+    },
+    {
+      "group": "geometry-and-undo",
+      "prompt": "Primitive assembly 100",
+      "pass": true,
+      "ms": 86
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 1",
+      "pass": true,
+      "ms": 74
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 2",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 3",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 4",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 5",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 6",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 7",
+      "pass": true,
+      "ms": 74
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 8",
+      "pass": true,
+      "ms": 74
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 9",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 10",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 11",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 12",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 13",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 14",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 15",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 16",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 17",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 18",
+      "pass": true,
+      "ms": 71
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 19",
+      "pass": true,
+      "ms": 74
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 20",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 21",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 22",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 23",
+      "pass": true,
+      "ms": 71
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 24",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 25",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 26",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 27",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 28",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 29",
+      "pass": true,
+      "ms": 71
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 30",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 31",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 32",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 33",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 34",
+      "pass": true,
+      "ms": 71
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 35",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 36",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 37",
+      "pass": true,
+      "ms": 71
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 38",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 39",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 40",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 41",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 42",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 43",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 44",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 45",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 46",
+      "pass": true,
+      "ms": 92
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 47",
+      "pass": true,
+      "ms": 94
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 48",
+      "pass": true,
+      "ms": 104
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 49",
+      "pass": true,
+      "ms": 76
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 50",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 51",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 52",
+      "pass": true,
+      "ms": 82
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 53",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 54",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 55",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 56",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 57",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 58",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 59",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 60",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 61",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 62",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 63",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 64",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 65",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 66",
+      "pass": true,
+      "ms": 71
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 67",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 68",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 69",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 70",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 71",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 72",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 73",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 74",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 75",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 76",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 77",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 78",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 79",
+      "pass": true,
+      "ms": 71
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 80",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 81",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 82",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 83",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 84",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 85",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 86",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 87",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 88",
+      "pass": true,
+      "ms": 71
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 89",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 90",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 91",
+      "pass": true,
+      "ms": 71
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 92",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 93",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 94",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 95",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 96",
+      "pass": true,
+      "ms": 72
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 97",
+      "pass": true,
+      "ms": 73
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 98",
+      "pass": true,
+      "ms": 77
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 99",
+      "pass": true,
+      "ms": 71
+    },
+    {
+      "group": "invalid-plan-rejection",
+      "prompt": "Reject invalid assembly 100",
+      "pass": true,
+      "ms": 72
+    }
+  ]
+}

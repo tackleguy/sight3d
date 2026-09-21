@@ -1,0 +1,126 @@
+{
+  "referenceIds": [
+    "example:allianz-arena"
+  ],
+  "name": "Allianz Arena Inspired Stadium",
+  "reference": "Allianz Arena",
+  "features": [
+    "volume wrapped around the playing field",
+    "cantilevered roof",
+    "air-cushion exterior skin"
+  ],
+  "parts": [
+    {
+      "name": "field_box",
+      "shape": "box",
+      "position": [
+        0,
+        0.1,
+        0
+      ],
+      "size": [
+        68,
+        0.2,
+        105
+      ]
+    },
+    {
+      "name": "left_stand",
+      "shape": "box",
+      "position": [
+        -44,
+        5,
+        0
+      ],
+      "size": [
+        20,
+        10,
+        125
+      ]
+    },
+    {
+      "name": "right_stand",
+      "shape": "box",
+      "position": [
+        44,
+        5,
+        0
+      ],
+      "size": [
+        20,
+        10,
+        125
+      ]
+    },
+    {
+      "name": "left_end",
+      "shape": "box",
+      "position": [
+        0,
+        5,
+        -62.5
+      ],
+      "size": [
+        68,
+        10,
+        20
+      ]
+    },
+    {
+      "name": "right_end",
+      "shape": "box",
+      "position": [
+        0,
+        5,
+        62.5
+      ],
+      "size": [
+        68,
+        10,
+        20
+      ]
+    },
+    {
+      "name": "roof_left",
+      "shape": "cylinder",
+      "position": [
+        -44,
+        5,
+        -50
+      ],
+      "size": [
+        20,
+        100,
+        20
+      ]
+    },
+    {
+      "name": "roof_right",
+      "shape": "cylinder",
+      "position": [
+        44,
+        5,
+        -50
+      ],
+      "size": [
+        20,
+        100,
+        20
+      ]
+    },
+    {
+      "name": "outer_skin",
+      "shape": "sphere",
+      "position": [
+        0,
+        5,
+        -30
+      ],
+      "size": [
+        150,
+        150,
+        150
+      ]
+    }
+  ]
+}

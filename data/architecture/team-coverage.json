@@ -1,0 +1,2737 @@
+{
+  "generatedAt": "2026-09-21T18:42:44.559081+00:00",
+  "leagues": [
+    {
+      "league": "National Football League",
+      "source": "https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams?limit=1000",
+      "teams": [
+        {
+          "id": "22",
+          "name": "Arizona Cardinals",
+          "venue": "espn:football:nfl:3970",
+          "source": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/22"
+        },
+        {
+          "id": "1",
+          "name": "Atlanta Falcons",
+          "venue": "espn:football:nfl:5348",
+          "source": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/1"
+        },
+        {
+          "id": "33",
+          "name": "Baltimore Ravens",
+          "venue": "espn:football:nfl:3814",
+          "source": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/33"
+        },
+        {
+          "id": "2",
+          "name": "Buffalo Bills",
+          "venue": "espn:football:nfl:3883",
+          "source": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/2"
+        },
+        {
+          "id": "29",
+          "name": "Carolina Panthers",
+          "venue": "espn:football:nfl:3628",
+          "source": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/29"
+        },
+        {
+          "id": "3",
+          "name": "Chicago Bears",
+          "venue": "espn:football:nfl:3933",
+          "source": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/3"
+        },
+        {
+          "id": "4",
+          "name": "Cincinnati Bengals",
+          "venue": "espn:football:nfl:3874",
+          "source": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/4"
+        },
+        {
+          "id": "5",
+          "name": "Cleveland Browns",
+          "venue": "espn:football:nfl:3679",
+          "source": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/5"
+        },
+        {
+          "id": "6",
+          "name": "Dallas Cowboys",
+          "venue": "espn:football:nfl:3687",
+          "source": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/6"
+        },
+        {
+          "id": "7",
+          "name": "Denver Broncos",
+          "venue": "espn:football:nfl:3937",
+          "source": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/7"
+        },
+        {
+          "id": "8",
+          "name": "Detroit Lions",
+          "venue": "espn:football:nfl:3727",
+          "source": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/8"
+        },
+        {
+          "id": "9",
+          "name": "Green Bay Packers",
+          "venue": "espn:football:nfl:3798",
+          "source": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/9"
+        },
+        {
+          "id": "34",
+          "name": "Houston Texans",
+          "venue": "espn:football:nfl:3891",
+          "source": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/34"
+        },
+        {
+          "id": "11",
+          "name": "Indianapolis Colts",
+          "venue": "espn:football:nfl:3812",
+          "source": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/11"
+        },
+        {
+          "id": "30",
+          "name": "Jacksonville Jaguars",
+          "venue": "espn:football:nfl:3712",
+          "source": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/30"
+        },
+        {
+          "id": "12",
+          "name": "Kansas City Chiefs",
+          "venue": "espn:football:nfl:3622",
+          "source": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/12"
+        },
+        {
+          "id": "13",
+          "name": "Las Vegas Raiders",
+          "venue": "espn:football:nfl:6501",
+          "source": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/13"
+        },
+        {
+          "id": "24",
+          "name": "Los Angeles Chargers",
+          "venue": "espn:football:nfl:538",
+          "source": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/24"
+        },
+        {
+          "id": "14",
+          "name": "Los Angeles Rams",
+          "venue": "espn:football:nfl:477",
+          "source": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/14"
+        },
+        {
+          "id": "15",
+          "name": "Miami Dolphins",
+          "venue": "espn:football:nfl:3948",
+          "source": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/15"
+        },
+        {
+          "id": "16",
+          "name": "Minnesota Vikings",
+          "venue": "espn:football:nfl:5239",
+          "source": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/16"
+        },
+        {
+          "id": "17",
+          "name": "New England Patriots",
+          "venue": "espn:football:nfl:3738",
+          "source": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/17"
+        },
+        {
+          "id": "18",
+          "name": "New Orleans Saints",
+          "venue": "espn:football:nfl:3493",
+          "source": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/18"
+        },
+        {
+          "id": "19",
+          "name": "New York Giants",
+          "venue": "espn:football:nfl:3839",
+          "source": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/19"
+        },
+        {
+          "id": "20",
+          "name": "New York Jets",
+          "venue": "espn:football:nfl:3839",
+          "source": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/20"
+        },
+        {
+          "id": "21",
+          "name": "Philadelphia Eagles",
+          "venue": "espn:football:nfl:3806",
+          "source": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/21"
+        },
+        {
+          "id": "23",
+          "name": "Pittsburgh Steelers",
+          "venue": "espn:football:nfl:3752",
+          "source": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/23"
+        },
+        {
+          "id": "25",
+          "name": "San Francisco 49ers",
+          "venue": "espn:football:nfl:4738",
+          "source": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/25"
+        },
+        {
+          "id": "26",
+          "name": "Seattle Seahawks",
+          "venue": "espn:football:nfl:3673",
+          "source": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/26"
+        },
+        {
+          "id": "27",
+          "name": "Tampa Bay Buccaneers",
+          "venue": "espn:football:nfl:3886",
+          "source": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/27"
+        },
+        {
+          "id": "10",
+          "name": "Tennessee Titans",
+          "venue": "espn:football:nfl:3810",
+          "source": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/10"
+        },
+        {
+          "id": "28",
+          "name": "Washington Commanders",
+          "venue": "espn:football:nfl:3719",
+          "source": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/teams/28"
+        }
+      ]
+    },
+    {
+      "league": "Major League Baseball",
+      "source": "https://statsapi.mlb.com/api/v1/teams?sportId=1&hydrate=venue(location,fieldInfo)",
+      "teams": [
+        {
+          "id": "133",
+          "name": "Athletics",
+          "venue": "mlb:2529",
+          "source": "https://statsapi.mlb.com/api/v1/teams?sportId=1&hydrate=venue(location,fieldInfo)"
+        },
+        {
+          "id": "134",
+          "name": "Pittsburgh Pirates",
+          "venue": "mlb:31",
+          "source": "https://statsapi.mlb.com/api/v1/teams?sportId=1&hydrate=venue(location,fieldInfo)"
+        },
+        {
+          "id": "135",
+          "name": "San Diego Padres",
+          "venue": "mlb:2680",
+          "source": "https://statsapi.mlb.com/api/v1/teams?sportId=1&hydrate=venue(location,fieldInfo)"
+        },
+        {
+          "id": "136",
+          "name": "Seattle Mariners",
+          "venue": "mlb:680",
+          "source": "https://statsapi.mlb.com/api/v1/teams?sportId=1&hydrate=venue(location,fieldInfo)"
+        },
+        {
+          "id": "137",
+          "name": "San Francisco Giants",
+          "venue": "mlb:2395",
+          "source": "https://statsapi.mlb.com/api/v1/teams?sportId=1&hydrate=venue(location,fieldInfo)"
+        },
+        {
+          "id": "138",
+          "name": "St. Louis Cardinals",
+          "venue": "mlb:2889",
+          "source": "https://statsapi.mlb.com/api/v1/teams?sportId=1&hydrate=venue(location,fieldInfo)"
+        },
+        {
+          "id": "139",
+          "name": "Tampa Bay Rays",
+          "venue": "mlb:12",
+          "source": "https://statsapi.mlb.com/api/v1/teams?sportId=1&hydrate=venue(location,fieldInfo)"
+        },
+        {
+          "id": "140",
+          "name": "Texas Rangers",
+          "venue": "mlb:5325",
+          "source": "https://statsapi.mlb.com/api/v1/teams?sportId=1&hydrate=venue(location,fieldInfo)"
+        },
+        {
+          "id": "141",
+          "name": "Toronto Blue Jays",
+          "venue": "mlb:14",
+          "source": "https://statsapi.mlb.com/api/v1/teams?sportId=1&hydrate=venue(location,fieldInfo)"
+        },
+        {
+          "id": "142",
+          "name": "Minnesota Twins",
+          "venue": "mlb:3312",
+          "source": "https://statsapi.mlb.com/api/v1/teams?sportId=1&hydrate=venue(location,fieldInfo)"
+        },
+        {
+          "id": "143",
+          "name": "Philadelphia Phillies",
+          "venue": "mlb:2681",
+          "source": "https://statsapi.mlb.com/api/v1/teams?sportId=1&hydrate=venue(location,fieldInfo)"
+        },
+        {
+          "id": "144",
+          "name": "Atlanta Braves",
+          "venue": "mlb:4705",
+          "source": "https://statsapi.mlb.com/api/v1/teams?sportId=1&hydrate=venue(location,fieldInfo)"
+        },
+        {
+          "id": "145",
+          "name": "Chicago White Sox",
+          "venue": "mlb:4",
+          "source": "https://statsapi.mlb.com/api/v1/teams?sportId=1&hydrate=venue(location,fieldInfo)"
+        },
+        {
+          "id": "146",
+          "name": "Miami Marlins",
+          "venue": "mlb:4169",
+          "source": "https://statsapi.mlb.com/api/v1/teams?sportId=1&hydrate=venue(location,fieldInfo)"
+        },
+        {
+          "id": "147",
+          "name": "New York Yankees",
+          "venue": "mlb:3313",
+          "source": "https://statsapi.mlb.com/api/v1/teams?sportId=1&hydrate=venue(location,fieldInfo)"
+        },
+        {
+          "id": "158",
+          "name": "Milwaukee Brewers",
+          "venue": "mlb:32",
+          "source": "https://statsapi.mlb.com/api/v1/teams?sportId=1&hydrate=venue(location,fieldInfo)"
+        },
+        {
+          "id": "108",
+          "name": "Los Angeles Angels",
+          "venue": "mlb:1",
+          "source": "https://statsapi.mlb.com/api/v1/teams?sportId=1&hydrate=venue(location,fieldInfo)"
+        },
+        {
+          "id": "109",
+          "name": "Arizona Diamondbacks",
+          "venue": "mlb:15",
+          "source": "https://statsapi.mlb.com/api/v1/teams?sportId=1&hydrate=venue(location,fieldInfo)"
+        },
+        {
+          "id": "110",
+          "name": "Baltimore Orioles",
+          "venue": "mlb:2",
+          "source": "https://statsapi.mlb.com/api/v1/teams?sportId=1&hydrate=venue(location,fieldInfo)"
+        },
+        {
+          "id": "111",
+          "name": "Boston Red Sox",
+          "venue": "mlb:3",
+          "source": "https://statsapi.mlb.com/api/v1/teams?sportId=1&hydrate=venue(location,fieldInfo)"
+        },
+        {
+          "id": "112",
+          "name": "Chicago Cubs",
+          "venue": "mlb:17",
+          "source": "https://statsapi.mlb.com/api/v1/teams?sportId=1&hydrate=venue(location,fieldInfo)"
+        },
+        {
+          "id": "113",
+          "name": "Cincinnati Reds",
+          "venue": "mlb:2602",
+          "source": "https://statsapi.mlb.com/api/v1/teams?sportId=1&hydrate=venue(location,fieldInfo)"
+        },
+        {
+          "id": "114",
+          "name": "Cleveland Guardians",
+          "venue": "mlb:5",
+          "source": "https://statsapi.mlb.com/api/v1/teams?sportId=1&hydrate=venue(location,fieldInfo)"
+        },
+        {
+          "id": "115",
+          "name": "Colorado Rockies",
+          "venue": "mlb:19",
+          "source": "https://statsapi.mlb.com/api/v1/teams?sportId=1&hydrate=venue(location,fieldInfo)"
+        },
+        {
+          "id": "116",
+          "name": "Detroit Tigers",
+          "venue": "mlb:2394",
+          "source": "https://statsapi.mlb.com/api/v1/teams?sportId=1&hydrate=venue(location,fieldInfo)"
+        },
+        {
+          "id": "117",
+          "name": "Houston Astros",
+          "venue": "mlb:2392",
+          "source": "https://statsapi.mlb.com/api/v1/teams?sportId=1&hydrate=venue(location,fieldInfo)"
+        },
+        {
+          "id": "118",
+          "name": "Kansas City Royals",
+          "venue": "mlb:7",
+          "source": "https://statsapi.mlb.com/api/v1/teams?sportId=1&hydrate=venue(location,fieldInfo)"
+        },
+        {
+          "id": "119",
+          "name": "Los Angeles Dodgers",
+          "venue": "mlb:22",
+          "source": "https://statsapi.mlb.com/api/v1/teams?sportId=1&hydrate=venue(location,fieldInfo)"
+        },
+        {
+          "id": "120",
+          "name": "Washington Nationals",
+          "venue": "mlb:3309",
+          "source": "https://statsapi.mlb.com/api/v1/teams?sportId=1&hydrate=venue(location,fieldInfo)"
+        },
+        {
+          "id": "121",
+          "name": "New York Mets",
+          "venue": "mlb:3289",
+          "source": "https://statsapi.mlb.com/api/v1/teams?sportId=1&hydrate=venue(location,fieldInfo)"
+        }
+      ]
+    },
+    {
+      "league": "National Basketball Association",
+      "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams?limit=1000",
+      "teams": [
+        {
+          "id": "1",
+          "name": "Atlanta Hawks",
+          "venue": "espn:basketball:nba:1827",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/teams/1"
+        },
+        {
+          "id": "2",
+          "name": "Boston Celtics",
+          "venue": "espn:basketball:nba:1824",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/teams/2"
+        },
+        {
+          "id": "17",
+          "name": "Brooklyn Nets",
+          "venue": "espn:basketball:nba:1826",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/teams/17"
+        },
+        {
+          "id": "30",
+          "name": "Charlotte Hornets",
+          "venue": "espn:basketball:nba:1893",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/teams/30"
+        },
+        {
+          "id": "4",
+          "name": "Chicago Bulls",
+          "venue": "espn:basketball:nba:1847",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/teams/4"
+        },
+        {
+          "id": "5",
+          "name": "Cleveland Cavaliers",
+          "venue": "espn:basketball:nba:3417",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/teams/5"
+        },
+        {
+          "id": "6",
+          "name": "Dallas Mavericks",
+          "venue": "espn:basketball:nba:516",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/teams/6"
+        },
+        {
+          "id": "7",
+          "name": "Denver Nuggets",
+          "venue": "espn:basketball:nba:892",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/teams/7"
+        },
+        {
+          "id": "8",
+          "name": "Detroit Pistons",
+          "venue": "espn:basketball:nba:5311",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/teams/8"
+        },
+        {
+          "id": "9",
+          "name": "Golden State Warriors",
+          "venue": "espn:basketball:nba:2465",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/teams/9"
+        },
+        {
+          "id": "10",
+          "name": "Houston Rockets",
+          "venue": "espn:basketball:nba:1394",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/teams/10"
+        },
+        {
+          "id": "11",
+          "name": "Indiana Pacers",
+          "venue": "espn:basketball:nba:2183",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/teams/11"
+        },
+        {
+          "id": "12",
+          "name": "LA Clippers",
+          "venue": "official:intuit-dome",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/teams/12"
+        },
+        {
+          "id": "13",
+          "name": "Los Angeles Lakers",
+          "venue": "espn:basketball:nba:1841",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/teams/13"
+        },
+        {
+          "id": "29",
+          "name": "Memphis Grizzlies",
+          "venue": "espn:basketball:nba:1392",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/teams/29"
+        },
+        {
+          "id": "14",
+          "name": "Miami Heat",
+          "venue": "espn:basketball:nba:3438",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/teams/14"
+        },
+        {
+          "id": "15",
+          "name": "Milwaukee Bucks",
+          "venue": "espn:basketball:nba:2099",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/teams/15"
+        },
+        {
+          "id": "16",
+          "name": "Minnesota Timberwolves",
+          "venue": "espn:basketball:nba:2029",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/teams/16"
+        },
+        {
+          "id": "3",
+          "name": "New Orleans Pelicans",
+          "venue": "espn:basketball:nba:985",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/teams/3"
+        },
+        {
+          "id": "18",
+          "name": "New York Knicks",
+          "venue": "espn:basketball:nba:1830",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/teams/18"
+        },
+        {
+          "id": "25",
+          "name": "Oklahoma City Thunder",
+          "venue": "espn:basketball:nba:2559",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/teams/25"
+        },
+        {
+          "id": "19",
+          "name": "Orlando Magic",
+          "venue": "espn:basketball:nba:3432",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/teams/19"
+        },
+        {
+          "id": "20",
+          "name": "Philadelphia 76ers",
+          "venue": "espn:basketball:nba:1845",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/teams/20"
+        },
+        {
+          "id": "21",
+          "name": "Phoenix Suns",
+          "venue": "espn:basketball:nba:1949",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/teams/21"
+        },
+        {
+          "id": "22",
+          "name": "Portland Trail Blazers",
+          "venue": "espn:basketball:nba:3423",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/teams/22"
+        },
+        {
+          "id": "23",
+          "name": "Sacramento Kings",
+          "venue": "espn:basketball:nba:2247",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/teams/23"
+        },
+        {
+          "id": "24",
+          "name": "San Antonio Spurs",
+          "venue": "espn:basketball:nba:780",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/teams/24"
+        },
+        {
+          "id": "28",
+          "name": "Toronto Raptors",
+          "venue": "espn:basketball:nba:1838",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/teams/28"
+        },
+        {
+          "id": "26",
+          "name": "Utah Jazz",
+          "venue": "espn:basketball:nba:3093",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/teams/26"
+        },
+        {
+          "id": "27",
+          "name": "Washington Wizards",
+          "venue": "espn:basketball:nba:1823",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/teams/27"
+        }
+      ]
+    },
+    {
+      "league": "National Hockey League",
+      "source": "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/teams?limit=1000",
+      "teams": [
+        {
+          "id": "25",
+          "name": "Anaheim Ducks",
+          "venue": "espn:hockey:nhl:1842",
+          "source": "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/teams/25"
+        },
+        {
+          "id": "1",
+          "name": "Boston Bruins",
+          "venue": "espn:hockey:nhl:1824",
+          "source": "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/teams/1"
+        },
+        {
+          "id": "2",
+          "name": "Buffalo Sabres",
+          "venue": "espn:hockey:nhl:1848",
+          "source": "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/teams/2"
+        },
+        {
+          "id": "3",
+          "name": "Calgary Flames",
+          "venue": "espn:hockey:nhl:1843",
+          "source": "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/teams/3"
+        },
+        {
+          "id": "7",
+          "name": "Carolina Hurricanes",
+          "venue": "espn:hockey:nhl:999",
+          "source": "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/teams/7"
+        },
+        {
+          "id": "4",
+          "name": "Chicago Blackhawks",
+          "venue": "espn:hockey:nhl:1847",
+          "source": "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/teams/4"
+        },
+        {
+          "id": "17",
+          "name": "Colorado Avalanche",
+          "venue": "espn:hockey:nhl:892",
+          "source": "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/teams/17"
+        },
+        {
+          "id": "29",
+          "name": "Columbus Blue Jackets",
+          "venue": "espn:hockey:nhl:1828",
+          "source": "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/teams/29"
+        },
+        {
+          "id": "9",
+          "name": "Dallas Stars",
+          "venue": "espn:hockey:nhl:516",
+          "source": "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/teams/9"
+        },
+        {
+          "id": "5",
+          "name": "Detroit Red Wings",
+          "venue": "espn:hockey:nhl:5404",
+          "source": "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/teams/5"
+        },
+        {
+          "id": "6",
+          "name": "Edmonton Oilers",
+          "venue": "espn:hockey:nhl:5282",
+          "source": "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/teams/6"
+        },
+        {
+          "id": "26",
+          "name": "Florida Panthers",
+          "venue": "espn:hockey:nhl:1840",
+          "source": "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/teams/26"
+        },
+        {
+          "id": "8",
+          "name": "Los Angeles Kings",
+          "venue": "espn:hockey:nhl:1841",
+          "source": "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/teams/8"
+        },
+        {
+          "id": "30",
+          "name": "Minnesota Wild",
+          "venue": "espn:hockey:nhl:1835",
+          "source": "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/teams/30"
+        },
+        {
+          "id": "10",
+          "name": "Montreal Canadiens",
+          "venue": "espn:hockey:nhl:1831",
+          "source": "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/teams/10"
+        },
+        {
+          "id": "27",
+          "name": "Nashville Predators",
+          "venue": "espn:hockey:nhl:1834",
+          "source": "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/teams/27"
+        },
+        {
+          "id": "11",
+          "name": "New Jersey Devils",
+          "venue": "espn:hockey:nhl:2562",
+          "source": "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/teams/11"
+        },
+        {
+          "id": "12",
+          "name": "New York Islanders",
+          "venue": "espn:hockey:nhl:7226",
+          "source": "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/teams/12"
+        },
+        {
+          "id": "13",
+          "name": "New York Rangers",
+          "venue": "espn:hockey:nhl:1830",
+          "source": "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/teams/13"
+        },
+        {
+          "id": "14",
+          "name": "Ottawa Senators",
+          "venue": "espn:hockey:nhl:1832",
+          "source": "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/teams/14"
+        },
+        {
+          "id": "15",
+          "name": "Philadelphia Flyers",
+          "venue": "espn:hockey:nhl:1845",
+          "source": "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/teams/15"
+        },
+        {
+          "id": "16",
+          "name": "Pittsburgh Penguins",
+          "venue": "espn:hockey:nhl:1837",
+          "source": "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/teams/16"
+        },
+        {
+          "id": "18",
+          "name": "San Jose Sharks",
+          "venue": "espn:hockey:nhl:1653",
+          "source": "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/teams/18"
+        },
+        {
+          "id": "124292",
+          "name": "Seattle Kraken",
+          "venue": "espn:hockey:nhl:7224",
+          "source": "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/teams/124292"
+        },
+        {
+          "id": "19",
+          "name": "St. Louis Blues",
+          "venue": "espn:hockey:nhl:1839",
+          "source": "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/teams/19"
+        },
+        {
+          "id": "20",
+          "name": "Tampa Bay Lightning",
+          "venue": "espn:hockey:nhl:1396",
+          "source": "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/teams/20"
+        },
+        {
+          "id": "21",
+          "name": "Toronto Maple Leafs",
+          "venue": "espn:hockey:nhl:1838",
+          "source": "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/teams/21"
+        },
+        {
+          "id": "129764",
+          "name": "Utah Mammoth",
+          "venue": "espn:hockey:nhl:3093",
+          "source": "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/teams/129764"
+        },
+        {
+          "id": "22",
+          "name": "Vancouver Canucks",
+          "venue": "espn:hockey:nhl:1833",
+          "source": "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/teams/22"
+        },
+        {
+          "id": "37",
+          "name": "Vegas Golden Knights",
+          "venue": "espn:hockey:nhl:5060",
+          "source": "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/teams/37"
+        },
+        {
+          "id": "23",
+          "name": "Washington Capitals",
+          "venue": "espn:hockey:nhl:1823",
+          "source": "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/teams/23"
+        },
+        {
+          "id": "28",
+          "name": "Winnipeg Jets",
+          "venue": "espn:hockey:nhl:1827",
+          "source": "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/teams/28"
+        }
+      ]
+    },
+    {
+      "league": "Women's National Basketball Association",
+      "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/wnba/teams?limit=1000",
+      "teams": [
+        {
+          "id": "20",
+          "name": "Atlanta Dream",
+          "venue": "espn:basketball:wnba:6282",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/wnba/teams/20"
+        },
+        {
+          "id": "19",
+          "name": "Chicago Sky",
+          "venue": "espn:basketball:wnba:977",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/wnba/teams/19"
+        },
+        {
+          "id": "18",
+          "name": "Connecticut Sun",
+          "venue": "espn:basketball:wnba:2160",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/wnba/teams/18"
+        },
+        {
+          "id": "3",
+          "name": "Dallas Wings",
+          "venue": "espn:basketball:wnba:3416",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/wnba/teams/3"
+        },
+        {
+          "id": "129689",
+          "name": "Golden State Valkyries",
+          "venue": "espn:basketball:wnba:6270",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/wnba/teams/129689"
+        },
+        {
+          "id": "5",
+          "name": "Indiana Fever",
+          "venue": "espn:basketball:wnba:2183",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/wnba/teams/5"
+        },
+        {
+          "id": "17",
+          "name": "Las Vegas Aces",
+          "venue": "espn:basketball:wnba:780",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/wnba/teams/17"
+        },
+        {
+          "id": "6",
+          "name": "Los Angeles Sparks",
+          "venue": "espn:basketball:wnba:1841",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/wnba/teams/6"
+        },
+        {
+          "id": "8",
+          "name": "Minnesota Lynx",
+          "venue": "espn:basketball:wnba:2029",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/wnba/teams/8"
+        },
+        {
+          "id": "9",
+          "name": "New York Liberty",
+          "venue": "espn:basketball:wnba:3559",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/wnba/teams/9"
+        },
+        {
+          "id": "11",
+          "name": "Phoenix Mercury",
+          "venue": "espn:basketball:wnba:1949",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/wnba/teams/11"
+        },
+        {
+          "id": "132052",
+          "name": "Portland Fire",
+          "venue": "espn:basketball:wnba:3423",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/wnba/teams/132052"
+        },
+        {
+          "id": "14",
+          "name": "Seattle Storm",
+          "venue": "espn:basketball:wnba:2184",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/wnba/teams/14"
+        },
+        {
+          "id": "131935",
+          "name": "Toronto Tempo",
+          "venue": "espn:basketball:wnba:7546",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/wnba/teams/131935"
+        },
+        {
+          "id": "16",
+          "name": "Washington Mystics",
+          "venue": "espn:basketball:wnba:5946",
+          "source": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/wnba/teams/16"
+        }
+      ]
+    },
+    {
+      "league": "Major League Soccer",
+      "source": "https://site.api.espn.com/apis/site/v2/sports/soccer/usa.1/teams?limit=1000",
+      "teams": [
+        {
+          "id": "18418",
+          "name": "Atlanta United FC",
+          "venue": "espn:soccer:usa.1:7485",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.1/teams/18418"
+        },
+        {
+          "id": "20906",
+          "name": "Austin FC",
+          "venue": "espn:soccer:usa.1:8673",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.1/teams/20906"
+        },
+        {
+          "id": "9720",
+          "name": "CF Montréal",
+          "venue": "espn:soccer:usa.1:3278",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.1/teams/9720"
+        },
+        {
+          "id": "21300",
+          "name": "Charlotte FC",
+          "venue": "espn:soccer:usa.1:4418",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.1/teams/21300"
+        },
+        {
+          "id": "182",
+          "name": "Chicago Fire FC",
+          "venue": "espn:soccer:usa.1:2266",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.1/teams/182"
+        },
+        {
+          "id": "184",
+          "name": "Colorado Rapids",
+          "venue": "espn:soccer:usa.1:2731",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.1/teams/184"
+        },
+        {
+          "id": "183",
+          "name": "Columbus Crew",
+          "venue": "espn:soccer:usa.1:8689",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.1/teams/183"
+        },
+        {
+          "id": "193",
+          "name": "D.C. United",
+          "venue": "espn:soccer:usa.1:7604",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.1/teams/193"
+        },
+        {
+          "id": "18267",
+          "name": "FC Cincinnati",
+          "venue": "espn:soccer:usa.1:8674",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.1/teams/18267"
+        },
+        {
+          "id": "185",
+          "name": "FC Dallas",
+          "venue": "espn:soccer:usa.1:7474",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.1/teams/185"
+        },
+        {
+          "id": "6077",
+          "name": "Houston Dynamo FC",
+          "venue": "espn:soccer:usa.1:4791",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.1/teams/6077"
+        },
+        {
+          "id": "20232",
+          "name": "Inter Miami CF",
+          "venue": "espn:soccer:usa.1:10661",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.1/teams/20232"
+        },
+        {
+          "id": "187",
+          "name": "LA Galaxy",
+          "venue": "espn:soccer:usa.1:1423",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.1/teams/187"
+        },
+        {
+          "id": "18966",
+          "name": "LAFC",
+          "venue": "espn:soccer:usa.1:7605",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.1/teams/18966"
+        },
+        {
+          "id": "17362",
+          "name": "Minnesota United FC",
+          "venue": "espn:soccer:usa.1:6538",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.1/teams/17362"
+        },
+        {
+          "id": "18986",
+          "name": "Nashville SC",
+          "venue": "espn:soccer:usa.1:8993",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.1/teams/18986"
+        },
+        {
+          "id": "189",
+          "name": "New England Revolution",
+          "venue": "espn:soccer:usa.1:10660",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.1/teams/189"
+        },
+        {
+          "id": "17606",
+          "name": "New York City FC",
+          "venue": "espn:soccer:usa.1:5146",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.1/teams/17606"
+        },
+        {
+          "id": "12011",
+          "name": "Orlando City SC",
+          "venue": "espn:soccer:usa.1:6971",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.1/teams/12011"
+        },
+        {
+          "id": "10739",
+          "name": "Philadelphia Union",
+          "venue": "espn:soccer:usa.1:4061",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.1/teams/10739"
+        },
+        {
+          "id": "9723",
+          "name": "Portland Timbers",
+          "venue": "espn:soccer:usa.1:4383",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.1/teams/9723"
+        },
+        {
+          "id": "4771",
+          "name": "Real Salt Lake",
+          "venue": "espn:soccer:usa.1:3714",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.1/teams/4771"
+        },
+        {
+          "id": "190",
+          "name": "Red Bull New York",
+          "venue": "espn:soccer:usa.1:9606",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.1/teams/190"
+        },
+        {
+          "id": "22529",
+          "name": "San Diego FC",
+          "venue": "espn:soccer:usa.1:9195",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.1/teams/22529"
+        },
+        {
+          "id": "191",
+          "name": "San Jose Earthquakes",
+          "venue": "espn:soccer:usa.1:6072",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.1/teams/191"
+        },
+        {
+          "id": "9726",
+          "name": "Seattle Sounders FC",
+          "venue": "espn:soccer:usa.1:4485",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.1/teams/9726"
+        },
+        {
+          "id": "186",
+          "name": "Sporting Kansas City",
+          "venue": "espn:soccer:usa.1:6587",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.1/teams/186"
+        },
+        {
+          "id": "21812",
+          "name": "St. Louis CITY SC",
+          "venue": "espn:soccer:usa.1:10421",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.1/teams/21812"
+        },
+        {
+          "id": "7318",
+          "name": "Toronto FC",
+          "venue": "espn:soccer:usa.1:10143",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.1/teams/7318"
+        },
+        {
+          "id": "9727",
+          "name": "Vancouver Whitecaps",
+          "venue": "espn:soccer:usa.1:4370",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.1/teams/9727"
+        }
+      ]
+    },
+    {
+      "league": "National Women's Soccer League",
+      "source": "https://site.api.espn.com/apis/site/v2/sports/soccer/usa.nwsl/teams?limit=1000",
+      "teams": [
+        {
+          "id": "21422",
+          "name": "Angel City FC",
+          "venue": "espn:soccer:usa.nwsl:7605",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.nwsl/teams/21422"
+        },
+        {
+          "id": "22187",
+          "name": "Bay FC",
+          "venue": "espn:soccer:usa.nwsl:6072",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.nwsl/teams/22187"
+        },
+        {
+          "id": "131562",
+          "name": "Boston Legacy FC",
+          "venue": "espn:soccer:usa.nwsl:10224",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.nwsl/teams/131562"
+        },
+        {
+          "id": "15360",
+          "name": "Chicago Stars FC",
+          "venue": "espn:soccer:usa.nwsl:10469",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.nwsl/teams/15360"
+        },
+        {
+          "id": "131563",
+          "name": "Denver Summit FC",
+          "venue": "espn:soccer:usa.nwsl:11017",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.nwsl/teams/131563"
+        },
+        {
+          "id": "15364",
+          "name": "Gotham FC",
+          "venue": "espn:soccer:usa.nwsl:9606",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.nwsl/teams/15364"
+        },
+        {
+          "id": "17346",
+          "name": "Houston Dash",
+          "venue": "espn:soccer:usa.nwsl:4791",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.nwsl/teams/17346"
+        },
+        {
+          "id": "20907",
+          "name": "Kansas City Current",
+          "venue": "espn:soccer:usa.nwsl:9895",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.nwsl/teams/20907"
+        },
+        {
+          "id": "15366",
+          "name": "North Carolina Courage",
+          "venue": "espn:soccer:usa.nwsl:6541",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.nwsl/teams/15366"
+        },
+        {
+          "id": "18206",
+          "name": "Orlando Pride",
+          "venue": "espn:soccer:usa.nwsl:6971",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.nwsl/teams/18206"
+        },
+        {
+          "id": "15362",
+          "name": "Portland Thorns FC",
+          "venue": "espn:soccer:usa.nwsl:4383",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.nwsl/teams/15362"
+        },
+        {
+          "id": "20905",
+          "name": "Racing Louisville FC",
+          "venue": "espn:soccer:usa.nwsl:8390",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.nwsl/teams/20905"
+        },
+        {
+          "id": "21423",
+          "name": "San Diego Wave FC",
+          "venue": "espn:soccer:usa.nwsl:9195",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.nwsl/teams/21423"
+        },
+        {
+          "id": "15363",
+          "name": "Seattle Reign FC",
+          "venue": "espn:soccer:usa.nwsl:4485",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.nwsl/teams/15363"
+        },
+        {
+          "id": "19141",
+          "name": "Utah Royals",
+          "venue": "espn:soccer:usa.nwsl:3714",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.nwsl/teams/19141"
+        },
+        {
+          "id": "15365",
+          "name": "Washington Spirit",
+          "venue": "espn:soccer:usa.nwsl:7604",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/usa.nwsl/teams/15365"
+        }
+      ]
+    },
+    {
+      "league": "Premier League",
+      "source": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/teams?limit=1000",
+      "teams": [
+        {
+          "id": "349",
+          "name": "AFC Bournemouth",
+          "venue": "espn:soccer:eng.1:6020",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/eng.1/teams/349"
+        },
+        {
+          "id": "359",
+          "name": "Arsenal",
+          "venue": "espn:soccer:eng.1:2267",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/eng.1/teams/359"
+        },
+        {
+          "id": "362",
+          "name": "Aston Villa",
+          "venue": "espn:soccer:eng.1:307",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/eng.1/teams/362"
+        },
+        {
+          "id": "337",
+          "name": "Brentford",
+          "venue": "espn:soccer:eng.1:9658",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/eng.1/teams/337"
+        },
+        {
+          "id": "331",
+          "name": "Brighton & Hove Albion",
+          "venue": "espn:soccer:eng.1:10378",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/eng.1/teams/331"
+        },
+        {
+          "id": "363",
+          "name": "Chelsea",
+          "venue": "espn:soccer:eng.1:249",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/eng.1/teams/363"
+        },
+        {
+          "id": "388",
+          "name": "Coventry City",
+          "venue": "espn:soccer:eng.1:1680",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/eng.1/teams/388"
+        },
+        {
+          "id": "384",
+          "name": "Crystal Palace",
+          "venue": "espn:soccer:eng.1:135",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/eng.1/teams/384"
+        },
+        {
+          "id": "368",
+          "name": "Everton",
+          "venue": "espn:soccer:eng.1:10318",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/eng.1/teams/368"
+        },
+        {
+          "id": "370",
+          "name": "Fulham",
+          "venue": "espn:soccer:eng.1:279",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/eng.1/teams/370"
+        },
+        {
+          "id": "306",
+          "name": "Hull City",
+          "venue": "espn:soccer:eng.1:3670",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/eng.1/teams/306"
+        },
+        {
+          "id": "373",
+          "name": "Ipswich Town",
+          "venue": "espn:soccer:eng.1:257",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/eng.1/teams/373"
+        },
+        {
+          "id": "357",
+          "name": "Leeds United",
+          "venue": "espn:soccer:eng.1:190",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/eng.1/teams/357"
+        },
+        {
+          "id": "364",
+          "name": "Liverpool",
+          "venue": "espn:soccer:eng.1:192",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/eng.1/teams/364"
+        },
+        {
+          "id": "382",
+          "name": "Manchester City",
+          "venue": "espn:soccer:eng.1:4036",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/eng.1/teams/382"
+        },
+        {
+          "id": "360",
+          "name": "Manchester United",
+          "venue": "espn:soccer:eng.1:250",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/eng.1/teams/360"
+        },
+        {
+          "id": "361",
+          "name": "Newcastle United",
+          "venue": "espn:soccer:eng.1:152",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/eng.1/teams/361"
+        },
+        {
+          "id": "393",
+          "name": "Nottingham Forest",
+          "venue": "espn:soccer:eng.1:131",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/eng.1/teams/393"
+        },
+        {
+          "id": "366",
+          "name": "Sunderland",
+          "venue": "espn:soccer:eng.1:194",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/eng.1/teams/366"
+        },
+        {
+          "id": "367",
+          "name": "Tottenham Hotspur",
+          "venue": "espn:soccer:eng.1:7827",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/eng.1/teams/367"
+        }
+      ]
+    },
+    {
+      "league": "La Liga",
+      "source": "https://site.api.espn.com/apis/site/v2/sports/soccer/esp.1/teams?limit=1000",
+      "teams": [
+        {
+          "id": "96",
+          "name": "Alavés",
+          "venue": "espn:soccer:esp.1:10022",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/esp.1/teams/96"
+        },
+        {
+          "id": "93",
+          "name": "Athletic Club",
+          "venue": "espn:soccer:esp.1:10634",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/esp.1/teams/93"
+        },
+        {
+          "id": "1068",
+          "name": "Atlético Madrid",
+          "venue": "espn:soccer:esp.1:10633",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/esp.1/teams/1068"
+        },
+        {
+          "id": "83",
+          "name": "Barcelona",
+          "venue": "espn:soccer:esp.1:1625",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/esp.1/teams/83"
+        },
+        {
+          "id": "85",
+          "name": "Celta Vigo",
+          "venue": "espn:soccer:esp.1:10627",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/esp.1/teams/85"
+        },
+        {
+          "id": "90",
+          "name": "Deportivo",
+          "venue": "espn:soccer:esp.1:10626",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/esp.1/teams/90"
+        },
+        {
+          "id": "3751",
+          "name": "Elche",
+          "venue": "espn:soccer:esp.1:3468",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/esp.1/teams/3751"
+        },
+        {
+          "id": "88",
+          "name": "Espanyol",
+          "venue": "espn:soccer:esp.1:4159",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/esp.1/teams/88"
+        },
+        {
+          "id": "2922",
+          "name": "Getafe",
+          "venue": "espn:soccer:esp.1:4154",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/esp.1/teams/2922"
+        },
+        {
+          "id": "1538",
+          "name": "Levante",
+          "venue": "espn:soccer:esp.1:10018",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/esp.1/teams/1538"
+        },
+        {
+          "id": "99",
+          "name": "Málaga",
+          "venue": "espn:soccer:esp.1:10638",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/esp.1/teams/99"
+        },
+        {
+          "id": "97",
+          "name": "Osasuna",
+          "venue": "espn:soccer:esp.1:10629",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/esp.1/teams/97"
+        },
+        {
+          "id": "87",
+          "name": "Racing Santander",
+          "venue": "espn:soccer:esp.1:10643",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/esp.1/teams/87"
+        },
+        {
+          "id": "101",
+          "name": "Rayo Vallecano",
+          "venue": "espn:soccer:esp.1:4645",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/esp.1/teams/101"
+        },
+        {
+          "id": "244",
+          "name": "Real Betis",
+          "venue": "espn:soccer:esp.1:2781",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/esp.1/teams/244"
+        },
+        {
+          "id": "86",
+          "name": "Real Madrid",
+          "venue": "espn:soccer:esp.1:10630",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/esp.1/teams/86"
+        },
+        {
+          "id": "89",
+          "name": "Real Sociedad",
+          "venue": "espn:soccer:esp.1:10631",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/esp.1/teams/89"
+        },
+        {
+          "id": "243",
+          "name": "Sevilla",
+          "venue": "espn:soccer:esp.1:10628",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/esp.1/teams/243"
+        },
+        {
+          "id": "94",
+          "name": "Valencia",
+          "venue": "espn:soccer:esp.1:9659",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/esp.1/teams/94"
+        },
+        {
+          "id": "102",
+          "name": "Villarreal",
+          "venue": "espn:soccer:esp.1:55",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/esp.1/teams/102"
+        }
+      ]
+    },
+    {
+      "league": "Bundesliga",
+      "source": "https://site.api.espn.com/apis/site/v2/sports/soccer/ger.1/teams?limit=1000",
+      "teams": [
+        {
+          "id": "598",
+          "name": "1. FC Union Berlin",
+          "venue": "espn:soccer:ger.1:4305",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ger.1/teams/598"
+        },
+        {
+          "id": "131",
+          "name": "Bayer Leverkusen",
+          "venue": "espn:soccer:ger.1:112",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ger.1/teams/131"
+        },
+        {
+          "id": "132",
+          "name": "Bayern Munich",
+          "venue": "espn:soccer:ger.1:1935",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ger.1/teams/132"
+        },
+        {
+          "id": "124",
+          "name": "Borussia Dortmund",
+          "venue": "espn:soccer:ger.1:10344",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ger.1/teams/124"
+        },
+        {
+          "id": "268",
+          "name": "Borussia Mönchengladbach",
+          "venue": "espn:soccer:ger.1:1541",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ger.1/teams/268"
+        },
+        {
+          "id": "125",
+          "name": "Eintracht Frankfurt",
+          "venue": null,
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ger.1/teams/125"
+        },
+        {
+          "id": "3841",
+          "name": "FC Augsburg",
+          "venue": "espn:soccer:ger.1:9608",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ger.1/teams/3841"
+        },
+        {
+          "id": "122",
+          "name": "FC Cologne",
+          "venue": "espn:soccer:ger.1:3857",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ger.1/teams/122"
+        },
+        {
+          "id": "127",
+          "name": "Hamburg SV",
+          "venue": "espn:soccer:ger.1:10662",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ger.1/teams/127"
+        },
+        {
+          "id": "2950",
+          "name": "Mainz",
+          "venue": "espn:soccer:ger.1:4450",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ger.1/teams/2950"
+        },
+        {
+          "id": "11420",
+          "name": "RB Leipzig",
+          "venue": "espn:soccer:ger.1:4237",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ger.1/teams/11420"
+        },
+        {
+          "id": "126",
+          "name": "SC Freiburg",
+          "venue": "espn:soccer:ger.1:8842",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ger.1/teams/126"
+        },
+        {
+          "id": "3307",
+          "name": "SC Paderborn 07",
+          "venue": "espn:soccer:ger.1:3845",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ger.1/teams/3307"
+        },
+        {
+          "id": "10388",
+          "name": "SV Elversberg",
+          "venue": "espn:soccer:ger.1:3826",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ger.1/teams/10388"
+        },
+        {
+          "id": "133",
+          "name": "Schalke 04",
+          "venue": "espn:soccer:ger.1:2357",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ger.1/teams/133"
+        },
+        {
+          "id": "7911",
+          "name": "TSG Hoffenheim",
+          "venue": "espn:soccer:ger.1:3697",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ger.1/teams/7911"
+        },
+        {
+          "id": "134",
+          "name": "VfB Stuttgart",
+          "venue": "espn:soccer:ger.1:6719",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ger.1/teams/134"
+        },
+        {
+          "id": "137",
+          "name": "Werder Bremen",
+          "venue": "espn:soccer:ger.1:10021",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ger.1/teams/137"
+        }
+      ]
+    },
+    {
+      "league": "Serie A",
+      "source": "https://site.api.espn.com/apis/site/v2/sports/soccer/ita.1/teams?limit=1000",
+      "teams": [
+        {
+          "id": "103",
+          "name": "AC Milan",
+          "venue": "espn:soccer:ita.1:26",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ita.1/teams/103"
+        },
+        {
+          "id": "104",
+          "name": "AS Roma",
+          "venue": "espn:soccer:ita.1:10409",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ita.1/teams/104"
+        },
+        {
+          "id": "105",
+          "name": "Atalanta",
+          "venue": "espn:soccer:ita.1:4253",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ita.1/teams/105"
+        },
+        {
+          "id": "107",
+          "name": "Bologna",
+          "venue": "espn:soccer:ita.1:10719",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ita.1/teams/107"
+        },
+        {
+          "id": "2925",
+          "name": "Cagliari",
+          "venue": "espn:soccer:ita.1:7400",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ita.1/teams/2925"
+        },
+        {
+          "id": "2572",
+          "name": "Como",
+          "venue": "espn:soccer:ita.1:5934",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ita.1/teams/2572"
+        },
+        {
+          "id": "109",
+          "name": "Fiorentina",
+          "venue": "espn:soccer:ita.1:10720",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ita.1/teams/109"
+        },
+        {
+          "id": "4057",
+          "name": "Frosinone",
+          "venue": "espn:soccer:ita.1:10439",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ita.1/teams/4057"
+        },
+        {
+          "id": "3263",
+          "name": "Genoa",
+          "venue": "espn:soccer:ita.1:10689",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ita.1/teams/3263"
+        },
+        {
+          "id": "110",
+          "name": "Internazionale",
+          "venue": "espn:soccer:ita.1:26",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ita.1/teams/110"
+        },
+        {
+          "id": "111",
+          "name": "Juventus",
+          "venue": "espn:soccer:ita.1:4600",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ita.1/teams/111"
+        },
+        {
+          "id": "112",
+          "name": "Lazio",
+          "venue": "espn:soccer:ita.1:10409",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ita.1/teams/112"
+        },
+        {
+          "id": "113",
+          "name": "Lecce",
+          "venue": "espn:soccer:ita.1:10721",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ita.1/teams/113"
+        },
+        {
+          "id": "4007",
+          "name": "Monza",
+          "venue": "espn:soccer:ita.1:2470",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ita.1/teams/4007"
+        },
+        {
+          "id": "114",
+          "name": "Napoli",
+          "venue": "espn:soccer:ita.1:10717",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ita.1/teams/114"
+        },
+        {
+          "id": "115",
+          "name": "Parma",
+          "venue": "espn:soccer:ita.1:10548",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ita.1/teams/115"
+        },
+        {
+          "id": "3997",
+          "name": "Sassuolo",
+          "venue": "espn:soccer:ita.1:5275",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ita.1/teams/3997"
+        },
+        {
+          "id": "239",
+          "name": "Torino",
+          "venue": "espn:soccer:ita.1:10716",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ita.1/teams/239"
+        },
+        {
+          "id": "118",
+          "name": "Udinese",
+          "venue": "espn:soccer:ita.1:7411",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ita.1/teams/118"
+        },
+        {
+          "id": "17530",
+          "name": "Venezia",
+          "venue": "espn:soccer:ita.1:10688",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ita.1/teams/17530"
+        }
+      ]
+    },
+    {
+      "league": "Ligue 1",
+      "source": "https://site.api.espn.com/apis/site/v2/sports/soccer/fra.1/teams?limit=1000",
+      "teams": [
+        {
+          "id": "172",
+          "name": "AJ Auxerre",
+          "venue": "espn:soccer:fra.1:4617",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/fra.1/teams/172"
+        },
+        {
+          "id": "174",
+          "name": "AS Monaco",
+          "venue": "espn:soccer:fra.1:339",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/fra.1/teams/174"
+        },
+        {
+          "id": "7868",
+          "name": "Angers",
+          "venue": "espn:soccer:fra.1:3369",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/fra.1/teams/7868"
+        },
+        {
+          "id": "6997",
+          "name": "Brest",
+          "venue": "espn:soccer:fra.1:4618",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/fra.1/teams/6997"
+        },
+        {
+          "id": "3236",
+          "name": "Le Havre AC",
+          "venue": "espn:soccer:fra.1:4844",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/fra.1/teams/3236"
+        },
+        {
+          "id": "2697",
+          "name": "Le Mans",
+          "venue": "espn:soccer:fra.1:4364",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/fra.1/teams/2697"
+        },
+        {
+          "id": "175",
+          "name": "Lens",
+          "venue": "espn:soccer:fra.1:10342",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/fra.1/teams/175"
+        },
+        {
+          "id": "166",
+          "name": "Lille",
+          "venue": "espn:soccer:fra.1:4947",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/fra.1/teams/166"
+        },
+        {
+          "id": "273",
+          "name": "Lorient",
+          "venue": "espn:soccer:fra.1:2332",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/fra.1/teams/273"
+        },
+        {
+          "id": "167",
+          "name": "Lyon",
+          "venue": "espn:soccer:fra.1:6499",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/fra.1/teams/167"
+        },
+        {
+          "id": "176",
+          "name": "Marseille",
+          "venue": "espn:soccer:fra.1:3113",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/fra.1/teams/176"
+        },
+        {
+          "id": "2502",
+          "name": "Nice",
+          "venue": "espn:soccer:fra.1:5324",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/fra.1/teams/2502"
+        },
+        {
+          "id": "6851",
+          "name": "Paris FC",
+          "venue": "espn:soccer:fra.1:6856",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/fra.1/teams/6851"
+        },
+        {
+          "id": "160",
+          "name": "Paris Saint-Germain",
+          "venue": "espn:soccer:fra.1:2271",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/fra.1/teams/160"
+        },
+        {
+          "id": "169",
+          "name": "Stade Rennais",
+          "venue": "espn:soccer:fra.1:2323",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/fra.1/teams/169"
+        },
+        {
+          "id": "180",
+          "name": "Strasbourg",
+          "venue": "espn:soccer:fra.1:2980",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/fra.1/teams/180"
+        },
+        {
+          "id": "179",
+          "name": "Toulouse",
+          "venue": "espn:soccer:fra.1:10379",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/fra.1/teams/179"
+        },
+        {
+          "id": "170",
+          "name": "Troyes",
+          "venue": "espn:soccer:fra.1:10681",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/fra.1/teams/170"
+        }
+      ]
+    },
+    {
+      "league": "Eredivisie",
+      "source": "https://site.api.espn.com/apis/site/v2/sports/soccer/ned.1/teams?limit=1000",
+      "teams": [
+        {
+          "id": "2726",
+          "name": "ADO Den Haag",
+          "venue": "espn:soccer:ned.1:10514",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ned.1/teams/2726"
+        },
+        {
+          "id": "140",
+          "name": "AZ Alkmaar",
+          "venue": "espn:soccer:ned.1:4449",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ned.1/teams/140"
+        },
+        {
+          "id": "139",
+          "name": "Ajax Amsterdam",
+          "venue": "espn:soccer:ned.1:10356",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ned.1/teams/139"
+        },
+        {
+          "id": "2566",
+          "name": "Excelsior",
+          "venue": "espn:soccer:ned.1:4377",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ned.1/teams/2566"
+        },
+        {
+          "id": "145",
+          "name": "FC Groningen",
+          "venue": "espn:soccer:ned.1:10549",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ned.1/teams/145"
+        },
+        {
+          "id": "152",
+          "name": "FC Twente",
+          "venue": "espn:soccer:ned.1:4376",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ned.1/teams/152"
+        },
+        {
+          "id": "153",
+          "name": "FC Utrecht",
+          "venue": "espn:soccer:ned.1:3473",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ned.1/teams/153"
+        },
+        {
+          "id": "142",
+          "name": "Feyenoord Rotterdam",
+          "venue": "espn:soccer:ned.1:10050",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ned.1/teams/142"
+        },
+        {
+          "id": "143",
+          "name": "Fortuna Sittard",
+          "venue": "espn:soccer:ned.1:10428",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ned.1/teams/143"
+        },
+        {
+          "id": "3706",
+          "name": "Go Ahead Eagles",
+          "venue": "espn:soccer:ned.1:2484",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ned.1/teams/3706"
+        },
+        {
+          "id": "146",
+          "name": "Heerenveen",
+          "venue": "espn:soccer:ned.1:315",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ned.1/teams/146"
+        },
+        {
+          "id": "147",
+          "name": "NEC Nijmegen",
+          "venue": "espn:soccer:ned.1:48",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ned.1/teams/147"
+        },
+        {
+          "id": "2565",
+          "name": "PEC Zwolle",
+          "venue": "espn:soccer:ned.1:4998",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ned.1/teams/2565"
+        },
+        {
+          "id": "148",
+          "name": "PSV Eindhoven",
+          "venue": "espn:soccer:ned.1:5",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ned.1/teams/148"
+        },
+        {
+          "id": "3736",
+          "name": "SC Cambuur",
+          "venue": "espn:soccer:ned.1:10338",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ned.1/teams/3736"
+        },
+        {
+          "id": "151",
+          "name": "Sparta Rotterdam",
+          "venue": "espn:soccer:ned.1:3470",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ned.1/teams/151"
+        },
+        {
+          "id": "3735",
+          "name": "Telstar",
+          "venue": "espn:soccer:ned.1:10723",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ned.1/teams/3735"
+        },
+        {
+          "id": "156",
+          "name": "Willem II",
+          "venue": "espn:soccer:ned.1:23",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ned.1/teams/156"
+        }
+      ]
+    },
+    {
+      "league": "Primeira Liga",
+      "source": "https://site.api.espn.com/apis/site/v2/sports/soccer/por.1/teams?limit=1000",
+      "teams": [
+        {
+          "id": "21607",
+          "name": "Académico de Viseu",
+          "venue": "espn:soccer:por.1:10836",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/por.1/teams/21607"
+        },
+        {
+          "id": "21613",
+          "name": "Alverca",
+          "venue": "espn:soccer:por.1:9220",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/por.1/teams/21613"
+        },
+        {
+          "id": "15784",
+          "name": "Arouca",
+          "venue": "espn:soccer:por.1:5246",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/por.1/teams/15784"
+        },
+        {
+          "id": "1929",
+          "name": "Benfica",
+          "venue": "espn:soccer:por.1:1470",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/por.1/teams/1929"
+        },
+        {
+          "id": "2994",
+          "name": "Braga",
+          "venue": "espn:soccer:por.1:3439",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/por.1/teams/2994"
+        },
+        {
+          "id": "3472",
+          "name": "C.D. Nacional",
+          "venue": "espn:soccer:por.1:10735",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/por.1/teams/3472"
+        },
+        {
+          "id": "21581",
+          "name": "Casa Pia",
+          "venue": "espn:soccer:por.1:9622",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/por.1/teams/21581"
+        },
+        {
+          "id": "12216",
+          "name": "Estoril",
+          "venue": "espn:soccer:por.1:10737",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/por.1/teams/12216"
+        },
+        {
+          "id": "21610",
+          "name": "Estrela",
+          "venue": "espn:soccer:por.1:9622",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/por.1/teams/21610"
+        },
+        {
+          "id": "12698",
+          "name": "FC Famalicao",
+          "venue": "espn:soccer:por.1:8157",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/por.1/teams/12698"
+        },
+        {
+          "id": "437",
+          "name": "FC Porto",
+          "venue": "espn:soccer:por.1:1467",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/por.1/teams/437"
+        },
+        {
+          "id": "3699",
+          "name": "Gil Vicente",
+          "venue": "espn:soccer:por.1:4722",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/por.1/teams/3699"
+        },
+        {
+          "id": "552",
+          "name": "Maritimo",
+          "venue": "espn:soccer:por.1:11083",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/por.1/teams/552"
+        },
+        {
+          "id": "3696",
+          "name": "Moreirense",
+          "venue": "espn:soccer:por.1:4951",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/por.1/teams/3696"
+        },
+        {
+          "id": "3822",
+          "name": "Rio Ave",
+          "venue": "espn:soccer:por.1:3436",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/por.1/teams/3822"
+        },
+        {
+          "id": "12215",
+          "name": "Santa Clara",
+          "venue": "espn:soccer:por.1:7864",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/por.1/teams/12215"
+        },
+        {
+          "id": "2250",
+          "name": "Sporting CP",
+          "venue": "espn:soccer:por.1:2352",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/por.1/teams/2250"
+        },
+        {
+          "id": "5309",
+          "name": "Vitória de Guimaraes",
+          "venue": "espn:soccer:por.1:4723",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/por.1/teams/5309"
+        }
+      ]
+    },
+    {
+      "league": "Campeonato Brasileiro Série A",
+      "source": "https://site.api.espn.com/apis/site/v2/sports/soccer/bra.1/teams?limit=1000",
+      "teams": [
+        {
+          "id": "3458",
+          "name": "Athletico-PR",
+          "venue": "espn:soccer:bra.1:10771",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/bra.1/teams/3458"
+        },
+        {
+          "id": "7632",
+          "name": "Atlético-MG",
+          "venue": "espn:soccer:bra.1:9663",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/bra.1/teams/7632"
+        },
+        {
+          "id": "9967",
+          "name": "Bahia",
+          "venue": "espn:soccer:bra.1:10770",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/bra.1/teams/9967"
+        },
+        {
+          "id": "6086",
+          "name": "Botafogo",
+          "venue": "espn:soccer:bra.1:10707",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/bra.1/teams/6086"
+        },
+        {
+          "id": "9318",
+          "name": "Chapecoense",
+          "venue": "espn:soccer:bra.1:10773",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/bra.1/teams/9318"
+        },
+        {
+          "id": "874",
+          "name": "Corinthians",
+          "venue": "espn:soccer:bra.1:5375",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/bra.1/teams/874"
+        },
+        {
+          "id": "3456",
+          "name": "Coritiba",
+          "venue": "espn:soccer:bra.1:3265",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/bra.1/teams/3456"
+        },
+        {
+          "id": "2022",
+          "name": "Cruzeiro",
+          "venue": "espn:soccer:bra.1:5109",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/bra.1/teams/2022"
+        },
+        {
+          "id": "819",
+          "name": "Flamengo",
+          "venue": "espn:soccer:bra.1:5120",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/bra.1/teams/819"
+        },
+        {
+          "id": "3445",
+          "name": "Fluminense",
+          "venue": "espn:soccer:bra.1:5120",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/bra.1/teams/3445"
+        },
+        {
+          "id": "6273",
+          "name": "Grêmio",
+          "venue": "espn:soccer:bra.1:5039",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/bra.1/teams/6273"
+        },
+        {
+          "id": "1936",
+          "name": "Internacional",
+          "venue": "espn:soccer:bra.1:5376",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/bra.1/teams/1936"
+        },
+        {
+          "id": "9169",
+          "name": "Mirassol",
+          "venue": "espn:soccer:bra.1:10812",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/bra.1/teams/9169"
+        },
+        {
+          "id": "2029",
+          "name": "Palmeiras",
+          "venue": "espn:soccer:bra.1:6053",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/bra.1/teams/2029"
+        },
+        {
+          "id": "6079",
+          "name": "Red Bull Bragantino",
+          "venue": "espn:soccer:bra.1:10420",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/bra.1/teams/6079"
+        },
+        {
+          "id": "4936",
+          "name": "Remo",
+          "venue": "espn:soccer:bra.1:10774",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/bra.1/teams/4936"
+        },
+        {
+          "id": "2674",
+          "name": "Santos",
+          "venue": "espn:soccer:bra.1:5480",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/bra.1/teams/2674"
+        },
+        {
+          "id": "2026",
+          "name": "São Paulo",
+          "venue": "espn:soccer:bra.1:10647",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/bra.1/teams/2026"
+        },
+        {
+          "id": "3454",
+          "name": "Vasco da Gama",
+          "venue": "espn:soccer:bra.1:5151",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/bra.1/teams/3454"
+        },
+        {
+          "id": "3457",
+          "name": "Vitória",
+          "venue": "espn:soccer:bra.1:5627",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/bra.1/teams/3457"
+        }
+      ]
+    },
+    {
+      "league": "Argentine Primera División",
+      "source": "https://site.api.espn.com/apis/site/v2/sports/soccer/arg.1/teams?limit=1000",
+      "teams": [
+        {
+          "id": "9739",
+          "name": "Aldosivi",
+          "venue": "espn:soccer:arg.1:10781",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/arg.1/teams/9739"
+        },
+        {
+          "id": "3",
+          "name": "Argentinos Juniors",
+          "venue": "espn:soccer:arg.1:10785",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/arg.1/teams/3"
+        },
+        {
+          "id": "9785",
+          "name": "Atlético Tucumán",
+          "venue": "espn:soccer:arg.1:5558",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/arg.1/teams/9785"
+        },
+        {
+          "id": "235",
+          "name": "Banfield",
+          "venue": "espn:soccer:arg.1:10789",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/arg.1/teams/235"
+        },
+        {
+          "id": "10060",
+          "name": "Barracas Central",
+          "venue": "espn:soccer:arg.1:10793",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/arg.1/teams/10060"
+        },
+        {
+          "id": "4",
+          "name": "Belgrano (Córdoba)",
+          "venue": "espn:soccer:arg.1:2736",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/arg.1/teams/4"
+        },
+        {
+          "id": "5",
+          "name": "Boca Juniors",
+          "venue": "espn:soccer:arg.1:5348",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/arg.1/teams/5"
+        },
+        {
+          "id": "11989",
+          "name": "Central Córdoba (Santiago del Estero)",
+          "venue": "espn:soccer:arg.1:6075",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/arg.1/teams/11989"
+        },
+        {
+          "id": "8950",
+          "name": "Defensa y Justicia",
+          "venue": "espn:soccer:arg.1:5554",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/arg.1/teams/8950"
+        },
+        {
+          "id": "17702",
+          "name": "Deportivo Riestra",
+          "venue": "espn:soccer:arg.1:10787",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/arg.1/teams/17702"
+        },
+        {
+          "id": "8",
+          "name": "Estudiantes de La Plata",
+          "venue": "espn:soccer:arg.1:8296",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/arg.1/teams/8"
+        },
+        {
+          "id": "19685",
+          "name": "Estudiantes de Río Cuarto",
+          "venue": "espn:soccer:arg.1:8203",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/arg.1/teams/19685"
+        },
+        {
+          "id": "11972",
+          "name": "Gimnasia (Mendoza)",
+          "venue": "espn:soccer:arg.1:10925",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/arg.1/teams/11972"
+        },
+        {
+          "id": "9",
+          "name": "Gimnasia La Plata",
+          "venue": "espn:soccer:arg.1:1731",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/arg.1/teams/9"
+        },
+        {
+          "id": "10",
+          "name": "Huracán",
+          "venue": "espn:soccer:arg.1:10783",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/arg.1/teams/10"
+        },
+        {
+          "id": "11",
+          "name": "Independiente",
+          "venue": "espn:soccer:arg.1:5555",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/arg.1/teams/11"
+        },
+        {
+          "id": "9744",
+          "name": "Independiente Rivadavia",
+          "venue": "espn:soccer:arg.1:3253",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/arg.1/teams/9744"
+        },
+        {
+          "id": "2975",
+          "name": "Instituto (Córdoba)",
+          "venue": "espn:soccer:arg.1:5557",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/arg.1/teams/2975"
+        },
+        {
+          "id": "12",
+          "name": "Lanús",
+          "venue": "espn:soccer:arg.1:10792",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/arg.1/teams/12"
+        },
+        {
+          "id": "14",
+          "name": "Newell's Old Boys",
+          "venue": "espn:soccer:arg.1:10794",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/arg.1/teams/14"
+        },
+        {
+          "id": "7764",
+          "name": "Platense",
+          "venue": "espn:soccer:arg.1:3250",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/arg.1/teams/7764"
+        },
+        {
+          "id": "15",
+          "name": "Racing Club",
+          "venue": "espn:soccer:arg.1:5349",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/arg.1/teams/15"
+        },
+        {
+          "id": "16",
+          "name": "River Plate",
+          "venue": "espn:soccer:arg.1:10786",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/arg.1/teams/16"
+        },
+        {
+          "id": "17",
+          "name": "Rosario Central",
+          "venue": "espn:soccer:arg.1:10775",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/arg.1/teams/17"
+        },
+        {
+          "id": "18",
+          "name": "San Lorenzo",
+          "venue": "espn:soccer:arg.1:10791",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/arg.1/teams/18"
+        },
+        {
+          "id": "10158",
+          "name": "Sarmiento (Junín)",
+          "venue": "espn:soccer:arg.1:10784",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/arg.1/teams/10158"
+        },
+        {
+          "id": "19",
+          "name": "Talleres (Córdoba)",
+          "venue": "espn:soccer:arg.1:10782",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/arg.1/teams/19"
+        },
+        {
+          "id": "7767",
+          "name": "Tigre",
+          "venue": "espn:soccer:arg.1:5354",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/arg.1/teams/7767"
+        },
+        {
+          "id": "20",
+          "name": "Unión (Santa Fe)",
+          "venue": "espn:soccer:arg.1:10790",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/arg.1/teams/20"
+        },
+        {
+          "id": "21",
+          "name": "Vélez Sarsfield",
+          "venue": "espn:soccer:arg.1:10761",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/arg.1/teams/21"
+        }
+      ]
+    },
+    {
+      "league": "Liga MX",
+      "source": "https://site.api.espn.com/apis/site/v2/sports/soccer/mex.1/teams?limit=1000",
+      "teams": [
+        {
+          "id": "227",
+          "name": "América",
+          "venue": "espn:soccer:mex.1:1672",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/mex.1/teams/227"
+        },
+        {
+          "id": "226",
+          "name": "Atlante",
+          "venue": "espn:soccer:mex.1:1672",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/mex.1/teams/226"
+        },
+        {
+          "id": "216",
+          "name": "Atlas",
+          "venue": "espn:soccer:mex.1:8445",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/mex.1/teams/216"
+        },
+        {
+          "id": "15720",
+          "name": "Atlético de San Luis",
+          "venue": "espn:soccer:mex.1:4906",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/mex.1/teams/15720"
+        },
+        {
+          "id": "218",
+          "name": "Cruz Azul",
+          "venue": "espn:soccer:mex.1:1672",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/mex.1/teams/218"
+        },
+        {
+          "id": "17851",
+          "name": "FC Juarez",
+          "venue": "espn:soccer:mex.1:3305",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/mex.1/teams/17851"
+        },
+        {
+          "id": "219",
+          "name": "Guadalajara",
+          "venue": "espn:soccer:mex.1:3789",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/mex.1/teams/219"
+        },
+        {
+          "id": "228",
+          "name": "León",
+          "venue": "espn:soccer:mex.1:3631",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/mex.1/teams/228"
+        },
+        {
+          "id": "220",
+          "name": "Monterrey",
+          "venue": "espn:soccer:mex.1:6351",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/mex.1/teams/220"
+        },
+        {
+          "id": "229",
+          "name": "Necaxa",
+          "venue": "espn:soccer:mex.1:1402",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/mex.1/teams/229"
+        },
+        {
+          "id": "234",
+          "name": "Pachuca",
+          "venue": "espn:soccer:mex.1:10645",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/mex.1/teams/234"
+        },
+        {
+          "id": "231",
+          "name": "Puebla",
+          "venue": "espn:soccer:mex.1:1264",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/mex.1/teams/231"
+        },
+        {
+          "id": "233",
+          "name": "Pumas UNAM",
+          "venue": "espn:soccer:mex.1:4905",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/mex.1/teams/233"
+        },
+        {
+          "id": "222",
+          "name": "Querétaro",
+          "venue": "espn:soccer:mex.1:4685",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/mex.1/teams/222"
+        },
+        {
+          "id": "225",
+          "name": "Santos",
+          "venue": "espn:soccer:mex.1:1266",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/mex.1/teams/225"
+        },
+        {
+          "id": "232",
+          "name": "Tigres UANL",
+          "venue": "espn:soccer:mex.1:10646",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/mex.1/teams/232"
+        },
+        {
+          "id": "10125",
+          "name": "Tijuana",
+          "venue": "espn:soccer:mex.1:4913",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/mex.1/teams/10125"
+        },
+        {
+          "id": "223",
+          "name": "Toluca",
+          "venue": "espn:soccer:mex.1:4910",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/mex.1/teams/223"
+        }
+      ]
+    },
+    {
+      "league": "Saudi Pro League",
+      "source": "https://site.api.espn.com/apis/site/v2/sports/soccer/ksa.1/teams?limit=1000",
+      "teams": [
+        {
+          "id": "21833",
+          "name": "Abha",
+          "venue": null,
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ksa.1/teams/21833"
+        },
+        {
+          "id": "8346",
+          "name": "Al Ahli",
+          "venue": null,
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ksa.1/teams/8346"
+        },
+        {
+          "id": "131746",
+          "name": "Al Diriyah",
+          "venue": null,
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ksa.1/teams/131746"
+        },
+        {
+          "id": "8363",
+          "name": "Al Ettifaq",
+          "venue": "espn:soccer:ksa.1:10361",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ksa.1/teams/8363"
+        },
+        {
+          "id": "21446",
+          "name": "Al Faisaly",
+          "venue": null,
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ksa.1/teams/21446"
+        },
+        {
+          "id": "13033",
+          "name": "Al Fateh",
+          "venue": "espn:soccer:ksa.1:10673",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ksa.1/teams/13033"
+        },
+        {
+          "id": "21827",
+          "name": "Al Fayha",
+          "venue": null,
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ksa.1/teams/21827"
+        },
+        {
+          "id": "21964",
+          "name": "Al Hazem",
+          "venue": null,
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ksa.1/teams/21964"
+        },
+        {
+          "id": "929",
+          "name": "Al Hilal",
+          "venue": null,
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ksa.1/teams/929"
+        },
+        {
+          "id": "2276",
+          "name": "Al Ittihad",
+          "venue": null,
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ksa.1/teams/2276"
+        },
+        {
+          "id": "21829",
+          "name": "Al Khaleej",
+          "venue": null,
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ksa.1/teams/21829"
+        },
+        {
+          "id": "22028",
+          "name": "Al Kholood",
+          "venue": "espn:soccer:ksa.1:9630",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ksa.1/teams/22028"
+        },
+        {
+          "id": "817",
+          "name": "Al Nassr",
+          "venue": null,
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ksa.1/teams/817"
+        },
+        {
+          "id": "22022",
+          "name": "Al Qadsiah",
+          "venue": null,
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ksa.1/teams/22022"
+        },
+        {
+          "id": "21965",
+          "name": "Al Riyadh",
+          "venue": null,
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ksa.1/teams/21965"
+        },
+        {
+          "id": "793",
+          "name": "Al Shabab",
+          "venue": null,
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ksa.1/teams/793"
+        },
+        {
+          "id": "18459",
+          "name": "Al Taawoun",
+          "venue": "espn:soccer:ksa.1:10767",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ksa.1/teams/18459"
+        },
+        {
+          "id": "130899",
+          "name": "Neom SC",
+          "venue": "espn:soccer:ksa.1:10449",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/ksa.1/teams/130899"
+        }
+      ]
+    },
+    {
+      "league": "J1 League",
+      "source": "https://site.api.espn.com/apis/site/v2/sports/soccer/jpn.1/teams?limit=1000",
+      "teams": [
+        {
+          "id": "7107",
+          "name": "Avispa Fukuoka",
+          "venue": "espn:soccer:jpn.1:6685",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/jpn.1/teams/7107"
+        },
+        {
+          "id": "7109",
+          "name": "Cerezo Osaka",
+          "venue": "espn:soccer:jpn.1:4406",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/jpn.1/teams/7109"
+        },
+        {
+          "id": "3384",
+          "name": "FC Tokyo",
+          "venue": "espn:soccer:jpn.1:10488",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/jpn.1/teams/3384"
+        },
+        {
+          "id": "22522",
+          "name": "Fagiano Okayama",
+          "venue": "espn:soccer:jpn.1:10873",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/jpn.1/teams/22522"
+        },
+        {
+          "id": "7102",
+          "name": "Gamba Osaka",
+          "venue": "espn:soccer:jpn.1:10470",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/jpn.1/teams/7102"
+        },
+        {
+          "id": "7111",
+          "name": "JEF United Ichihara-Chiba",
+          "venue": "espn:soccer:jpn.1:8633",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/jpn.1/teams/7111"
+        },
+        {
+          "id": "7115",
+          "name": "Kashima Antlers",
+          "venue": "espn:soccer:jpn.1:2559",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/jpn.1/teams/7115"
+        },
+        {
+          "id": "7476",
+          "name": "Kashiwa Reysol",
+          "venue": "espn:soccer:jpn.1:6691",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/jpn.1/teams/7476"
+        },
+        {
+          "id": "7112",
+          "name": "Kawasaki Frontale",
+          "venue": "espn:soccer:jpn.1:6684",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/jpn.1/teams/7112"
+        },
+        {
+          "id": "21361",
+          "name": "Kyoto Sanga",
+          "venue": "espn:soccer:jpn.1:8750",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/jpn.1/teams/21361"
+        },
+        {
+          "id": "22167",
+          "name": "Machida Zelvia",
+          "venue": "espn:soccer:jpn.1:9892",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/jpn.1/teams/22167"
+        },
+        {
+          "id": "131701",
+          "name": "Mito Hollyhock",
+          "venue": "espn:soccer:jpn.1:11611",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/jpn.1/teams/131701"
+        },
+        {
+          "id": "7108",
+          "name": "Nagoya Grampus",
+          "venue": "espn:soccer:jpn.1:10588",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/jpn.1/teams/7108"
+        },
+        {
+          "id": "7114",
+          "name": "Sanfrecce Hiroshima",
+          "venue": "espn:soccer:jpn.1:9891",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/jpn.1/teams/7114"
+        },
+        {
+          "id": "7104",
+          "name": "Shimizu S-Pulse",
+          "venue": "espn:soccer:jpn.1:7007",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/jpn.1/teams/7104"
+        },
+        {
+          "id": "3393",
+          "name": "Tokyo Verdy 1969",
+          "venue": "espn:soccer:jpn.1:5730",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/jpn.1/teams/3393"
+        },
+        {
+          "id": "3385",
+          "name": "Urawa Red Diamonds",
+          "venue": "espn:soccer:jpn.1:10896",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/jpn.1/teams/3385"
+        },
+        {
+          "id": "19001",
+          "name": "V-Varen Nagasaki",
+          "venue": "espn:soccer:jpn.1:10436",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/jpn.1/teams/19001"
+        },
+        {
+          "id": "7477",
+          "name": "Vissel Kobe",
+          "venue": "espn:soccer:jpn.1:1271",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/jpn.1/teams/7477"
+        },
+        {
+          "id": "7116",
+          "name": "Yokohama F. Marinos",
+          "venue": "espn:soccer:jpn.1:1933",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/jpn.1/teams/7116"
+        }
+      ]
+    },
+    {
+      "league": "A-League Men",
+      "source": "https://site.api.espn.com/apis/site/v2/sports/soccer/aus.1/teams?limit=1000",
+      "teams": [
+        {
+          "id": "5321",
+          "name": "Adelaide United",
+          "venue": "espn:soccer:aus.1:1802",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/aus.1/teams/5321"
+        },
+        {
+          "id": "22344",
+          "name": "Auckland FC",
+          "venue": "espn:soccer:aus.1:6652",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/aus.1/teams/22344"
+        },
+        {
+          "id": "5326",
+          "name": "Brisbane Roar",
+          "venue": "espn:soccer:aus.1:3153",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/aus.1/teams/5326"
+        },
+        {
+          "id": "5325",
+          "name": "Central Coast Mariners",
+          "venue": "espn:soccer:aus.1:1804",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/aus.1/teams/5325"
+        },
+        {
+          "id": "19340",
+          "name": "Macarthur FC",
+          "venue": "espn:soccer:aus.1:4649",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/aus.1/teams/19340"
+        },
+        {
+          "id": "11143",
+          "name": "Melbourne City FC",
+          "venue": "espn:soccer:aus.1:10624",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/aus.1/teams/11143"
+        },
+        {
+          "id": "5328",
+          "name": "Melbourne Victory",
+          "venue": "espn:soccer:aus.1:10624",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/aus.1/teams/5328"
+        },
+        {
+          "id": "5323",
+          "name": "Newcastle Jets",
+          "venue": "espn:soccer:aus.1:5572",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/aus.1/teams/5323"
+        },
+        {
+          "id": "5322",
+          "name": "Perth Glory",
+          "venue": "espn:soccer:aus.1:11770",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/aus.1/teams/5322"
+        },
+        {
+          "id": "5327",
+          "name": "Sydney FC",
+          "venue": "espn:soccer:aus.1:5370",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/aus.1/teams/5327"
+        },
+        {
+          "id": "8352",
+          "name": "Wellington Phoenix FC",
+          "venue": "espn:soccer:aus.1:3058",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/aus.1/teams/8352"
+        },
+        {
+          "id": "13696",
+          "name": "Western Sydney Wanderers",
+          "venue": "espn:soccer:aus.1:8044",
+          "source": "https://sports.core.api.espn.com/v2/sports/soccer/leagues/aus.1/teams/13696"
+        }
+      ]
+    }
+  ],
+  "failures": [],
+  "scope": "Public team-directory snapshot. Not a season-roster or venue certification. Missing links are explicit. Contains a cited official Intuit Dome correction."
+}
