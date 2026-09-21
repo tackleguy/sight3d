@@ -3821,6 +3821,9 @@ nodes:
         three tools (`execute_script` runs JavaScript against window.DraftDown/Geom/UI/Length inside one auto-managed
         undo step; `read_selection` returns a JSON snapshot; `read_api_reference` returns the markdown surface). Any
         snippet Claude writes is paste-able into the Ruby Console or installable as a plugin verbatim.
+        Procedural architecture in implementations/ai.chat/architecture.ts includes sports-venues.ts
+        for stadium and arena seating bowls, configurable playing surfaces, roofs and sport presets.
+        Sports concepts use the existing create_building catalog, mesh import and undo/detail pipeline.
   uuid: aI1ChAtP
 - id: tool.walk
   kind: tool

@@ -692,3 +692,9 @@ Look for nodes with `impl.status: placeholder` or `impl.status: stub` in `archig
 ## License
 
 MIT
+
+### Sports venues
+
+Use the AI building tool to create stadiums and arenas: “Create a soccer stadium”, “Build a basketball arena with an open roof”, or “Make an ice hockey stadium 150m wide and 100m deep”. The catalog includes 30 sport presets spanning field, court, ice, aquatic, combat, track, equestrian, motorsport and esports venues. Set `type` to `stadium` or `arena`, `sport` to any other sport name, and `width`, `depth` and `height` to configure a custom venue. Dimensions describe the whole venue; the playing area occupies 62% of its width and depth.
+
+Venues include stepped seating bowls, surface markings, roof options, and additional seat strips and scoreboards at detail level 3. Creation and each detail pass support undo. These are rectangular concept models with illustrative surfaces, not regulation sport layouts or construction designs. Custom footprint shapes, twists and loft profiles remain features of the other building types.

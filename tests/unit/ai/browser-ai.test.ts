@@ -142,3 +142,9 @@ test('catalog receipt answers without a second generation or geometry claims',()
  const response=completedBrowserOperations({system:'',tools:[],messages:[{role:'assistant',content:[{type:'tool_use',id:'search',name:'search_building_catalog',input:{}}]},{role:'user',content:[{type:'tool_result',tool_use_id:'search',content:JSON.stringify(result)}]}]});
  expect(response?.content?.[0].text).toContain('10,000 configurable');expect(response?.content?.[0].text).toContain('cottage');
 });
+
+test('stadiums and arenas route to building creation and detail tools',()=>{
+ const tools=[{name:'create_building'},{name:'detail_building'},{name:'create_city'}];
+ for(const content of ['Create a soccer stadium','Build a basketball arena','Build a custom sport stadium'])expect(browserTools({system:'',tools,messages:[{role:'user',content}]}).map(t=>t.name)).toEqual(['create_building']);
+ expect(browserTools({system:'',tools,messages:[{role:'assistant',content:'Created a soccer stadium.'},{role:'user',content:'Add more detail.'}]}).map(t=>t.name)).toEqual(['detail_building']);
+});

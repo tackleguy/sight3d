@@ -1,3 +1,5 @@
+// @archigraph ai.chat
+import { findSport, sportsMesh } from './sports-venues';
 import { resolveBuildingRecipe, DESIGN_STYLES, type BuildingFeature, type DesignStyle } from './building-catalog';
 import { ShapeUtils, Vector2 } from 'three';
 import type { IModelAPI } from '../api.model/ModelAPI';
@@ -6,15 +8,15 @@ import type { Vec3 } from '../../src/core/types';
 type Point = { x:number; z:number };
 type Section = { at:number; scale:number; rotation:number; offsetX:number; offsetZ:number };
 export type BuildingOptions = {
-  type:string; shape:string; roof:string; style:string; city:string; floors:number; height:number;
+  sport?:string; type:string; shape:string; roof:string; style:string; city:string; floors:number; height:number;
   width:number; depth:number; rotation:number; twist:number; taper:number; detail:number;
   x:number; y:number; z:number; footprint:Point[]; sections:Section[];
   catalogId?:string; catalogName?:string; feature?:BuildingFeature; designStyle?:DesignStyle;
 };
 export type ArchitectureMesh = { vertices:Vec3[]; faces:number[][]; colors:number[] };
-const TYPES = ['house','apartment','office','skyscraper','warehouse','pavilion','civic'];
+const TYPES = ['house','apartment','office','skyscraper','warehouse','pavilion','civic','stadium','arena'];
 const SHAPES = ['rectangle','circle','ellipse','triangle','hexagon','l_shape','u_shape','custom'];
-const ROOFS = ['flat','gable','hip','dome','pyramid','spire'];
+const ROOFS = ['flat','gable','hip','dome','pyramid','spire','open'];
 const STYLES = ['glass','brick','stone','concrete','terracotta','white'];
 const COLORS = [[.69,.7,.71],[.24,.5,.62],[.82,.85,.86],[.18,.22,.27],[.36,.53,.31],[.82,.74,.57],[.49,.24,.19],[.87,.87,.81],[.20,.23,.28]];
 const CITY = {
@@ -32,6 +34,8 @@ const CITY = {
   singapore:{label:'Singapore',style:'white',roof:'flat',floors:28,width:32,depth:26,shape:'l_shape'},
 };
 const PRESETS:Record<string,Record<string,unknown>> = {
+  stadium:{floors:1,height:28,width:165,depth:100,roof:'open',style:'concrete'},
+  arena:{floors:1,height:24,width:100,depth:75,roof:'dome',style:'concrete'},
   house:{floors:2,height:7,width:12,depth:9,roof:'gable',style:'brick'},
   apartment:{floors:7,height:23,width:26,depth:18,roof:'flat',style:'stone'},
   office:{floors:12,height:45,width:30,depth:22,roof:'flat',style:'glass'},
@@ -62,6 +66,10 @@ export function architectureBrief(text:string):Record<string,unknown> {
   for(const [pattern,shape] of shapes)if(pattern.test(text)){out.shape=shape;break;}
   const types:Array<[RegExp,string]>=[[/\b(warehouse|factory|industrial)\b/i,'warehouse'],[/\b(house|cottage|villa|home)\b/i,'house'],[/\b(pavilion|gazebo)\b/i,'pavilion'],[/\b(apartment|residential)\b/i,'apartment'],[/\b(museum|library|civic|school|hospital)\b/i,'civic'],[/\b(skyscraper|high[- ]?rise|tower)\b/i,'skyscraper'],[/\boffice\b/i,'office']];
   for(const [pattern,type] of types)if(pattern.test(text)){out.type=type;break;}
+  const sport=findSport(text);if(sport){out.sport=sport[0];out.type=sport[1];}
+  if(/\baren(?:a|as)\b/i.test(text))out.type='arena';
+  else if(/\bstadi(?:um|ums|a)\b/i.test(text))out.type='stadium';
+  if(/\b(open[- ]air|uncovered|roofless|open roof)\b/i.test(text))out.roof='open';
   const floors=text.match(/\b(\d+)\s*[- ]?(?:floors?|storeys?|stor(?:y|ies))\b/i);if(floors)out.floors=Number(floors[1]);
   for(const [key,words] of [['width','wide|width'],['depth','deep|depth'],['height','tall|high|height']] as const){
     const match=text.match(new RegExp(`(\\d+(?:\\.\\d+)?)\\s*(m|meters?|metres?|ft|feet)\\s*(?:${words})\\b`,'i'));
@@ -80,7 +88,9 @@ export function buildingOptions(raw:Record<string,unknown>):BuildingOptions {
   const input:Record<string,unknown>=recipe
     ? (typeof raw.brief==='string'?{...raw,...recipe.defaults,...explicit}:{...recipe.defaults,...raw,...explicit})
     : {...raw,...explicit};
-  if(recipe)input.type=recipe.archetype.baseType;
+  if(recipe)input.type=['stadium','arena'].includes(recipe.archetype.baseType)?explicit.type??raw.type??recipe.archetype.baseType:recipe.archetype.baseType;
+  if(recipe&&['stadium','arena'].includes(recipe.archetype.baseType)&&!['stadium','arena'].includes(String(input.type)))input.type=recipe.archetype.baseType;
+  if(recipe&&input.type!==recipe.archetype.baseType&&['stadium','arena'].includes(String(input.type)))input.roof=explicit.roof??PRESETS[String(input.type)].roof;
   if(typeof raw.brief==='string'){
     // Small models tend to fill every optional field. Keep embellishments opt-in.
     for(const key of ['city','twist','taper','rotation','x','y','z'])if(explicit[key]===undefined&&!(recipe&&key==='taper'))delete input[key];
@@ -95,7 +105,10 @@ export function buildingOptions(raw:Record<string,unknown>):BuildingOptions {
   const floors=numeric(input,'floors',input.height!==undefined?Math.max(1,Math.min(200,Math.round(Number(input.height)/3.4))):Number(defaults.floors),1,200,true);
   const height=numeric(input,'height',input.floors!==undefined?floors*3.4:Number(preset.height)*(regional&&input.type===undefined?Number(regional.floors)/Number(preset.floors):1),.5,1000);
   const width=numeric(input,'width',Number(defaults.width),1,2000),depth=numeric(input,'depth',Number(defaults.depth),1,2000);
-  const shape=choice(input,'shape',String(defaults.shape??'rectangle'),SHAPES);
+  const venue=type==='stadium'||type==='arena';
+  const shape=venue?'rectangle':choice(input,'shape',String(defaults.shape??'rectangle'),SHAPES);
+  if(venue){input.twist=0;input.taper=0;delete input.sections;}
+  if(!venue&&input.roof==='open')throw new Error('Open roofs are supported for stadiums and arenas.');
   let footprint:Point[]=[];
   if(shape==='custom'){
     if(!Array.isArray(input.footprint)||input.footprint.length<3||input.footprint.length>32)throw new Error('A custom footprint needs 3–32 {x,z} points in meters.');
@@ -112,7 +125,8 @@ export function buildingOptions(raw:Record<string,unknown>):BuildingOptions {
     if(sections[0].at!==0||sections[sections.length-1].at!==1||sections.some((s,i)=>i>0&&s.at<=sections[i-1].at))throw new Error('Sections must have increasing at values, starting at 0 and ending at 1.');
   }
   if(input.roof==='gable'&&shape!=='rectangle')input.roof='hip';
-  return {...(recipe?{catalogId:recipe.id,catalogName:recipe.name,feature:recipe.archetype.feature,designStyle:recipe.designStyle}:{}),type,shape,roof:choice(input,'roof',shape==='custom'?'flat':String(defaults.roof),ROOFS),style:choice(input,'style',String(defaults.style),STYLES),city,
+  if(input.sport!==undefined&&(typeof input.sport!=='string'||input.sport.length>100))throw new Error('sport must be a name of up to 100 characters.');
+  return {sport:typeof input.sport==='string'?input.sport:undefined,...(recipe?{catalogId:recipe.id,catalogName:recipe.name,feature:recipe.archetype.feature,designStyle:recipe.designStyle}:{}),type,shape,roof:choice(input,'roof',shape==='custom'?'flat':String(defaults.roof),ROOFS),style:choice(input,'style',String(defaults.style),STYLES),city,
     floors,height,width:footprint.length?Math.max(...footprint.map(p=>p.x)):width,depth:footprint.length?Math.max(...footprint.map(p=>p.z)):depth,
     rotation:numeric(input,'rotation',0,-360,360),twist:numeric(input,'twist',0,-180,180),taper:numeric(input,'taper',0,0,.85),detail:numeric(input,'detail',2,1,3,true),
     x:numeric(input,'x',0,-100000,100000),y:numeric(input,'y',0,-100000,100000),z:numeric(input,'z',0,-100000,100000),footprint,sections};
@@ -148,6 +162,7 @@ class MeshWriter {
 }
 const mix=(a:Vec3,b:Vec3,t:number):Vec3=>({x:a.x+(b.x-a.x)*t,y:a.y+(b.y-a.y)*t,z:a.z+(b.z-a.z)*t});
 export function buildingMesh(o:BuildingOptions):ArchitectureMesh {
+  if(o.type==='stadium'||o.type==='arena')return sportsMesh(o);
   const writer=new MeshWriter(), base=outline(o);
   // Normalize to CCW in plan; custom footprints can be entered either way.
   if(base.reduce((s,p,i)=>s+p.x*base[(i+1)%base.length].z-base[(i+1)%base.length].x*p.z,0)<0)base.reverse();
@@ -303,7 +318,7 @@ const latest=new WeakMap<IModelAPI,{options:BuildingOptions; layers:string[][]; 
 export function createBuilding(api:IModelAPI,input:Record<string,unknown>){
   const options=buildingOptions(input),mesh=buildingMesh(options),faces=commitMeshes(api,[mesh],'Create building');
   latest.set(api,{options,layers:[faces],anchor:faces.map(id=>api.getFaceInfo(id)!.vertices)});
-  return {ok:true,created:{faces},catalogId:options.catalogId,summary:`Created ${options.catalogName?options.catalogName+' · a':'a'} ${options.shape.replace('_','-')} ${options.type}: ${options.width} × ${options.depth} m, ${options.height} m tall, ${options.floors} floors, ${options.roof} roof, ${options.style} facade${options.twist?`, ${options.twist}° twist`:''}${options.taper?`, ${Math.round(options.taper*100)}% taper`:''}${options.city?`. Inspired by ${CITY[options.city as keyof typeof CITY].label}; not a map reconstruction`:''}. Detail ${options.detail}/3.${options.floors>80?' Facade simplified to 80 window rows for performance.':''} Undo reverses this building.`};
+  return {ok:true,created:{faces},catalogId:options.catalogId,summary:`Created ${options.catalogName?options.catalogName+' · a':'a'} ${options.shape.replace('_','-')} ${options.type}: ${options.width} × ${options.depth} m, ${options.height} m tall, ${options.type==='stadium'||options.type==='arena'?`${options.sport??'multi sport'} concept seating bowl`:`${options.floors} floors`}, ${options.roof} roof, ${options.style} facade${options.twist?`, ${options.twist}° twist`:''}${options.taper?`, ${Math.round(options.taper*100)}% taper`:''}${options.city?`. Inspired by ${CITY[options.city as keyof typeof CITY].label}; not a map reconstruction`:''}. Detail ${options.detail}/3.${options.floors>80?' Facade simplified to 80 window rows for performance.':''} Undo reverses this building.`};
 }
 export function createCity(api:IModelAPI,raw:Record<string,unknown>){
   const parsed=typeof raw.brief==='string'?architectureBrief(raw.brief):{};
@@ -353,5 +368,5 @@ export function detailBuilding(api:IModelAPI){
   const added=mesh.faces.map((_,i)=>i).filter(i=>{const k=key(mesh,i),count=existing.get(k)||0;if(count){existing.set(k,count-1);return false;}return true;});
   const ids=commitMeshes(api,[{...mesh,faces:added.map(i=>mesh.faces[i]),colors:added.map(i=>mesh.colors[i])}],'Add building detail');
   record.layers=record.layers.slice(0,used);record.layers.push(ids);
-  return {ok:true,created:{faces:ids},summary:`Added ${level===1?'window panels':'floor-band details'} to the ${options.shape.replace('_','-')} ${options.type}. Detail ${options.detail}/3. Undo reverses this detail pass.`};
+  return {ok:true,created:{faces:ids},summary:`Added ${['stadium','arena'].includes(options.type)?(level===1?'playing-surface markings':'seat strips and scoreboards'):(level===1?'window panels':'floor-band details')} to the ${options.shape.replace('_','-')} ${options.type}. Detail ${options.detail}/3. Undo reverses this detail pass.`};
 }

@@ -9,7 +9,7 @@ export function browserTools(args: ChatArgs) {
   const assistant = [...args.messages].reverse().find(m => m.role === 'assistant' && typeof m.content === 'string');
   const previousReply = typeof assistant?.content === 'string' ? assistant.content : '';
   const request = prompt.split('\n\n').pop()!.trim();
-  const tower = /\b(skyscraper|skysraper|high[- ]?rise|tower|building|house|home|cottage|villa|apartment|office|warehouse|pavilion|museum|library|school|civic)\b/i;
+  const tower = /\b(skyscraper|skysraper|high[- ]?rise|tower|building|house|home|cottage|villa|apartment|office|warehouse|pavilion|museum|library|school|civic|stadium|arena)\b/i;
   // A browser model reliably fills parameters when it isn't distracted by a general
   // JavaScript tool. Learn mode still has no tools, and other edits keep theirs.
   const detail = (tower.test(prompt) || (/^(?:please )?add (?:more |extra )?detail[.!]?$/i.test(request) && tower.test(previousReply))) && /\b(add|more|increase|extra|next)\b[^.!?]*\bdetail\b/i.test(prompt);

@@ -86,6 +86,9 @@ let browser, server;
     ['art_museum/brutalist/terraced','Create a terraced brutalist art museum, 48m wide, 30m deep and 20m tall.',20],
     ['railway_station/traditional/compact','Create a traditional railway station, 70m wide.',17],
     ['aircraft_hangar/contemporary/compact','Create an aircraft hangar.',24],
+    ['soccer_stadium/contemporary/compact','Create a soccer stadium.',28],
+    ['basketball_arena/contemporary/compact','Create a basketball arena with an open roof.',20],
+    ['ice_hockey_arena/contemporary/compact','Create an ice hockey arena.',20],
   ]){
     await page.evaluate(()=>window.modelAPI.deleteEntities(window.modelAPI.getAllFaces()));
     await page.evaluate(catalogId=>{

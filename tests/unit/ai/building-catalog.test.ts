@@ -6,9 +6,9 @@ import { ModelDocument } from '../../../implementations/data.document/ModelDocum
 import { GeometryEngine } from '../../../implementations/engine.geometry/GeometryEngine';
 import type { ICameraController } from '../../../src/core/interfaces';
 function setup(){const doc=new ModelDocument(new GeometryEngine());return {doc,api:new ModelAPI(doc,()=>{},{} as ICameraController)};}
-test('catalog has 100 unique subtypes in 20 categories and 10,000 addressable recipes',()=>{
- expect(BUILDING_ARCHETYPES).toHaveLength(100);expect(new Set(BUILDING_ARCHETYPES.map(a=>a.id)).size).toBe(100);
- expect(new Set(BUILDING_ARCHETYPES.map(a=>a.category)).size).toBe(20);expect(BUILDING_RECIPE_COUNT).toBe(10000);
+test('catalog has unique subtypes and addressable recipes',()=>{
+ expect(BUILDING_ARCHETYPES.length).toBeGreaterThan(100);expect(new Set(BUILDING_ARCHETYPES.map(a=>a.id)).size).toBe(BUILDING_ARCHETYPES.length);
+ expect(new Set(BUILDING_ARCHETYPES.map(a=>a.category)).size).toBe(22);expect(BUILDING_RECIPE_COUNT).toBe(BUILDING_ARCHETYPES.length*100);
  const ids=new Set<string>();
  for(const a of BUILDING_ARCHETYPES)for(const style of Object.keys(DESIGN_STYLES))for(const form of Object.keys(MASSING_FORMS)){
   const recipe=buildingRecipe(a.id,style as DesignStyle,form as MassingForm);ids.add(recipe.id);
@@ -20,7 +20,7 @@ test('catalog has 100 unique subtypes in 20 categories and 10,000 addressable re
    if(Math.hypot(u.y*v.z-u.z*v.y,u.z*v.x-u.x*v.z,u.x*v.y-u.y*v.x)<1e-12)throw new Error(`Degenerate face: ${recipe.id}`);
   }
  }
- expect(ids.size).toBe(10000);
+ expect(ids.size).toBe(BUILDING_RECIPE_COUNT);
 },60000);
 test.each([['Create an airport terminal','airport_terminal'],['Make a dental clinic','dental_clinic'],['Build a train station','railway_station'],['Make an art museum','art_museum'],['Create a courthouse','courthouse']])('specific subtype retrieval: %s',(text,id)=>{
  expect(findBuildingArchetype(text)?.id).toBe(id);expect(buildingCatalogContext(text)).toContain(id);
@@ -35,7 +35,7 @@ test('catalog dimensions, style and features survive model guesses, but explicit
 test('unknown IDs reject before mutation; search is paginated and readonly',()=>{
  const {api}=setup();expect(()=>createBuilding(api,{catalogId:'invented'})).toThrow('Unknown');expect(api.getAllFaces()).toHaveLength(0);
  const first=searchBuildingCatalog({limit:20}),second=searchBuildingCatalog({limit:20,offset:20});
- expect(first.matchCount).toBe(100);expect(first.nextOffset).toBe(20);
+ expect(first.matchCount).toBe(BUILDING_ARCHETYPES.length);expect(first.nextOffset).toBe(20);
  expect(new Set([...first.results,...second.results].map(r=>r.id)).size).toBe(40);
  expect(searchBuildingCatalog({query:'dental clinic'}).results[0].id).toBe('dental_clinic');
  expect(searchBuildingCatalog({query:'xyzunknown'}).results).toHaveLength(0);
