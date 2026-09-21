@@ -20,6 +20,17 @@ let context;
   await page.waitForFunction(()=>{const text=document.querySelector('.browser-ai-setup [role=status]')?.textContent;return text?.startsWith('Ready') || !!document.querySelector('.browser-ai-setup button')?.textContent?.includes('Retry');},{},{timeout:620000});
  } finally {clearInterval(progress);}
  const status=await page.locator('.browser-ai-setup [role=status]').textContent();console.log('LOAD:',status);assert.match(status,/Ready/);
+ if(process.env.SIGHT3D_SCENARIO === 'batch') {
+  // This wording deliberately bypasses the deterministic creation-list shortcut.
+  await page.locator('#ai-prompt-input').fill('Build 15 chairs in a grid, using wood material.');
+  await page.getByRole('button',{name:'Send',exact:true}).click();
+  await page.getByText(/Created 15 of 15 objects across 1 commands/).first().waitFor({timeout:300000});
+  assert.equal(await page.evaluate(()=>window.modelAPI.getAllFaces().length),15*36);
+  assert.equal(await page.locator('.ai-chat-error').count(),0);
+  assert.equal(posts.filter(url=>!url.includes('__webpack')).length,0);
+  console.log('PASS: real browser AI generated and completed a compact batch plan.');
+  await context.close();context=null;return;
+ }
  if(process.env.SIGHT3D_SCENARIO === 'architecture') {
   const ask=async(prompt)=>{
    await page.locator('#ai-prompt-input').fill(prompt);

@@ -25,7 +25,7 @@ export async function runChatTurn(options: {
 }) {
   let history = [...options.messages];
   const text: string[] = [];
-  const limit = options.maxRounds ?? 25;
+  const limit = options.maxRounds ?? 32;
   for (let round = 0; round < limit; round++) {
     if (options.stopped()) return { text: text.join('\n\n'), stopped: true };
     options.onProgress(round ? 'Reviewing the model…' : 'Thinking through your request…');
@@ -42,11 +42,14 @@ export async function runChatTurn(options: {
     // Never run a truncated script or tools supplied in teaching mode.
     if (response.stop_reason === 'max_tokens') throw new Error('The modeling instructions were cut short. Try one smaller change.');
     if (!options.allowEdits) throw new Error('Learn mode cannot change the model. Switch to Build to make edits.');
+    if(calls.length>15 || calls.some(call=>!call.id||!call.name||!call.input))throw new Error('The AI returned an incomplete plan or more than 15 commands. No commands from this plan were run.');
     const results = [];
     for (const call of calls) {
       if (options.stopped()) return { text: text.join('\n\n'), stopped: true };
       if (!call.id || !call.name || !call.input) throw new Error('The AI returned an incomplete modeling action. Please try again.');
       options.onProgress(call.name === 'execute_script' ? String(call.input.operationName || 'Updating the model…') : 'Inspecting the model…');
+      await new Promise<void>(resolve=>setTimeout(resolve,0));
+      if(options.stopped())return {text:text.join('\n\n'),stopped:true};
       const result = await options.execute(call.name, call.input);
       options.onTool({ name: call.name, input: call.input, result });
       results.push({ type: 'tool_result', tool_use_id: call.id, content: result });

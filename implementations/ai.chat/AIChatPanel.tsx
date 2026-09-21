@@ -1,3 +1,4 @@
+import {directBatchPlan,createBatchResponder} from './batch-modeling';
 import { wantsKnowledgeDesign } from './knowledge-design';
 import { directSportsRequest, createDirectSportsResponder } from './direct-sports';
 import { buildingCatalogContext } from './building-catalog';
@@ -16,6 +17,7 @@ import {completedBrowserOperations} from '../../src/web/browser-ai-protocol';
 import {searchArchitectureReferences} from './architecture-references';
 
 const STARTERS = [
+  ['150 objects', 'Create 50 red cubes; create 50 blue spheres; create 50 chairs.'],
   ['Quick stadium preset', 'Create a quick soccer stadium preset.'],
   ['A familiar example', 'Create a lighthouse inspired by a traditional coastal lighthouse, with its recognizable parts.'],
   ['A glass of water', 'Create a glass of water, radius 0.04m, height 0.12m.'],
@@ -68,9 +70,10 @@ export function AIChatPanel({ visible = true }: { visible?: boolean }) {
     setMessages(next);
     const completed: ToolResult[] = [];
     try {
-      let photo=mode==='build'?selectedPhoto:null;
+      const batch = mode === 'build' ? directBatchPlan(text) : null;
+      let photo=mode==='build'&&!batch?selectedPhoto:null;
       const buildingRequest=/\b(building|stadium|arena|tower|house|condo|apartment|skyscraper|museum|church|temple|cathedral|lighthouse|palace|castle|hotel|office|station|bridge|housing|residential)\b/i.test(text)||searchArchitectureReferences(text,1).results.some(r=>text.toLowerCase().includes(r.name.toLowerCase()));
-      if(mode==='build'&&usePhotos&&!photo&&wantsKnowledgeDesign(text)&&buildingRequest){
+      if(mode==='build'&&!batch&&usePhotos&&!photo&&wantsKnowledgeDesign(text)&&buildingRequest){
         setProgress('Finding a photo reference…');
         let results=await photoLibrary().search(text,4);
         if(!results.length){const names=searchArchitectureReferences(text,2).results.map(r=>r.name);for(const name of names){results=await photoLibrary().search(name,4);if(results.length)break;}}
@@ -87,18 +90,19 @@ export function AIChatPanel({ visible = true }: { visible?: boolean }) {
       const system = mode === 'learn'
         ? 'You are Sight3D’s friendly modeling instructor. Explain SketchUp-style modeling in short, concrete steps using the active tool and selection context. You cannot edit geometry in Learn mode. Never claim to have made changes. Teach Rectangle (R), Push/Pull (P), Orbit (O), Move (M), and typed dimensions. Ask one focused question when the request is ambiguous.'
         : buildLocalSystemPrompt() + '\nYou are the Sight3D modeling assistant. Use plain language, state assumptions about dimensions, and ask one focused question when intent is ambiguous. Preserve unrelated geometry. After editing, briefly explain what changed and that each modeling operation can be undone. Never claim an operation succeeded if its result failed.';
-      const direct = !photo&&mode === 'build' && /\b(quick|preset)\b/i.test(text) && directSportsRequest(text) ? createDirectSportsResponder(text) : null;
+      const direct = batch ? createBatchResponder(batch) : !photo&&mode === 'build' && /\b(quick|preset)\b/i.test(text) && directSportsRequest(text) ? createDirectSportsResponder(text) : null;
       const result = await runChatTurn({
         messages: history,
-        maxRounds: 6,
+        maxRounds: 32,
         request: async messages => cached ? completedBrowserOperations({system:'',messages,tools:getToolDefinitions()})||{content:[{type:'tool_use',id:'cached_photo',name:'create_design',input:cached}],stop_reason:'tool_use'} : direct ? direct(messages) : window.api.invoke('ai:chat', { system:system+(wantsKnowledgeDesign(text)?'':buildingCatalogContext(text)), messages, tools: mode === 'build' ? getToolDefinitions() : [],photo:photoInput }) as any,
         execute: async (name, args) => {
           if(photo){if(name!=='create_design')throw new Error('Photo modeling can only create a design.');validatePhotoDesign(args);}
-          let result = await executeTool(api, name, ['create_building','create_city'].includes(name) ? {...args,brief:text} : args);
+          let result = await executeTool(api, name, ['create_building','create_city'].includes(name) ? {...args,brief:text} : args, {stopped:()=>stopRef.current,onProgress:setProgress,onBatch:()=>{syncToolState();}});
           if(photo&&name==='create_design'&&JSON.parse(result).ok){savePhotoPlan(photo.id,text,args);const receipt=JSON.parse(result);receipt.photo={id:photo.id,name:photo.landmark,source:photo.source,author:photo.author,license:photo.license};receipt.summary=`Created ${receipt.parts} parts inspired by the selected photo of ${photo.landmark}. This is an approximate concept; hidden surfaces and unspecified dimensions are assumptions. Undo reverses this design.`;result=JSON.stringify(receipt);}
+
           (app as any)?.syncScene?.(); (app as any)?.syncSelection?.();
           syncToolState(); syncPreviews();
-          if (['create_design','create_skyscraper','create_building','create_city'].includes(name) && JSON.parse(result).ok) { api.setView('iso'); api.zoomExtents(); }
+          if (['create_batch','create_design','create_skyscraper','create_building','create_city'].includes(name) && JSON.parse(result).ok) { api.setView('iso'); api.zoomExtents(); }
           return result;
         },
         stopped: () => stopRef.current,

@@ -49,3 +49,13 @@ test('an exhausted action budget produces an actionable error', async () => {
 test('an empty response is an error', async () => {
   await expect(runChatTurn(setup([{ content:[] }]))).rejects.toThrow('empty response');
 });
+
+test('runs 15 commands and leaves room for the final response',async()=>{
+ const calls=Array.from({length:15},(_,i)=>({type:'tool_use',id:`cmd-${i}`,name:'create_box',input:{width:1,depth:1,height:1}}));
+ const options=setup([{content:calls,stop_reason:'tool_use'},{content:[{type:'text',text:'15 commands complete.'}]}]);
+ expect((await runChatTurn(options)).text).toContain('15 commands');expect(options.execute).toHaveBeenCalledTimes(15);
+});
+test('validates the complete command list before running the first mutation',async()=>{
+ const options=setup([{content:[action.content![1],{type:'tool_use',name:'create_box',input:{}}]}]);
+ await expect(runChatTurn(options)).rejects.toThrow('incomplete plan');expect(options.execute).not.toHaveBeenCalled();
+});

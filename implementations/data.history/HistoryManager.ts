@@ -35,7 +35,7 @@ type HistoryEvents = {
 // ─── HistoryManager ────────────���─────────────────────────────────
 
 export class HistoryManager implements IHistoryManager {
-  maxSteps = 100;
+  maxSteps = 200;
 
   private undoStack: DeltaTransaction[] = [];
   private redoStack: DeltaTransaction[] = [];

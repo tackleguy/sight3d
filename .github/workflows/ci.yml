@@ -38,3 +38,6 @@ jobs:
 
       - name: Verify production website
         run: npm run test:web
+
+      - name: Verify 150-object batch queue
+        run: node scripts/verify-batch-web.cjs

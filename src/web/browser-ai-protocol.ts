@@ -1,3 +1,5 @@
+import {validateBatch,directBatchPlan} from '../../implementations/ai.chat/batch-modeling';
+import {objectOptions} from '../../implementations/ai.chat/objects';
 import { architectureReferenceContext, REFERENCE_CONTEXT_HEADER, constrainDesignTool, validateDesignRequest, designDemonstration } from '../../implementations/ai.chat/architecture-references';
 import { wantsKnowledgeDesign, KNOWLEDGE_DESIGN_PROMPT, validateKnowledgeDesign } from '../../implementations/ai.chat/knowledge-design';
 import { findBuildingArchetype, buildingCatalogContext, inferBuildingUse } from '../../implementations/ai.chat/building-catalog';
@@ -13,6 +15,7 @@ export function browserTools(args: ChatArgs) {
   const assistant = [...args.messages].reverse().find(m => m.role === 'assistant' && typeof m.content === 'string');
   const previousReply = typeof assistant?.content === 'string' ? assistant.content : '';
   const request = prompt.split('\n\n').pop()!.trim();
+  if(tools.some(t=>t.name==='create_batch')&&(directBatchPlan(request)||/\b(?:[2-9]|\d{2,3})\s+(?:\w+\s+)?(?:objects|cubes|boxes|spheres|chairs|tables|houses|buildings|towers)\b/i.test(request)))return tools.filter(t=>t.name==='create_batch');
   if(wantsKnowledgeDesign(request)&&tools.some(t=>t.name==='create_design'))return tools.filter(t=>t.name==='create_design').map(t=>constrainDesignTool(t,request));
   if(/\b(search|find|show|list|browse)\b/i.test(request)&&/\b(examples|references|real buildings|team stadiums)\b/i.test(request)&&tools.some(t=>t.name==='search_architecture_references'))return tools.filter(t=>t.name==='search_architecture_references');
   const tower = /\b(skyscraper|skysraper|high[- ]?rise|tower|building|house|home|cottage|villa|apartment|office|warehouse|pavilion|museum|library|school|civic|stadium|arena)\b/i;
@@ -52,10 +55,10 @@ export function browserRequest(args: ChatArgs, retry = false) {
     const schema = tool.input_schema as { properties?: Record<string,unknown>; required?: string[] };
     return ['create_skyscraper','create_building','create_city'].includes(tool.name) && detail ? { ...schema, properties: { ...schema.properties, detail: { const: Number(detail) } }, required: [...new Set([...(schema.required || []), 'detail'])] } : schema;
   };
-  const architecture = tools.length === 1 && ['create_design','create_building','create_city','detail_building','search_building_catalog','search_architecture_references'].includes(tools[0].name);
+  const architecture = tools.length === 1 && ['create_batch','create_design','create_building','create_city','detail_building','search_building_catalog','search_architecture_references'].includes(tools[0].name);
   const schema = { type: 'object', properties: {
     reply: architecture ? { const: '' } : { type: 'string' },
-    calls: { type: 'array', minItems: architecture ? 1 : 0, maxItems: architecture ? 1 : 6, items: { anyOf: tools.map(tool => ({ type: 'object', properties: { name: { const: tool.name }, arguments: inputSchema(tool) }, required: ['name', 'arguments'], additionalProperties: false })) } },
+    calls: { type: 'array', minItems: architecture ? 1 : 0, maxItems: architecture ? 1 : 15, items: { anyOf: tools.map(tool => ({ type: 'object', properties: { name: { const: tool.name }, arguments: inputSchema(tool) }, required: ['name', 'arguments'], additionalProperties: false })) } },
   }, required: ['reply', 'calls'], additionalProperties: false };
   return {
     messages: [{ role: 'system' as const, content: base + '\nReturn concise JSON with reply and calls. Omit optional arguments unless needed by the request. Do not write an explanation before a tool call; successful tools provide the final confirmation. Each call has name and arguments (a JSON object matching the tool schema). For knowledge-inspired multipart designs use create_design. For objects and arcs use create_object, and for painting existing faces use apply_surface. For explicit quick/preset architecture use create_building. Otherwise use create_design to express the sourced reference features; do not substitute a catalog recipe. For city-inspired blocks use create_city. For more detail use detail_building. Only simple boxes use create_box. After success, return a brief reply and calls:[]; never repeat a completed action.  Available tools:\n' + JSON.stringify(tools) + referenceContext }, ...(knowledge?designDemonstration(String(latestText||'')):[]), ...messages],
@@ -68,7 +71,7 @@ export function parseBrowserReply(text: string, tools: unknown[], finishReason: 
   if (finishReason === 'length') throw new Error('The browser model reached its response limit. Try a smaller change.');
   if (!tools.length) return { content: [{ type: 'text', text }], stop_reason: 'end_turn' };
   const result = JSON.parse(text);
-  if (typeof result.reply !== 'string' || !Array.isArray(result.calls) || result.calls.length > 6) throw new Error('The browser model returned an invalid plan. Try a simpler request.');
+  if (typeof result.reply !== 'string' || !Array.isArray(result.calls) || result.calls.length > 15) throw new Error('The browser model returned an invalid plan. Try a simpler request.');
   const allowed = new Set((tools as Array<{name:string}>).map(t => t.name));
   const content: AIBlock[] = !result.calls.length && result.reply ? [{ type:'text', text:result.reply }] : [];
   // Validate the complete plan before returning any executable action.
@@ -76,6 +79,8 @@ export function parseBrowserReply(text: string, tools: unknown[], finishReason: 
     if (!allowed.has(call.name)) throw new Error('The browser model requested an unavailable action. No actions were run.');
     const input = typeof call.arguments === 'string' ? JSON.parse(call.arguments) : call.arguments;
     if (!input || typeof input !== 'object' || Array.isArray(input)) throw new Error('The browser model returned invalid action inputs. No actions were run.');
+    if(call.name==='create_batch')validateBatch(input);
+    if(call.name==='create_object')objectOptions(input);
     if(call.name==='create_design')validateKnowledgeDesign(input);
     content.push({ type:'tool_use', id:`browser_${++sequence}`, name:call.name, input });
   }
@@ -111,6 +116,11 @@ export function completedBrowserOperations(args: ChatArgs): AIResponse | null {
     }
     return {content:[{type:'text',text:descriptions.join('\n\n')}],stop_reason:'end_turn'};
   }
+  if(calls.length===1 && calls[0].name==='create_batch'){
+    const receipt=last.content.find((r:any)=>r.type==='tool_result'&&r.tool_use_id===calls[0].id);if(!receipt)return null;
+    let data;try{data=JSON.parse(receipt.content);}catch{return null;}
+    return typeof data.summary==='string'?{content:[{type:'text',text:data.summary}],stop_reason:'end_turn'}:{error:data.error||'The batch did not complete.'};
+  }
   if (!calls.length || calls.some((call: any) => !['create_design','create_object','create_box','create_skyscraper','detail_skyscraper','create_building','create_city','detail_building'].includes(call.name))) return null;
   const receipts = last.content;
   const descriptions: string[] = [];
@@ -140,7 +150,7 @@ export async function generateBrowserResponse(
   for(let attempt=0;attempt<2;attempt++) {
     if(stopped())throw new Error('Generation stopped.');
     const request=browserRequest(args,attempt===1);
-    if(correction)request.messages[0].content+='\nThe previous plan was rejected before execution: '+correction+'. Return a corrected complete plan with short, nonempty name, reference and features.';
+    if(correction)request.messages[0].content+='\nThe previous plan was rejected before execution: '+correction+'. Return a corrected complete plan that follows the tool schema and these validation errors.';
     const reply=await generate(request);
     if(stopped())throw new Error('Generation stopped.');
     const choice=reply.choices[0];
@@ -152,7 +162,7 @@ export async function generateBrowserResponse(
       for(const block of parsed.content||[])if(block.type==='tool_use'&&block.name==='create_design'){if(args.photo)validatePhotoDesign(block.input||{});else validateDesignRequest(block.input||{},String(latest?.content||'').split('\n\n').pop()!);}
       return parsed;
     }
-    catch(error){if(attempt===0&&browserTools(args).some(t=>t.name==='create_design')){correction=error instanceof Error?error.message:'Invalid design plan';continue;}throw error;}
+    catch(error){if(attempt===0){correction=error instanceof Error?error.message:'Invalid design plan';continue;}throw error;}
   }
   throw new Error('No complete response was generated.');
 }

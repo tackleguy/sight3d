@@ -1,3 +1,4 @@
+import {BATCH_TOOL,createBatch,BatchHooks} from './batch-modeling';
 import { SEARCH_ARCHITECTURE_TOOL, searchArchitectureReferences } from './architecture-references';
 import { createKnowledgeDesign, KNOWLEDGE_DESIGN_TOOL, KNOWLEDGE_DESIGN_PROMPT } from './knowledge-design';
 import { searchBuildingCatalog } from './building-catalog';
@@ -36,6 +37,7 @@ export interface ChatMessage {
 
 export function getToolDefinitions() {
   return [
+    BATCH_TOOL,
     KNOWLEDGE_DESIGN_TOOL,
     SEARCH_ARCHITECTURE_TOOL,
     {name:'search_building_catalog',description:'Search building subtypes, including sports stadiums and arenas, with 10 design styles and 10 massing forms. Use for subtype discovery or to browse types. Returns catalog IDs, dimensions and features. Search with an empty query and offset to page through all subtypes. Does not edit geometry.',input_schema:{type:'object' as const,properties:{query:{type:'string'},offset:{type:'integer',minimum:0},limit:{type:'integer',minimum:1,maximum:20}}}},
@@ -584,7 +586,7 @@ if (typeof window !== 'undefined') {
   };
 }
 
-export async function executeTool(api: IModelAPI, name: string, input: Record<string, unknown>): Promise<string> {
+export async function executeTool(api: IModelAPI, name: string, input: Record<string, unknown>, hooks:BatchHooks = {}): Promise<string> {
   const callId = ++aiCallCount;
   const t0 = (typeof performance !== 'undefined' ? performance.now() : Date.now());
   let resultStr = '';
@@ -593,6 +595,7 @@ export async function executeTool(api: IModelAPI, name: string, input: Record<st
     switch (name) {
       case 'search_building_catalog': resultStr = JSON.stringify(searchBuildingCatalog(input)); break;
       case 'search_architecture_references': resultStr = JSON.stringify(searchArchitectureReferences(String(input.query||''),Number(input.limit)||5,Number(input.offset)||0)); break;
+      case 'create_batch': resultStr = JSON.stringify(await createBatch(api,input,hooks)); break;
       case 'create_design': resultStr = JSON.stringify(createKnowledgeDesign(api,input)); break;
       case 'create_object': resultStr = JSON.stringify(createObject(api,input)); break;
       case 'apply_surface': resultStr = JSON.stringify(paintObject(api,input)); break;

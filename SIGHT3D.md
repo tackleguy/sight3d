@@ -128,3 +128,11 @@ The static photo database contains 400,000 distinct source photo IDs/URLs across
 Enable photo AI under the browser download/device details for actual image understanding, or use a local vision-capable model. The default smaller text model cannot inspect images. Photo AI gets a locally resized image and emits only a validated `create_design` command; it never executes arbitrary code found in an image. The result is an approximate, undoable concept. Plans for identical photo IDs and prompts are cached locally after successful execution, so repeats avoid inference; clearing browser data also clears that cache.
 
 `node scripts/verify-photo-library.cjs` verifies counts, attribution fields, uniqueness, hashes and 1,000 search cases. `node scripts/verify-photo-web.cjs` exercises real photo loading, pixel attachment, real geometry/undo and cache reuse with stubbed inference. This browser integration check does not certify vision-model accuracy. A real vision-generation benchmark has not been completed on this machine.
+
+## Large requests
+
+Create up to **15 commands and 150 objects per batch**. Examples: `Create 150 chairs` or `Create 50 red cubes; create 50 blue spheres; create 50 chairs`. Numbered lists work too. Supported simple creation lists run directly through the local geometry tools without downloading or waiting for an AI model. More complex requests can use the AI's compact `create_batch` tool.
+
+The queue validates all commands before starting, arranges objects in a spaced grid, and yields between objects so Stop remains available. Each completed object has its own undo step; history retains 200 steps. Stop or a runtime failure keeps completed work and reports the count, without replaying it automatically. Buildings default to detail 1 and curves to 16 segments in a batch; explicit detail/segments are honored within the scene geometry budget. This supports large practical scenes, not unlimited device memory or arbitrary requests without error.
+
+Run `node scripts/verify-batch-web.cjs` after `npm run build:web` to exercise 15 commands, 150 mixed objects, progress, undo/redo and Stop through the production UI. Geometry tests additionally create 150 houses and verify full batch undo, preflight validation and partial-failure receipts.

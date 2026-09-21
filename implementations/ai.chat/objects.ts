@@ -48,7 +48,7 @@ function lathe(profile:Array<[number,number]>,segments:number,origin:Vec3) {
   }
   return {vertices,faces};
 }
-export function createObject(api:IModelAPI,input:Record<string,unknown>) {
+export function objectOptions(input:Record<string,unknown>) {
   const type=input.type;
   if(!OBJECT_TYPES.includes(type as any))throw new Error(`Choose ${OBJECT_TYPES.join(', ')}.`);
   const drinking=type==='glass_of_water';
@@ -60,14 +60,21 @@ export function createObject(api:IModelAPI,input:Record<string,unknown>) {
   const angle=number(input,'angle',180,1,360),tube=number(input,'thickness',r*.15,.00001,r*.95);
   const fill=number(input,'fill',.72,.01,.95);
   const surface=surfaceOptions({...input,material:input.material??(type==='water'?'water':drinking?'glass':'solid')});
+  return {type,r,h,width,depth,origin,segments,angle,tube,fill,surface};
+}
+export function createObject(api:IModelAPI,input:Record<string,unknown>) {
+  const {type,r,h,width,depth,origin,segments,angle,tube,fill,surface}=objectOptions(input);
   const faces:string[]=[];
   api.batch(`Create ${String(type).replace(/_/g,' ')}`,()=>{
     const material=api.createMaterial(surface.name,surface.color,surface);
     const collect=(ids:string[],mat=material)=>{api.setFaceMaterial(ids,mat);faces.push(...ids);};
     const mesh=(data:{vertices:Vec3[];faces:number[][]},mat=material)=>{const result=api.importGeometry(data.vertices,data.faces);if(result.faceIds.length!==data.faces.length)throw new Error('Invalid generated geometry; operation rolled back.');collect(result.faceIds,mat);};
     const box=(x:number,y:number,z:number,w:number,d:number,t:number)=>collect(api.createBox({x:origin.x+x,y:origin.y+y,z:origin.z+z},w,d,t).faceIds);
-    if(type==='sphere')collect(api.createSphere({...origin,y:origin.y+r},r,Math.max(8,Math.floor(segments/2)),segments).faceIds);
-    else if(type==='cylinder')collect(api.createCylinder(origin,r,h,segments).faceIds);
+    if(type==='sphere'){
+      const rings=Math.max(8,Math.floor(segments/2));
+      mesh(lathe(Array.from({length:rings+1},(_,i)=>[i===0||i===rings?0:r*Math.sin(i/rings*Math.PI),r-r*Math.cos(i/rings*Math.PI)] as [number,number]),segments,origin));
+    }
+    else if(type==='cylinder')mesh(lathe([[0,0],[r,0],[r,h],[0,h]],segments,origin));
     else if(type==='cone')mesh(lathe([[0,0],[r,0],[0,h]],segments,origin));
     else if(type==='glass_of_water') {
       const wall=Math.min(r*.09,h*.06);

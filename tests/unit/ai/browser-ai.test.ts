@@ -15,7 +15,7 @@ test('rejects unavailable tools, malformed inputs and truncated plans before exe
  expect(()=>parseBrowserReply('{',tools,'length')).toThrow('response limit');
 });
 test('bounds the number of mutations in one response',()=>{
- expect(()=>parseBrowserReply(JSON.stringify({reply:'',calls:Array(7).fill({name:'create_box',arguments:'{}'})}),tools,'stop')).toThrow('invalid plan');
+ expect(()=>parseBrowserReply(JSON.stringify({reply:'',calls:Array(16).fill({name:'create_box',arguments:'{}'})}),tools,'stop')).toThrow('invalid plan');
 });
 test('the response schema only advertises permitted tool names',()=>{
  const request=browserRequest({system:'Build',messages:[],tools});
@@ -147,4 +147,16 @@ test('stadiums and arenas route to building creation and detail tools',()=>{
  const tools=[{name:'create_building'},{name:'detail_building'},{name:'create_city'}];
  for(const content of ['Create a soccer stadium','Build a basketball arena','Build a custom sport stadium'])expect(browserTools({system:'',tools,messages:[{role:'user',content}]}).map(t=>t.name)).toEqual(['create_building']);
  expect(browserTools({system:'',tools,messages:[{role:'assistant',content:'Created a soccer stadium.'},{role:'user',content:'Add more detail.'}]}).map(t=>t.name)).toEqual(['detail_building']);
+});
+
+test('invalid object parameters are repaired before a tool can execute',async()=>{
+ const objectTools=[{name:'create_object',input_schema:{type:'object'}}];
+ const generate=jest.fn().mockResolvedValueOnce({choices:[{message:{content:JSON.stringify({reply:'',calls:[{name:'create_object',arguments:{type:'sphere',radius:-1}}]})},finish_reason:'stop'}]})
+  .mockResolvedValueOnce({choices:[{message:{content:JSON.stringify({reply:'',calls:[{name:'create_object',arguments:{type:'sphere',radius:2}}]})},finish_reason:'stop'}]});
+ const response=await generateBrowserResponse({system:'',tools:objectTools,messages:[{role:'user',content:'Create a sphere'}]},generate);
+ expect(generate).toHaveBeenCalledTimes(2);expect(response.content?.[0].input?.radius).toBe(2);
+});
+test('batch requests select the compact batch tool before knowledge design',()=>{
+ const tools=['create_batch','create_design','create_object'].map(name=>({name,input_schema:{type:'object'}}));
+ expect(browserTools({system:'',tools,messages:[{role:'user',content:'Create 150 chairs'}]}).map(t=>t.name)).toEqual(['create_batch']);
 });
