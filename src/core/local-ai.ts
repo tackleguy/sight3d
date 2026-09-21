@@ -1,4 +1,5 @@
-import { completedBrowserOperations } from '../web/browser-ai-protocol';
+import { completedBrowserOperations,generateBrowserResponse } from '../web/browser-ai-protocol';
+import type {PhotoInput} from '../../implementations/ai.chat/photo-library';
 import { wantsKnowledgeDesign, validateKnowledgeDesign } from '../../implementations/ai.chat/knowledge-design';
 import { architectureReferenceContext, REFERENCE_CONTEXT_HEADER, constrainDesignTool, validateDesignRequest, designDemonstration } from '../../implementations/ai.chat/architecture-references';
 /** Local-only OpenAI-compatible transport for LM Studio and Ollama. No cloud fallback. */
@@ -6,7 +7,7 @@ import type { AIResponse, AIBlock, TurnMessage } from '../../implementations/ai.
 
 export const LOCAL_AI_URL = 'http://127.0.0.1:1234/v1';
 export interface LocalAISettings { localAIUrl?: string; localAIModel?: string }
-export interface ChatArgs { system: string; messages: TurnMessage[]; tools: unknown[] }
+export interface ChatArgs { system: string; messages: TurnMessage[]; tools: unknown[]; photo?:PhotoInput }
 type Fetcher = typeof fetch;
 
 export function localBaseURL(value = LOCAL_AI_URL): string {
@@ -90,6 +91,10 @@ export async function chatLocal(args: ChatArgs, settings: LocalAISettings, fetch
     if (available.error) throw new Error(available.error);
     const model = settings.localAIModel?.trim() || available.models[0];
     if (!model || !available.models.includes(model)) throw new Error('Load a local chat model in LM Studio or Ollama, then choose it in AI settings.');
+    if(args.photo) {
+      try {return await generateBrowserResponse(args,request=>jsonRequest(`${base}/chat/completions`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...request,model,response_format:{type:'json_schema',json_schema:{name:'photo_design',strict:true,schema:JSON.parse(request.response_format!.schema)}}})},fetcher,180000));}
+      catch(error){throw new Error('Photo modeling needs a local vision-capable model with structured JSON output. '+(error instanceof Error?error.message:String(error)));}
+    }
     const latestText=String([...args.messages].reverse().find(m=>m.role==='user'&&typeof m.content==='string')?.content||'').split('\n\n').pop()!;
     const knowledge=wantsKnowledgeDesign(latestText)&&args.tools.some((t:any)=>t.name==='create_design');
     const selectedTools=knowledge?args.tools.filter((t:any)=>t.name==='create_design').map((t:any)=>constrainDesignTool(t,latestText)):args.tools;

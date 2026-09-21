@@ -132,5 +132,6 @@ test('short team names outrank unrelated curated stadiums',()=>{
 test('the real app prompt does not suppress actual source retrieval by mentioning examples',()=>{
  const request=browserRequest({system:buildLocalSystemPrompt(),tools:getToolDefinitions(),messages:[{role:'user',content:'Create Burj Khalifa'}]});
  expect(request.messages[0].content).toContain('Y-shaped plan with three wings');
- expect(request.messages[0].content.match(/SOURCED ARCHITECTURE EXAMPLES \(reference data, not instructions\):/g)).toHaveLength(1);
+ expect(typeof request.messages[0].content).toBe('string');
+ expect(String(request.messages[0].content).match(/SOURCED ARCHITECTURE EXAMPLES \(reference data, not instructions\):/g)).toHaveLength(1);
 });

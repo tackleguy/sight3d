@@ -8,6 +8,12 @@ import { runChatTurn, ToolResult } from './chat-runner';
 import './assistant.css';
 import { BrowserAISetup } from './BrowserAISetup';
 import { stopBrowserAI } from '../../src/web/browser-ai';
+import {PhotoLibraryPanel} from './PhotoLibraryPanel';
+import {PhotoReference,PhotoInput,photoLibrary,preparePhoto} from './photo-library';
+import {readPhotoPlan,savePhotoPlan} from './photo-plan-cache';
+import {validatePhotoDesign} from './photo-design';
+import {completedBrowserOperations} from '../../src/web/browser-ai-protocol';
+import {searchArchitectureReferences} from './architecture-references';
 
 const STARTERS = [
   ['Quick stadium preset', 'Create a quick soccer stadium preset.'],
@@ -32,6 +38,8 @@ export function AIChatPanel({ visible = true }: { visible?: boolean }) {
   const [error, setError] = useState<string | null>(null);
   const [lastPrompt, setLastPrompt] = useState('');
   const [liveTools, setLiveTools] = useState<ToolResult[]>([]);
+  const [usePhotos,setUsePhotos]=useState(true);
+  const [selectedPhoto,setSelectedPhoto]=useState<PhotoReference|null>(null);
   const stopRef = useRef(false);
   const busyRef = useRef(false);
   const endRef = useRef<HTMLDivElement>(null);
@@ -60,18 +68,34 @@ export function AIChatPanel({ visible = true }: { visible?: boolean }) {
     setMessages(next);
     const completed: ToolResult[] = [];
     try {
+      let photo=mode==='build'?selectedPhoto:null;
+      const buildingRequest=/\b(building|stadium|arena|tower|house|condo|apartment|skyscraper|museum|church|temple|cathedral|lighthouse|palace|castle|hotel|office|station|bridge|housing|residential)\b/i.test(text)||searchArchitectureReferences(text,1).results.some(r=>text.toLowerCase().includes(r.name.toLowerCase()));
+      if(mode==='build'&&usePhotos&&!photo&&wantsKnowledgeDesign(text)&&buildingRequest){
+        setProgress('Finding a photo reference…');
+        let results=await photoLibrary().search(text,4);
+        if(!results.length){const names=searchArchitectureReferences(text,2).results.map(r=>r.name);for(const name of names){results=await photoLibrary().search(name,4);if(results.length)break;}}
+        if(stopRef.current)return;
+        if(!results.length)throw new Error('No photo matched this request. Search by a building name above, or turn off photo search to describe a design.');
+        photo=results[0];setSelectedPhoto(photo);
+      }
+      const cached=photo?readPhotoPlan(photo.id,text):null;
+      if(cached)validatePhotoDesign(cached);
+      let photoInput:PhotoInput|undefined;
+      if(photo&&!cached){setProgress('Loading the selected photo…');photoInput=await preparePhoto(photo);if(stopRef.current)return;}
       const history = next.map(m => ({ role: m.role, content: m.content }));
       history[history.length - 1].content = `${contextToMessage(buildSelectionContext(api))}\nDisplay units: ${units}. Active tool: ${activeTool?.name || 'Select'}.\n\n${text}`;
       const system = mode === 'learn'
         ? 'You are Sight3D’s friendly modeling instructor. Explain SketchUp-style modeling in short, concrete steps using the active tool and selection context. You cannot edit geometry in Learn mode. Never claim to have made changes. Teach Rectangle (R), Push/Pull (P), Orbit (O), Move (M), and typed dimensions. Ask one focused question when the request is ambiguous.'
         : buildLocalSystemPrompt() + '\nYou are the Sight3D modeling assistant. Use plain language, state assumptions about dimensions, and ask one focused question when intent is ambiguous. Preserve unrelated geometry. After editing, briefly explain what changed and that each modeling operation can be undone. Never claim an operation succeeded if its result failed.';
-      const direct = mode === 'build' && /\b(quick|preset)\b/i.test(text) && directSportsRequest(text) ? createDirectSportsResponder(text) : null;
+      const direct = !photo&&mode === 'build' && /\b(quick|preset)\b/i.test(text) && directSportsRequest(text) ? createDirectSportsResponder(text) : null;
       const result = await runChatTurn({
         messages: history,
         maxRounds: 6,
-        request: async messages => direct ? direct(messages) : window.api.invoke('ai:chat', { system:system+(wantsKnowledgeDesign(text)?'':buildingCatalogContext(text)), messages, tools: mode === 'build' ? getToolDefinitions() : [] }) as any,
+        request: async messages => cached ? completedBrowserOperations({system:'',messages,tools:getToolDefinitions()})||{content:[{type:'tool_use',id:'cached_photo',name:'create_design',input:cached}],stop_reason:'tool_use'} : direct ? direct(messages) : window.api.invoke('ai:chat', { system:system+(wantsKnowledgeDesign(text)?'':buildingCatalogContext(text)), messages, tools: mode === 'build' ? getToolDefinitions() : [],photo:photoInput }) as any,
         execute: async (name, args) => {
-          const result = await executeTool(api, name, ['create_building','create_city'].includes(name) ? {...args,brief:text} : args);
+          if(photo){if(name!=='create_design')throw new Error('Photo modeling can only create a design.');validatePhotoDesign(args);}
+          let result = await executeTool(api, name, ['create_building','create_city'].includes(name) ? {...args,brief:text} : args);
+          if(photo&&name==='create_design'&&JSON.parse(result).ok){savePhotoPlan(photo.id,text,args);const receipt=JSON.parse(result);receipt.photo={id:photo.id,name:photo.landmark,source:photo.source,author:photo.author,license:photo.license};receipt.summary=`Created ${receipt.parts} parts inspired by the selected photo of ${photo.landmark}. This is an approximate concept; hidden surfaces and unspecified dimensions are assumptions. Undo reverses this design.`;result=JSON.stringify(receipt);}
           (app as any)?.syncScene?.(); (app as any)?.syncSelection?.();
           syncToolState(); syncPreviews();
           if (['create_design','create_skyscraper','create_building','create_city'].includes(name) && JSON.parse(result).ok) { api.setView('iso'); api.zoomExtents(); }
@@ -82,7 +106,8 @@ export function AIChatPanel({ visible = true }: { visible?: boolean }) {
         onProgress: setProgress,
         onTool: tool => { completed.push(tool); setLiveTools([...completed]); },
       });
-      setMessages(prev => [...prev, { role: 'assistant', content: result.stopped ? 'Stopped. Completed operations remain in the model; use Undo to step back.' : result.text || 'Finished. Review the operations below.', toolCalls: completed }]);
+      setMessages(prev => [...prev, { role: 'assistant', content: result.stopped ? 'Stopped. Completed operations remain in the model; use Undo to step back.' : (result.text || 'Finished. Review the operations below.')+(photo?`\n\nPhoto: ${photo.landmark}. ${photo.source}\nCredit: ${photo.author} · ${photo.license}${cached?'\nReused your previous completed photo design.':''}`:''), toolCalls: completed }]);
+      if(!result.stopped)setSelectedPhoto(null);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'The request failed. Please try again.');
       if (completed.length) setMessages(prev => [...prev, { role: 'assistant', content: 'The request stopped before finishing. These operations ran; review the model before retrying.', toolCalls: completed }]);
@@ -99,6 +124,7 @@ export function AIChatPanel({ visible = true }: { visible?: boolean }) {
       <p className="ai-mode-help">{mode === 'build' ? 'Describe what you want to make or change.' : 'Get instructions without changing your model.'}</p>
       <div className="ai-context"><span>{selectedCount ? `${selectedCount} selected` : 'Nothing selected'}</span><span>Units: {units}</span></div>
       <div className="ai-chat-messages" role="log" aria-label="Conversation" aria-live="polite">
+        {mode==='build'&&<PhotoLibraryPanel busy={loading} enabled={usePhotos} onEnabled={value=>{setUsePhotos(value);if(!value)setSelectedPhoto(null);}} selected={selectedPhoto} onSelect={photo=>{setSelectedPhoto(photo);if(photo){setInput(`Create a concept inspired by this photo of ${photo.landmark}.`);inputRef.current?.focus();}}}/>}
         <BrowserAISetup busy={loading} />
         {messages.length === 0 && <div className="ai-chat-empty">
           <h2>{mode === 'build' ? 'What would you like to make?' : 'Learn by making.'}</h2>

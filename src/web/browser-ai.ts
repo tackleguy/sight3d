@@ -5,7 +5,8 @@ import { createAIWorker } from './browser-ai-worker-factory';
 import { completedBrowserOperations, generateBrowserResponse } from './browser-ai-protocol';
 
 export const BROWSER_MODEL = 'Qwen2.5-1.5B-Instruct-q4f32_1-MLC';
-type State = { phase:'idle'|'loading'|'ready'|'error'; progress:number; message:string };
+export const BROWSER_VISION_MODEL = 'Phi-3.5-vision-instruct-q4f16_1-MLC';
+type State = { phase:'idle'|'loading'|'ready'|'error'; progress:number; message:string; vision?:boolean };
 let state: State = { phase:'idle', progress:0, message:'Download the model once, then chat on this device.' };
 const listeners = new Set<() => void>();
 export const getBrowserAIState = () => state;
@@ -27,13 +28,15 @@ export function releaseBrowserAI() {
   worker?.terminate(); worker = null; engine = null; loading = null;
   update({ phase:'idle', progress:0, message:'AI unloaded. Downloaded model files remain cached in this browser.' });
 }
-export async function enableBrowserAI(): Promise<void> {
-  if (state.phase === 'ready') return;
+export async function enableBrowserAI(vision=false): Promise<void> {
+  if (state.phase === 'ready'&&!!state.vision===vision) return;
   if (loading) return loading;
+  if(engine)releaseBrowserAI();
+  const model=vision?BROWSER_VISION_MODEL:BROWSER_MODEL;
   const run = ++generation;
   const cancelled = new Promise<never>((_, reject) => { cancelLoad = () => reject(new Error('Model loading cancelled.')); });
   void cancelled.catch(() => {});
-  update({ phase:'loading', progress:0, message:'Checking this device…' });
+  update({ phase:'loading', progress:0, message:'Checking this device…',vision });
   loading = (async () => {
     let timer: ReturnType<typeof setTimeout> | undefined;
     try {
@@ -44,19 +47,19 @@ export async function enableBrowserAI(): Promise<void> {
       const { WebWorkerMLCEngine: Engine, prebuiltAppConfig } = await import('@mlc-ai/web-llm');
       if (run !== generation) return;
       worker = createAIWorker();
-      engine = new Engine(worker, { appConfig: { ...prebuiltAppConfig, cacheBackend:'indexeddb', model_list:prebuiltAppConfig.model_list.filter(model => model.model_id === BROWSER_MODEL) }, initProgressCallback: report => {
-        if (run === generation) update({ phase:'loading', progress:Math.max(0,Math.min(1,report.progress)), message:report.text });
+      engine = new Engine(worker, { appConfig: { ...prebuiltAppConfig, cacheBackend:'indexeddb', model_list:prebuiltAppConfig.model_list.filter(item => item.model_id === model) }, initProgressCallback: report => {
+        if (run === generation) update({ phase:'loading', progress:Math.max(0,Math.min(1,report.progress)), message:report.text,vision });
       } });
       const failed = new Promise<never>((_, reject) => {
         worker!.onerror = () => reject(new Error('The browser AI worker failed. Reload the page and try again.'));
         timer = setTimeout(() => reject(new Error('Model loading timed out. Check your connection and retry; completed downloads are cached.')), 600000);
       });
-      await Promise.race([engine.reload(BROWSER_MODEL, { context_window_size:8192 }), cancelled, failed]);
-      if (run === generation) update({ phase:'ready', progress:1, message:'Ready · AI runs in this browser. No inference API fees.' });
+      await Promise.race([engine.reload(model, { context_window_size:8192 }), cancelled, failed]);
+      if (run === generation) update({ phase:'ready', progress:1, message:'Ready · AI runs in this browser. No inference API fees.',vision });
     } catch (e) {
       if (run === generation) {
         worker?.terminate(); worker = null; engine = null;
-        update({ phase:'error', progress:0, message:e instanceof Error ? e.message : `Could not load browser AI: ${String(e)}. Check your connection and available memory, then retry.` });
+        update({ phase:'error', progress:0, message:e instanceof Error ? e.message : `Could not load browser AI: ${String(e)}. Check your connection and available memory, then retry.`,vision });
       }
     } finally {
       if (timer) clearTimeout(timer);
@@ -70,6 +73,7 @@ export async function chatBrowser(args: ChatArgs): Promise<AIResponse> {
   if (!engine || state.phase !== 'ready') return { error:'Enable browser AI above the conversation first. No app installation or API key is needed.' };
   const completed = completedBrowserOperations(args);
   if (completed) return completed;
+  if(args.photo&&!state.vision)return {error:'Enable photo AI in Download details, or choose a local vision model in AI settings. The text model cannot inspect photos.'};
   if (busy) return { error:'Browser AI is still finishing a request. Wait a moment and retry.' };
   busy = true; chatStopped = false;
   let timer: ReturnType<typeof setTimeout> | undefined;

@@ -58,3 +58,26 @@
 .ai-mode-help { padding:8px 16px; }
 
 .ai-chat-messages > .browser-ai-setup { padding:0 0 12px; margin-bottom:20px; }
+.photo-library { padding-bottom:16px; margin-bottom:16px; border-bottom:1px solid var(--border-color); }
+.photo-library p { color:var(--text-secondary); line-height:1.5; margin:8px 0; }
+.photo-library label { display:block; margin:8px 0; }
+.photo-library .photo-mode { display:flex; align-items:center; gap:8px; font-weight:600; }
+.photo-mode input { accent-color:var(--accent); }
+.photo-search { display:flex; gap:8px; margin-bottom:8px; }
+.photo-search input { min-width:0; flex:1; padding:8px; font:inherit; color:var(--text-primary); background:var(--bg-primary); border:1px solid var(--border-color); border-radius:4px; }
+.photo-search button { padding:8px 10px; border:1px solid var(--border-color); }
+.photo-library small { display:block; font-size:11px; line-height:1.5; color:var(--text-secondary); }
+.photo-results { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px 8px; margin:12px 0; }
+.photo-results:empty { display:none; }
+.photo-tile { margin:0; min-width:0; }
+.photo-tile button { width:100%; padding:0; text-align:left; overflow:hidden; border:1px solid var(--border-color); border-radius:4px; }
+.photo-tile button[aria-pressed="true"] { border-color:var(--accent-hover); background:var(--bg-active); color:#fff; }
+.photo-tile button:hover:not(:disabled) { border-color:var(--accent-hover); }
+.photo-tile img,.photo-unavailable { display:block; width:100%; aspect-ratio:4/3; object-fit:cover; background:var(--bg-primary); }
+.photo-tile button > span { display:block; padding:6px; overflow-wrap:anywhere; line-height:1.4; }
+.photo-tile figcaption { font-size:10px; line-height:1.5; margin-top:4px; overflow-wrap:anywhere; }
+.photo-tile a { color:var(--accent-hover); text-underline-offset:2px; }
+.photo-tile summary { cursor:pointer; }
+.photo-selected { display:flex; align-items:center; justify-content:space-between; gap:8px; margin:12px 0; line-height:1.5; overflow-wrap:anywhere; }
+.photo-selected button { flex-shrink:0; text-decoration:underline; text-underline-offset:2px; }
+.photo-library input:focus-visible,.photo-library a:focus-visible { outline:2px solid var(--accent-hover); outline-offset:2px; }

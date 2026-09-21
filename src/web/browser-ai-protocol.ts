@@ -3,9 +3,11 @@ import { wantsKnowledgeDesign, KNOWLEDGE_DESIGN_PROMPT, validateKnowledgeDesign 
 import { findBuildingArchetype, buildingCatalogContext, inferBuildingUse } from '../../implementations/ai.chat/building-catalog';
 import type { AIResponse, AIBlock } from '../../implementations/ai.chat/chat-runner';
 import type { ChatArgs } from '../core/local-ai';
+import {photoDesignRequest,validatePhotoDesign} from '../../implementations/ai.chat/photo-design';
 
 export function browserTools(args: ChatArgs) {
   const tools = args.tools as Array<{ name: string; description: string; input_schema: unknown }>;
+  if(args.photo)return tools.filter(t=>t.name==='create_design');
   const latest = [...args.messages].reverse().find(m => m.role === 'user' && typeof m.content === 'string');
   const prompt = typeof latest?.content === 'string' ? latest.content : '';
   const assistant = [...args.messages].reverse().find(m => m.role === 'assistant' && typeof m.content === 'string');
@@ -26,6 +28,7 @@ export function browserTools(args: ChatArgs) {
   return name && tools.some(tool => tool.name === name) ? tools.filter(tool => tool.name === name) : tools;
 }
 export function browserRequest(args: ChatArgs, retry = false) {
+  if(args.photo){if(!(args.tools as {name:string}[]).some(t=>t.name==='create_design'))throw new Error('Photo creation is available only in Create mode.');const latest=[...args.messages].reverse().find(m=>m.role==='user'&&typeof m.content==='string');return photoDesignRequest(args.photo,String(latest?.content||'').split('\n\n').pop()!,retry);}
   const tools = browserTools(args);
   const latestText=[...args.messages].reverse().find(m=>m.role==='user'&&typeof m.content==='string')?.content;
   const knowledge=tools.length===1&&tools[0].name==='create_design';
@@ -145,7 +148,8 @@ export async function generateBrowserResponse(
     try{
       const parsed=parseBrowserReply(choice?.message.content||'',browserTools(args),choice?.finish_reason??null);
       const latest=[...args.messages].reverse().find(m=>m.role==='user'&&typeof m.content==='string');
-      for(const block of parsed.content||[])if(block.type==='tool_use'&&block.name==='create_design')validateDesignRequest(block.input||{},String(latest?.content||'').split('\n\n').pop()!);
+      if(args.photo&&parsed.content?.filter(b=>b.type==='tool_use').length!==1)throw new Error('Return exactly one complete photo design.');
+      for(const block of parsed.content||[])if(block.type==='tool_use'&&block.name==='create_design'){if(args.photo)validatePhotoDesign(block.input||{});else validateDesignRequest(block.input||{},String(latest?.content||'').split('\n\n').pop()!);}
       return parsed;
     }
     catch(error){if(attempt===0&&browserTools(args).some(t=>t.name==='create_design')){correction=error instanceof Error?error.message:'Invalid design plan';continue;}throw error;}

@@ -100,7 +100,7 @@ export interface MainProcessAPI {
   'app:get-user-data-path': () => Promise<string>;
   'app:quit': () => Promise<void>;
   'ai:models': (args: { baseUrl: string }) => Promise<{ models: string[]; error?: string }>;
-  'ai:chat': (args: { messages: Array<{ role: string; content: unknown }>; tools: unknown[]; system: string }) => Promise<unknown>;
+  'ai:chat': (args: { messages: Array<{ role: string; content: unknown }>; tools: unknown[]; system: string; photo?:import('../../implementations/ai.chat/photo-library').PhotoInput }) => Promise<unknown>;
 }
 
 export interface RendererEvents {

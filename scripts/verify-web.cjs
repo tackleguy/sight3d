@@ -56,6 +56,8 @@ let browser, server;
     assert.equal(await page.evaluate(()=>window.modelAPI.getAllFaces().length),0);
   }
   console.log('Real stadium and arena chat succeeded without AI or mocked replies.');
+  // This suite checks the existing text/catalog path; photo mode has its own pixel-input smoke test.
+  await page.getByRole('checkbox',{name:'Find a photo for new buildings'}).uncheck();
   await page.getByRole('button', { name: 'Enable browser AI', exact: true }).click();
   await page.getByText(/No compatible GPU is available/).waitFor();
   // Stub inference only; the production UI executes the real modeling operation.

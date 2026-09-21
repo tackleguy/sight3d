@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   mode: 'production',
@@ -39,6 +40,7 @@ module.exports = {
     clean: true,
   },
   plugins: [
+    new CopyPlugin({patterns:[{from:'data/photos',to:'photos',globOptions:{ignore:['**/*.md']}}]}),
     new HtmlWebpackPlugin({
       template: './src/web/index.html',
     }),

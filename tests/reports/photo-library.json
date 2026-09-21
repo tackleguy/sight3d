@@ -1,0 +1,14 @@
+{
+  "photoCount": 400000,
+  "landmarkCount": 52536,
+  "sourceIdsAndUrlsUnique": true,
+  "sourceFileHashesVerified": true,
+  "searches": 1000,
+  "passed": 1000,
+  "failed": 0,
+  "coldIndexMs": 189.03037500000005,
+  "p50Ms": 10.548208000000159,
+  "p95Ms": 96.91662499999802,
+  "note": "Local metadata lookup using filesystem reads; excludes network transfer, image loading and model inference. Photo bytes and visual fidelity are not verified.",
+  "failures": []
+}
